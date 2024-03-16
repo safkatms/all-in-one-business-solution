@@ -49,6 +49,9 @@ let UserService = class UserService {
         const schemaName = `${company}`;
         await this.connection.query(`CREATE SCHEMA IF NOT EXISTS "${schemaName}"`);
     }
+    async findByUsername(username) {
+        return this.usersRepository.findOneBy({ username });
+    }
 };
 exports.UserService = UserService;
 exports.UserService = UserService = __decorate([

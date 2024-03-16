@@ -52,4 +52,8 @@ export class UserService {
     const schemaName = `${company}`;
     await this.connection.query(`CREATE SCHEMA IF NOT EXISTS "${schemaName}"`);
   }
+
+  async findByUsername(username: string): Promise<User | undefined> {
+    return this.usersRepository.findOneBy({ username });
+  }
 }
