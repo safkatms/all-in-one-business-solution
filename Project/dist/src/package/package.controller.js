@@ -18,6 +18,8 @@ const package_service_1 = require("./package.service");
 const create_package_dto_1 = require("./dto/create-package.dto");
 const passport_1 = require("@nestjs/passport");
 const common_2 = require("@nestjs/common");
+const valid_package_guard_1 = require("../guards/valid-package.guard");
+const update_package_dto_1 = require("./dto/update-package.dto");
 let PackageController = class PackageController {
     constructor(packageService) {
         this.packageService = packageService;
@@ -26,17 +28,42 @@ let PackageController = class PackageController {
         const userId = req.user.userId;
         return this.packageService.createPackage(userId, createPackageDto);
     }
+    async getUserPackage(req) {
+        const userId = req.user.packageId;
+        return this.packageService.findById(userId);
+    }
+    async updatePackage(updatePackageDto, req) {
+        const packageId = req.user.packageId;
+        return this.packageService.updatePackage(packageId, updatePackageDto);
+    }
 };
 exports.PackageController = PackageController;
 __decorate([
-    (0, common_1.Post)(),
-    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
+    (0, common_1.Post)('/purchase'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt'), valid_package_guard_1.ValidPackageGuard),
     __param(0, (0, common_2.Request)()),
     __param(1, (0, common_1.Body)(common_1.ValidationPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, create_package_dto_1.CreatePackageDto]),
     __metadata("design:returntype", void 0)
 ], PackageController.prototype, "createPackage", null);
+__decorate([
+    (0, common_1.Get)(),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt'), valid_package_guard_1.ValidPackageGuard),
+    __param(0, (0, common_2.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], PackageController.prototype, "getUserPackage", null);
+__decorate([
+    (0, common_1.Put)('/renew'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt'), valid_package_guard_1.ValidPackageGuard),
+    __param(0, (0, common_1.Body)(common_1.ValidationPipe)),
+    __param(1, (0, common_2.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [update_package_dto_1.UpdatePackageDto, Object]),
+    __metadata("design:returntype", Promise)
+], PackageController.prototype, "updatePackage", null);
 exports.PackageController = PackageController = __decorate([
     (0, common_1.Controller)('packages'),
     __metadata("design:paramtypes", [package_service_1.PackageService])

@@ -1,29 +1,18 @@
-// guards/valid-package.guard.ts
-import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
-import { PackageService } from '../package/package.service';
+import { Injectable, CanActivate, ExecutionContext, HttpException, HttpStatus } from '@nestjs/common';
+import { Observable } from 'rxjs';
+import { Reflector } from '@nestjs/core';
 
 @Injectable()
 export class ValidPackageGuard implements CanActivate {
-  constructor(private packageService: PackageService) {}
+  constructor(private readonly reflector: Reflector) {}
 
-  async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = context.switchToHttp().getRequest();
-    const user = request.user; // Extracted from JWT token
-
-    if (!user || !user.packageId) {
-      throw new UnauthorizedException('No package associated with user account');
-    }
-
-    const userPackage = await this.packageService.findById(user.packageId);
-    if (!userPackage) {
-      throw new UnauthorizedException('No package found for this user');
+  canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
+    const user = context.switchToHttp().getRequest().user;
+    const userType = user.userType; // Assuming you have 'type' property in your user entity
+    if (userType === 'owner') {
+      return true;
     }
     
-    const currentDate = new Date();
-    if (currentDate > userPackage.validTill) {
-      throw new UnauthorizedException('User package has expired');
-    }
-
-    return true;
+    throw new HttpException('You are not authorized to access this resource', HttpStatus.UNAUTHORIZED);
   }
 }

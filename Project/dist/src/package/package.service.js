@@ -25,9 +25,6 @@ let PackageService = class PackageService {
     }
     async createPackage(userId, createPackageDto) {
         const user = await this.userRepository.findOneBy({ userId: userId });
-        if (!user) {
-            throw new common_1.NotFoundException(`User with ID ${userId} not found`);
-        }
         if (user.packageId) {
             const existingPackage = await this.findById(user.packageId);
             if (existingPackage && existingPackage.validTill >= new Date()) {
@@ -50,6 +47,20 @@ let PackageService = class PackageService {
             throw new common_1.NotFoundException(`Package with ID ${packageId} not found`);
         }
         return packageEntity;
+    }
+    async updatePackage(packageId, updatePackageDto) {
+        const packageEntity = await this.packageRepository.findOneBy({ id: packageId });
+        if (!packageEntity) {
+            throw new common_1.NotFoundException(`Package with ID ${packageId} not found`);
+        }
+        if (packageEntity.validTill >= new Date()) {
+            return packageEntity;
+        }
+        const validFrom = new Date();
+        const validTill = new Date(validFrom.getTime() + 30 * 24 * 60 * 60 * 1000);
+        packageEntity.validFrom = validFrom;
+        packageEntity.validTill = validTill;
+        return this.packageRepository.save(packageEntity);
     }
 };
 exports.PackageService = PackageService;

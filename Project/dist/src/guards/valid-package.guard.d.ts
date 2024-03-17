@@ -1,7 +1,8 @@
 import { CanActivate, ExecutionContext } from '@nestjs/common';
-import { PackageService } from '../package/package.service';
+import { Observable } from 'rxjs';
+import { Reflector } from '@nestjs/core';
 export declare class ValidPackageGuard implements CanActivate {
-    private packageService;
-    constructor(packageService: PackageService);
-    canActivate(context: ExecutionContext): Promise<boolean>;
+    private readonly reflector;
+    constructor(reflector: Reflector);
+    canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean>;
 }

@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from '../user/entities/user.entity';
 import { Package } from './entities/package.entity';
 import { CreatePackageDto } from './dto/create-package.dto';
+import { UpdatePackageDto } from './dto/update-package.dto';
 
 @Injectable()
 export class PackageService {
@@ -16,9 +17,6 @@ export class PackageService {
 
   async createPackage(userId: number, createPackageDto: CreatePackageDto): Promise<any> {
     const user = await this.userRepository.findOneBy({ userId: userId });
-    if (!user) {
-      throw new NotFoundException(`User with ID ${userId} not found`);
-    }
 
     // Ensure the user does not already have an active package
     if (user.packageId) {
@@ -50,4 +48,31 @@ export class PackageService {
     }
     return packageEntity;
   }
+  
+
+  async updatePackage(packageId: number, updatePackageDto: UpdatePackageDto): Promise<Package> {
+    const packageEntity = await this.packageRepository.findOneBy({ id: packageId });
+    if (!packageEntity) {
+      throw new NotFoundException(`Package with ID ${packageId} not found`);
+    }
+
+    // Check if the package has expired
+    if (packageEntity.validTill >= new Date()) {
+      // If the package is still valid, do not update the dates
+      return packageEntity;
+    }
+
+    // Calculate the validity period (30 days from now)
+    const validFrom = new Date();
+    const validTill = new Date(validFrom.getTime() + 30 * 24 * 60 * 60 * 1000);
+
+    // Update the package with new validity dates
+    packageEntity.validFrom = validFrom;
+    packageEntity.validTill = validTill;
+
+
+    // Save and return the updated package
+    return this.packageRepository.save(packageEntity);
+  }
+
 }

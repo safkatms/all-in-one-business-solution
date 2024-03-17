@@ -11,31 +11,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ValidPackageGuard = void 0;
 const common_1 = require("@nestjs/common");
-const package_service_1 = require("../package/package.service");
+const core_1 = require("@nestjs/core");
 let ValidPackageGuard = class ValidPackageGuard {
-    constructor(packageService) {
-        this.packageService = packageService;
+    constructor(reflector) {
+        this.reflector = reflector;
     }
-    async canActivate(context) {
-        const request = context.switchToHttp().getRequest();
-        const user = request.user;
-        if (!user || !user.packageId) {
-            throw new common_1.UnauthorizedException('No package associated with user account');
+    canActivate(context) {
+        const user = context.switchToHttp().getRequest().user;
+        const userType = user.userType;
+        if (userType === 'owner') {
+            return true;
         }
-        const userPackage = await this.packageService.findById(user.packageId);
-        if (!userPackage) {
-            throw new common_1.UnauthorizedException('No package found for this user');
-        }
-        const currentDate = new Date();
-        if (currentDate > userPackage.validTill) {
-            throw new common_1.UnauthorizedException('User package has expired');
-        }
-        return true;
+        throw new common_1.HttpException('You are not authorized to access this resource', common_1.HttpStatus.UNAUTHORIZED);
     }
 };
 exports.ValidPackageGuard = ValidPackageGuard;
 exports.ValidPackageGuard = ValidPackageGuard = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [package_service_1.PackageService])
+    __metadata("design:paramtypes", [core_1.Reflector])
 ], ValidPackageGuard);
 //# sourceMappingURL=valid-package.guard.js.map
