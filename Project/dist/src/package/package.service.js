@@ -28,9 +28,11 @@ let PackageService = class PackageService {
         if (!user) {
             throw new common_1.NotFoundException(`User with ID ${userId} not found`);
         }
-        const currentDate = new Date();
         if (user.packageId) {
-            throw new common_1.ConflictException('User has already purchased a package');
+            const existingPackage = await this.findById(user.packageId);
+            if (existingPackage && existingPackage.validTill >= new Date()) {
+                throw new common_1.ConflictException('User already has an active package');
+            }
         }
         const packageEntity = this.packageRepository.create({
             ...createPackageDto,
@@ -41,6 +43,13 @@ let PackageService = class PackageService {
         user.packageId = packageEntity.id;
         await this.userRepository.save(user);
         return { message: 'Package purchased successfully', package: packageEntity };
+    }
+    async findById(packageId) {
+        const packageEntity = await this.packageRepository.findOneBy({ id: packageId });
+        if (!packageEntity) {
+            throw new common_1.NotFoundException(`Package with ID ${packageId} not found`);
+        }
+        return packageEntity;
     }
 };
 exports.PackageService = PackageService;

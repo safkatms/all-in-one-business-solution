@@ -1,4 +1,3 @@
-// package.service.ts
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -13,34 +12,42 @@ export class PackageService {
     private userRepository: Repository<User>,
     @InjectRepository(Package)
     private packageRepository: Repository<Package>,
-  ) { }
+  ) {}
 
   async createPackage(userId: number, createPackageDto: CreatePackageDto): Promise<any> {
     const user = await this.userRepository.findOneBy({ userId: userId });
-
     if (!user) {
       throw new NotFoundException(`User with ID ${userId} not found`);
     }
 
-    // Check if the user already has a package 
-    const currentDate = new Date();
+    // Ensure the user does not already have an active package
     if (user.packageId) {
-      throw new ConflictException('User has already purchased a package');
+      const existingPackage = await this.findById(user.packageId);
+      if (existingPackage && existingPackage.validTill >= new Date()) {
+        throw new ConflictException('User already has an active package');
+      }
     }
 
-    // Create new package if not exist
+    // Create and save the new package
     const packageEntity = this.packageRepository.create({
       ...createPackageDto,
-      validFrom: new Date(), // Set validFrom as the current date
-      validTill: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // Set validTill as 30 days from now
+      validFrom: new Date(),
+      validTill: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // Assuming a 30-day validity
     });
     await this.packageRepository.save(packageEntity);
 
-
-    // Update user's packageId with the new package's id
+    // Update the user's packageId reference
     user.packageId = packageEntity.id;
     await this.userRepository.save(user);
 
     return { message: 'Package purchased successfully', package: packageEntity };
+  }
+
+  async findById(packageId: number): Promise<Package> {
+    const packageEntity = await this.packageRepository.findOneBy({ id: packageId });
+    if (!packageEntity) {
+      throw new NotFoundException(`Package with ID ${packageId} not found`);
+    }
+    return packageEntity;
   }
 }

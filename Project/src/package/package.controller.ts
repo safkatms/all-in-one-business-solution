@@ -1,17 +1,21 @@
 // package.controller.ts
-import { Controller, Post, Body, Param, ParseIntPipe, ValidationPipe } from '@nestjs/common';
+import { Controller, Post, Body, Param, ParseIntPipe, ValidationPipe, UseGuards } from '@nestjs/common';
 import { PackageService } from './package.service';
 import { CreatePackageDto } from './dto/create-package.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { Request } from '@nestjs/common';
 
 @Controller('packages')
 export class PackageController {
-  constructor(private readonly packageService: PackageService) {}
+  constructor(private readonly packageService: PackageService) { }
 
-  @Post('/:userId')
+  @Post()
+  @UseGuards(AuthGuard('jwt'))
   createPackage(
-    @Param('userId', ParseIntPipe) userId: number,
+    @Request() req,
     @Body(ValidationPipe) createPackageDto: CreatePackageDto,
   ) {
+    const userId = req.user.userId;
     return this.packageService.createPackage(userId, createPackageDto);
   }
 }

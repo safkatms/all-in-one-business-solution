@@ -16,21 +16,25 @@ exports.PackageController = void 0;
 const common_1 = require("@nestjs/common");
 const package_service_1 = require("./package.service");
 const create_package_dto_1 = require("./dto/create-package.dto");
+const passport_1 = require("@nestjs/passport");
+const common_2 = require("@nestjs/common");
 let PackageController = class PackageController {
     constructor(packageService) {
         this.packageService = packageService;
     }
-    createPackage(userId, createPackageDto) {
+    createPackage(req, createPackageDto) {
+        const userId = req.user.userId;
         return this.packageService.createPackage(userId, createPackageDto);
     }
 };
 exports.PackageController = PackageController;
 __decorate([
-    (0, common_1.Post)('/:userId'),
-    __param(0, (0, common_1.Param)('userId', common_1.ParseIntPipe)),
+    (0, common_1.Post)(),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
+    __param(0, (0, common_2.Request)()),
     __param(1, (0, common_1.Body)(common_1.ValidationPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, create_package_dto_1.CreatePackageDto]),
+    __metadata("design:paramtypes", [Object, create_package_dto_1.CreatePackageDto]),
     __metadata("design:returntype", void 0)
 ], PackageController.prototype, "createPackage", null);
 exports.PackageController = PackageController = __decorate([
