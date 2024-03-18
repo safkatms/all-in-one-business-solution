@@ -1,4 +1,4 @@
-import { Injectable, ConflictException } from '@nestjs/common';
+import { Injectable, ConflictException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Connection, MoreThan } from 'typeorm';
 import { User } from './entities/user.entity';
@@ -106,6 +106,22 @@ export class UserService {
       where: { username },
       select: ['userId', 'firstName', 'lastName', 'email', 'username', 'mobileNo', 'gender', 'profilePicture'],
     });
+  }
+
+  async changePassword(userId: number, currentPassword: string, newPassword: string): Promise<void> {
+    const user = await this.usersRepository.findOneBy({ userId });
+
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    const passwordMatches = await bcrypt.compare(currentPassword, user.password);
+    if (!passwordMatches) {
+      throw new UnauthorizedException('Current password is incorrect');
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    await this.usersRepository.update(userId, { password: hashedNewPassword });
   }
 
 async createPasswordResetToken(email: string): Promise<void> {

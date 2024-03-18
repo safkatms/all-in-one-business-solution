@@ -18,6 +18,7 @@ const user_service_1 = require("./user.service");
 const create_user_dto_1 = require("./dto/create-user.dto");
 const jwt_guard_1 = require("../guards/jwt.guard");
 const update_profile_dto_1 = require("./dto/update-profile.dto");
+const change_password_dto_1 = require("./dto/change-password.dto");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
@@ -30,8 +31,15 @@ let UserController = class UserController {
         return await this.userService.findProfileByUsername(user.username);
     }
     async updateProfile(req, updateProfileDto) {
-        const updatedUser = await this.userService.updateProfile(req.user.userId, updateProfileDto);
-        return updatedUser;
+        await this.userService.updateProfile(req.user.userId, updateProfileDto);
+        return { message: "Profile updated successfully" };
+    }
+    async changePassword(req, changePasswordDto) {
+        if (changePasswordDto.newPassword !== changePasswordDto.confirmPassword) {
+            throw new common_1.UnauthorizedException('New password and confirm password do not match');
+        }
+        await this.userService.changePassword(req.user.userId, changePasswordDto.currentPassword, changePasswordDto.newPassword);
+        return { message: 'Password successfully changed' };
     }
 };
 exports.UserController = UserController;
@@ -59,6 +67,15 @@ __decorate([
     __metadata("design:paramtypes", [Object, update_profile_dto_1.UpdateProfileDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "updateProfile", null);
+__decorate([
+    (0, common_1.Patch)('change-password'),
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Body)(common_1.ValidationPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, change_password_dto_1.ChangePasswordDto]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "changePassword", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('user'),
     __metadata("design:paramtypes", [user_service_1.UserService])
