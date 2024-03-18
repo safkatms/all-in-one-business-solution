@@ -7,9 +7,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { config } from 'ormconfig';
 import { PackageModule } from './package/package.module';
 import { EmployeeModule } from './employee/employee.module';
+import { InventoryManagementModule } from './inventory-management/inventory-management.module';
 
 @Module({
-  imports: [UserModule, AuthModule,TypeOrmModule.forRoot(config), PackageModule, EmployeeModule],
+  imports: [
+    UserModule,
+    AuthModule,
+    TypeOrmModule.forRoot(config),
+    PackageModule,
+    EmployeeModule,
+    InventoryManagementModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
