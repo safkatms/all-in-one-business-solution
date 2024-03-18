@@ -41,10 +41,10 @@ let PackageService = class PackageService {
         await this.userRepository.save(user);
         return { message: 'Package purchased successfully', package: packageEntity };
     }
-    async findById(packageId) {
-        const packageEntity = await this.packageRepository.findOneBy({ id: packageId });
+    async findById(userId) {
+        const packageEntity = await this.packageRepository.findOneBy({ id: userId });
         if (!packageEntity) {
-            throw new common_1.NotFoundException(`Package with ID ${packageId} not found`);
+            throw new common_1.NotFoundException(`Package with ID ${userId} not found`);
         }
         return packageEntity;
     }

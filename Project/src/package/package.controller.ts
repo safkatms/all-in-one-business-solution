@@ -22,11 +22,11 @@ export class PackageController {
   
   @Get()
 async getUserPackage(@Request() req) {
-  const packageId = req.user.packageId;
-  if (!packageId) {
+  const userId = req.user.userId;
+  if (!userId) {
     throw new NotFoundException('User does not have an associated package');
   }
-  return this.packageService.findById(packageId);
+  return this.packageService.findById(userId);
 }
 
   @Put('/renew')

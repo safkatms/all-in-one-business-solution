@@ -41,10 +41,10 @@ export class PackageService {
     return { message: 'Package purchased successfully', package: packageEntity };
   }
 
-  async findById(packageId: number): Promise<Package> {
-    const packageEntity = await this.packageRepository.findOneBy({ id: packageId });
+  async findById(userId: number): Promise<Package> {
+    const packageEntity = await this.packageRepository.findOneBy({ id: userId });
     if (!packageEntity) {
-      throw new NotFoundException(`Package with ID ${packageId} not found`);
+      throw new NotFoundException(`Package with ID ${userId} not found`);
     }
     return packageEntity;
   }

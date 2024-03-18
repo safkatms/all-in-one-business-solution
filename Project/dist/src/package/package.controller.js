@@ -29,11 +29,11 @@ let PackageController = class PackageController {
         return this.packageService.createPackage(userId, createPackageDto);
     }
     async getUserPackage(req) {
-        const packageId = req.user.packageId;
-        if (!packageId) {
+        const userId = req.user.userId;
+        if (!userId) {
             throw new common_1.NotFoundException('User does not have an associated package');
         }
-        return this.packageService.findById(packageId);
+        return this.packageService.findById(userId);
     }
     async updatePackage(updatePackageDto, req) {
         const packageId = req.user.packageId;
