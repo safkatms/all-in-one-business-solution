@@ -17,6 +17,7 @@ const ormconfig_1 = require("../ormconfig");
 const package_module_1 = require("./package/package.module");
 const employee_module_1 = require("./employee/employee.module");
 const inventory_management_module_1 = require("./inventory-management/inventory-management.module");
+const purchase_management_module_1 = require("./purchase-management/purchase-management.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -29,6 +30,7 @@ exports.AppModule = AppModule = __decorate([
             package_module_1.PackageModule,
             employee_module_1.EmployeeModule,
             inventory_management_module_1.InventoryManagementModule,
+            purchase_management_module_1.PurchaseManagementModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
