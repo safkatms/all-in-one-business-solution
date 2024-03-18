@@ -86,6 +86,10 @@ let UserService = class UserService {
   )
 `);
     }
+    async updateProfile(userId, updateProfileDto) {
+        await this.usersRepository.update(userId, updateProfileDto);
+        return this.usersRepository.findOneBy({ userId });
+    }
     async findByUsername(username) {
         return this.usersRepository.findOneBy({ username });
     }

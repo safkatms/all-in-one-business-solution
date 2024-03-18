@@ -3,6 +3,7 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from 'src/guards/jwt.guard';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 
 @Controller('user')
 export class UserController {
@@ -25,10 +26,12 @@ export class UserController {
     return await this.userService.findProfileByUsername(user.username);
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-  //   return this.userService.update(+id, updateUserDto);
-  // }
+  @Patch('profile/update')
+  @UseGuards(JwtAuthGuard) // Ensure this route is protected
+  async updateProfile(@Request() req, @Body(ValidationPipe) updateProfileDto: UpdateProfileDto) {
+    const updatedUser = await this.userService.updateProfile(req.user.userId, updateProfileDto);
+    return updatedUser;
+  }
 
   // @Delete(':id')
   // remove(@Param('id') id: string) {

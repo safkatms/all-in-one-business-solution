@@ -5,6 +5,7 @@ import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 
 @Injectable()
 export class UserService {
@@ -90,6 +91,12 @@ export class UserService {
   }
 
 
+  async updateProfile(userId: number, updateProfileDto: UpdateProfileDto): Promise<User> {
+    await this.usersRepository.update(userId, updateProfileDto);
+    return this.usersRepository.findOneBy({ userId });
+  }
+
+
   async findByUsername(username: string): Promise<User | undefined> {
     return this.usersRepository.findOneBy({ username });
   }
@@ -136,7 +143,7 @@ async resetPassword(token: string, newPassword: string): Promise<void> {
     const hashedPassword = await bcrypt.hash(newPassword, saltOrRounds);
 
   await this.usersRepository.update(user.userId, {
-    password: hashedPassword, // Store the hashed password
+    password: hashedPassword,
     passwordResetToken: null,
     passwordResetTokenExpires: null, 
   });
