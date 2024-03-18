@@ -8,6 +8,7 @@ import { config } from 'ormconfig';
 import { PackageModule } from './package/package.module';
 import { EmployeeModule } from './employee/employee.module';
 import { InventoryManagementModule } from './inventory-management/inventory-management.module';
+import { PurchaseManagementModule } from './purchase-management/purchase-management.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { InventoryManagementModule } from './inventory-management/inventory-mana
     PackageModule,
     EmployeeModule,
     InventoryManagementModule,
+    PurchaseManagementModule,
   ],
   controllers: [AppController],
   providers: [AppService],

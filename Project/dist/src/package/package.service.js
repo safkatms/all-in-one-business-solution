@@ -39,22 +39,32 @@ let PackageService = class PackageService {
         await this.packageRepository.save(packageEntity);
         user.packageId = packageEntity.id;
         await this.userRepository.save(user);
-        return { message: 'Package purchased successfully', package: packageEntity };
+        return {
+            message: 'Package purchased successfully',
+            package: packageEntity,
+        };
     }
     async findById(userId) {
-        const packageEntity = await this.packageRepository.findOneBy({ id: userId });
+        const packageEntity = await this.packageRepository.findOneBy({
+            id: userId,
+        });
         if (!packageEntity) {
             throw new common_1.NotFoundException(`Package with ID ${userId} not found`);
         }
         return packageEntity;
     }
     async updatePackage(packageId, updatePackageDto) {
-        const packageEntity = await this.packageRepository.findOneBy({ id: packageId });
+        const packageEntity = await this.packageRepository.findOneBy({
+            id: packageId,
+        });
         if (!packageEntity) {
             throw new common_1.NotFoundException(`Package with ID ${packageId} not found`);
         }
         if (packageEntity.validTill >= new Date()) {
-            return { message: 'You already have an active package', package: packageEntity };
+            return {
+                message: 'You already have an active package',
+                package: packageEntity,
+            };
         }
         const validFrom = new Date();
         const validTill = new Date(validFrom.getTime() + 30 * 24 * 60 * 60 * 1000);
