@@ -11,6 +11,7 @@ export declare class UserService {
     updateProfile(userId: number, updateProfileDto: UpdateProfileDto): Promise<User>;
     findByUsername(username: string): Promise<User | undefined>;
     findProfileByUsername(username: string): Promise<User | undefined>;
+    changePassword(userId: number, currentPassword: string, newPassword: string): Promise<void>;
     createPasswordResetToken(email: string): Promise<void>;
     resetPassword(token: string, newPassword: string): Promise<void>;
 }

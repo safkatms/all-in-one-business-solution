@@ -99,6 +99,18 @@ let UserService = class UserService {
             select: ['userId', 'firstName', 'lastName', 'email', 'username', 'mobileNo', 'gender', 'profilePicture'],
         });
     }
+    async changePassword(userId, currentPassword, newPassword) {
+        const user = await this.usersRepository.findOneBy({ userId });
+        if (!user) {
+            throw new common_1.UnauthorizedException('User not found');
+        }
+        const passwordMatches = await bcrypt.compare(currentPassword, user.password);
+        if (!passwordMatches) {
+            throw new common_1.UnauthorizedException('Current password is incorrect');
+        }
+        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+        await this.usersRepository.update(userId, { password: hashedNewPassword });
+    }
     async createPasswordResetToken(email) {
         const user = await this.usersRepository.findOne({ where: { email } });
         if (!user) {
