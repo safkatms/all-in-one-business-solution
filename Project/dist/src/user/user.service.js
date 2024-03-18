@@ -89,6 +89,12 @@ let UserService = class UserService {
     async findByUsername(username) {
         return this.usersRepository.findOneBy({ username });
     }
+    async findProfileByUsername(username) {
+        return this.usersRepository.findOne({
+            where: { username },
+            select: ['userId', 'firstName', 'lastName', 'email', 'username', 'mobileNo', 'gender', 'profilePicture'],
+        });
+    }
     async createPasswordResetToken(email) {
         const user = await this.usersRepository.findOne({ where: { email } });
         if (!user) {
@@ -112,8 +118,10 @@ let UserService = class UserService {
         if (!user) {
             throw new Error('Invalid or expired password reset token');
         }
+        const saltOrRounds = 10;
+        const hashedPassword = await bcrypt.hash(newPassword, saltOrRounds);
         await this.usersRepository.update(user.userId, {
-            password: newPassword,
+            password: hashedPassword,
             passwordResetToken: null,
             passwordResetTokenExpires: null,
         });

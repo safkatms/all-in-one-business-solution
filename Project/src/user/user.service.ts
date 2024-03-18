@@ -94,7 +94,12 @@ export class UserService {
     return this.usersRepository.findOneBy({ username });
   }
 
-  // In UserService
+  async findProfileByUsername(username: string): Promise<User | undefined> {
+    return this.usersRepository.findOne({
+      where: { username },
+      select: ['userId', 'firstName', 'lastName', 'email', 'username', 'mobileNo', 'gender', 'profilePicture'],
+    });
+  }
 
 async createPasswordResetToken(email: string): Promise<void> {
   const user = await this.usersRepository.findOne({ where: { email } });
@@ -102,18 +107,18 @@ async createPasswordResetToken(email: string): Promise<void> {
     throw new Error('User not found');
   }
 
-  const token = uuidv4(); // Generate a unique token
+  const token = uuidv4(); 
   const expiration = new Date();
-  expiration.setHours(expiration.getHours() + 1); // Token expires in 1 hour
+  expiration.setHours(expiration.getHours() + 1); 
 
   await this.usersRepository.update(user.userId, {
     passwordResetToken: token,
     passwordResetTokenExpires: expiration,
   });
 
-  // Send email with reset instructions including the token
-  // The email content should include a link to your frontend reset password page with the token as a parameter
 }
+
+
 
 async resetPassword(token: string, newPassword: string): Promise<void> {
   const user = await this.usersRepository.findOne({
@@ -127,11 +132,13 @@ async resetPassword(token: string, newPassword: string): Promise<void> {
     throw new Error('Invalid or expired password reset token');
   }
 
-  // Here, hash the new password before saving
+  const saltOrRounds = 10;
+    const hashedPassword = await bcrypt.hash(newPassword, saltOrRounds);
+
   await this.usersRepository.update(user.userId, {
-    password: newPassword, // Make sure to hash the password
-    passwordResetToken: null, // Clear the reset token
-    passwordResetTokenExpires: null, // Clear the token expiration
+    password: hashedPassword, // Store the hashed password
+    passwordResetToken: null,
+    passwordResetTokenExpires: null, 
   });
 }
 
