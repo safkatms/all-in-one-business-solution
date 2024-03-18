@@ -1,4 +1,3 @@
-// user.service.ts
 import { Injectable, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Connection } from 'typeorm';
@@ -17,7 +16,6 @@ export class UserService {
   async registerUser(createUserDto: CreateUserDto): Promise<User> {
     const { username, email, password, company } = createUserDto;
 
-    // Check if the user is already registered
     const existingUser = await this.usersRepository.findOne({
       where: [{ username }, { email }],
     });
@@ -34,15 +32,17 @@ export class UserService {
       throw new ConflictException('User already registered with given company name');
     }
 
-    // Hash the password before saving the user
     const saltOrRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltOrRounds);
-    createUserDto.password = hashedPassword;
+    const newUserDto = {
+      ...createUserDto,
+      password: hashedPassword,
+      userType: 'owner',
+    };
 
-    const newUser = this.usersRepository.create(createUserDto);
+    const newUser = this.usersRepository.create(newUserDto);
     const savedUser = await this.usersRepository.save(newUser);
 
-    // Create a schema for the user after successful registration
     await this.createSchemaForUser(savedUser.company);
 
     return savedUser;
@@ -51,7 +51,7 @@ export class UserService {
   private async createSchemaForUser(company: string): Promise<void> {
     const schemaName = `${company}`;
     await this.connection.query(`CREATE SCHEMA IF NOT EXISTS "${schemaName}"`);
-  
+
     await this.connection.query(`
     CREATE TABLE IF NOT EXISTS "${schemaName}".Employee (
       employeeId SERIAL PRIMARY KEY,
@@ -60,9 +60,35 @@ export class UserService {
       employeeJoiningDate TIMESTAMP
     )    
     `);
+
+    await this.connection.query(`
+  CREATE TABLE IF NOT EXISTS "${schemaName}"."productInfo" (
+    "productId" SERIAL PRIMARY KEY,
+    "productName" VARCHAR NOT NULL,
+    "productDetails" TEXT NOT NULL,
+    "productPurchasePrice" NUMERIC NOT NULL,
+    "productSellPrice" NUMERIC NOT NULL,
+    "porductBrand" VARCHAR NOT NULL,
+    "productQuantity" INT NOT NULL
+  )
+`);
+    await this.connection.query(`
+  CREATE TABLE IF NOT EXISTS "${schemaName}"."purchaseInfo" (
+    "purchaseId" SERIAL PRIMARY KEY,
+    "vendorName" VARCHAR NOT NULL,
+    "vendorContact" VARCHAR NOT NULL,
+    "vendorEmail" VARCHAR NOT NULL,
+    "productName" VARCHAR NOT NULL,
+    "productQuantity" INT NOT NULL,
+    "productPurchasePrice" NUMERIC NOT NULL,
+    "purchaseTotalPrice" NUMERIC NOT NULL,
+    "purchaseDate" DATE NOT NULL
+  )
+`);
+
   }
-   
-  
+
+
   async findByUsername(username: string): Promise<User | undefined> {
     return this.usersRepository.findOneBy({ username });
   }

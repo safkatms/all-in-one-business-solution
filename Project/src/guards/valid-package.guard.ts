@@ -4,12 +4,16 @@ import { Reflector } from '@nestjs/core';
 
 @Injectable()
 export class ValidPackageGuard implements CanActivate {
-  constructor(private readonly reflector: Reflector) {}
+  private rolesPassed: string[];
+
+  constructor(roles: string[]) {
+    this.rolesPassed = roles;
+  }
 
   canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
     const user = context.switchToHttp().getRequest().user;
     const userType = user.userType; // Assuming you have 'type' property in your user entity
-    if (userType === 'owner') {
+    if (this.rolesPassed.includes(userType)) {
       return true;
     }
     

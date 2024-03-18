@@ -54,7 +54,7 @@ let PackageService = class PackageService {
             throw new common_1.NotFoundException(`Package with ID ${packageId} not found`);
         }
         if (packageEntity.validTill >= new Date()) {
-            return packageEntity;
+            return { message: 'You already have an active package', package: packageEntity };
         }
         const validFrom = new Date();
         const validTill = new Date(validFrom.getTime() + 30 * 24 * 60 * 60 * 1000);

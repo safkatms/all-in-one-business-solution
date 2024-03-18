@@ -6,14 +6,6 @@ enum Gender {
   OTHER = 'other',
 }
 
-enum UserType {
-  OWNER = 'owner',
-  HR = 'hr',
-  ACCOUNTANT = 'accountant',
-  INVENTORY_MANAGER = 'inventory_manager',
-  SALESMAN = 'salesman',
-}
-
 export class CreateUserDto {
   @IsNotEmpty()
   @IsString()
@@ -55,6 +47,4 @@ export class CreateUserDto {
   @IsOptional()
   profilePicture?: string;
 
-  @IsEnum(UserType)
-  userType: UserType;
 }

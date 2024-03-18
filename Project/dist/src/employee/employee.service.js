@@ -43,7 +43,7 @@ let EmployeeService = class EmployeeService {
         await this.connection.query(`SET search_path TO "${company}"`);
         const employeeData = { userid: savedUser.userId, employeesalary, employeejoiningdate: formattedJoiningDate };
         await this.connection.getRepository(employee_entity_1.Employee).save(employeeData);
-        return savedUser;
+        return { message: 'Employee registered successfully', package: newUser };
     }
     async findAll() {
         const employees = await this.employeeRepository.find();
@@ -55,8 +55,19 @@ let EmployeeService = class EmployeeService {
     update(id, updateEmployeeDto) {
         return `This action updates a #${id} employee`;
     }
-    remove(id) {
-        return `This action removes a #${id} employee`;
+    async remove(id, company) {
+        const employee = await this.employeeRepository.findOneOrFail({ where: { employeeid: id } });
+        if (!employee) {
+            throw new common_1.NotFoundException(`Employee with ID ${id} not found`);
+        }
+        await this.employeeRepository.remove(employee);
+        await this.connection.query(`SET search_path TO "public"`);
+        const user = await this.usersRepository.findOne({ where: { userId: employee.userid } });
+        if (!user) {
+            throw new common_1.NotFoundException(`User corresponding to employee with ID ${id} not found`);
+        }
+        await this.usersRepository.remove(user);
+        return { message: `Employee with ID ${id} and associated user removed successfully` };
     }
 };
 exports.EmployeeService = EmployeeService;

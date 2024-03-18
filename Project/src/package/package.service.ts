@@ -50,16 +50,15 @@ export class PackageService {
   }
   
 
-  async updatePackage(packageId: number, updatePackageDto: UpdatePackageDto): Promise<Package> {
+  async updatePackage(packageId: number, updatePackageDto: UpdatePackageDto): Promise<any> {
     const packageEntity = await this.packageRepository.findOneBy({ id: packageId });
     if (!packageEntity) {
       throw new NotFoundException(`Package with ID ${packageId} not found`);
     }
 
-    // Check if the package has expired
     if (packageEntity.validTill >= new Date()) {
-      // If the package is still valid, do not update the dates
-      return packageEntity;
+      //throw new ConflictException(`You already have an active package`)
+      return {message:'You already have an active package',package:packageEntity};
     }
 
     // Calculate the validity period (30 days from now)

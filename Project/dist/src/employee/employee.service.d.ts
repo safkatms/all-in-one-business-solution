@@ -8,9 +8,11 @@ export declare class EmployeeService {
     private usersRepository;
     private connection;
     constructor(employeeRepository: Repository<Employee>, usersRepository: Repository<User>, connection: Connection);
-    registerEmployee(createEmployeeDto: CreateEmployeeDto, company: string, packageId: number): Promise<User>;
+    registerEmployee(createEmployeeDto: CreateEmployeeDto, company: string, packageId: number): Promise<any>;
     findAll(): Promise<Employee[]>;
     findOne(id: number): string;
     update(id: number, updateEmployeeDto: UpdateEmployeeDto): string;
-    remove(id: number): string;
+    remove(id: number, company: string): Promise<{
+        message: string;
+    }>;
 }

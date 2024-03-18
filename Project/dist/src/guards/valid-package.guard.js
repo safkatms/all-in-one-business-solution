@@ -11,15 +11,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ValidPackageGuard = void 0;
 const common_1 = require("@nestjs/common");
-const core_1 = require("@nestjs/core");
 let ValidPackageGuard = class ValidPackageGuard {
-    constructor(reflector) {
-        this.reflector = reflector;
+    constructor(roles) {
+        this.rolesPassed = roles;
     }
     canActivate(context) {
         const user = context.switchToHttp().getRequest().user;
         const userType = user.userType;
-        if (userType === 'owner') {
+        if (this.rolesPassed.includes(userType)) {
             return true;
         }
         throw new common_1.HttpException('You are not authorized to access this resource', common_1.HttpStatus.UNAUTHORIZED);
@@ -28,6 +27,6 @@ let ValidPackageGuard = class ValidPackageGuard {
 exports.ValidPackageGuard = ValidPackageGuard;
 exports.ValidPackageGuard = ValidPackageGuard = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [core_1.Reflector])
+    __metadata("design:paramtypes", [Array])
 ], ValidPackageGuard);
 //# sourceMappingURL=valid-package.guard.js.map

@@ -9,5 +9,5 @@ export declare class PackageService {
     constructor(userRepository: Repository<User>, packageRepository: Repository<Package>);
     createPackage(userId: number, createPackageDto: CreatePackageDto): Promise<any>;
     findById(packageId: number): Promise<Package>;
-    updatePackage(packageId: number, updatePackageDto: UpdatePackageDto): Promise<Package>;
+    updatePackage(packageId: number, updatePackageDto: UpdatePackageDto): Promise<any>;
 }

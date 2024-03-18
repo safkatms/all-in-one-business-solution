@@ -18,7 +18,6 @@ let SetSchemaGuard = class SetSchemaGuard {
     }
     async canActivate(context) {
         const req = context.switchToHttp().getRequest();
-        console.log('User:', req.user);
         const user = req.user;
         if (user && user.company) {
             const schemaName = `${user.company}`;

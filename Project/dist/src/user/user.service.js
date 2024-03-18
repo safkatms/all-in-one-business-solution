@@ -39,8 +39,12 @@ let UserService = class UserService {
         }
         const saltOrRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltOrRounds);
-        createUserDto.password = hashedPassword;
-        const newUser = this.usersRepository.create(createUserDto);
+        const newUserDto = {
+            ...createUserDto,
+            password: hashedPassword,
+            userType: 'owner',
+        };
+        const newUser = this.usersRepository.create(newUserDto);
         const savedUser = await this.usersRepository.save(newUser);
         await this.createSchemaForUser(savedUser.company);
         return savedUser;
@@ -56,6 +60,30 @@ let UserService = class UserService {
       employeeJoiningDate TIMESTAMP
     )    
     `);
+        await this.connection.query(`
+  CREATE TABLE IF NOT EXISTS "${schemaName}"."productInfo" (
+    "productId" SERIAL PRIMARY KEY,
+    "productName" VARCHAR NOT NULL,
+    "productDetails" TEXT NOT NULL,
+    "productPurchasePrice" NUMERIC NOT NULL,
+    "productSellPrice" NUMERIC NOT NULL,
+    "porductBrand" VARCHAR NOT NULL,
+    "productQuantity" INT NOT NULL
+  )
+`);
+        await this.connection.query(`
+  CREATE TABLE IF NOT EXISTS "${schemaName}"."purchaseInfo" (
+    "purchaseId" SERIAL PRIMARY KEY,
+    "vendorName" VARCHAR NOT NULL,
+    "vendorContact" VARCHAR NOT NULL,
+    "vendorEmail" VARCHAR NOT NULL,
+    "productName" VARCHAR NOT NULL,
+    "productQuantity" INT NOT NULL,
+    "productPurchasePrice" NUMERIC NOT NULL,
+    "purchaseTotalPrice" NUMERIC NOT NULL,
+    "purchaseDate" DATE NOT NULL
+  )
+`);
     }
     async findByUsername(username) {
         return this.usersRepository.findOneBy({ username });

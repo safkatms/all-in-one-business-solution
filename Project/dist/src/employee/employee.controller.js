@@ -25,7 +25,7 @@ let EmployeeController = class EmployeeController {
     }
     async register(createEmployeeDto, req) {
         const { company, packageId } = req.user;
-        await this.employeeService.registerEmployee(createEmployeeDto, company, packageId);
+        return this.employeeService.registerEmployee(createEmployeeDto, company, packageId);
     }
     async findAll(req) {
         return this.employeeService.findAll();
@@ -36,8 +36,9 @@ let EmployeeController = class EmployeeController {
     update(id, updateEmployeeDto) {
         return this.employeeService.update(+id, updateEmployeeDto);
     }
-    remove(id) {
-        return this.employeeService.remove(+id);
+    remove(id, req) {
+        const company = req.company;
+        return this.employeeService.remove(+id, company);
     }
 };
 exports.EmployeeController = EmployeeController;
@@ -73,10 +74,12 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], EmployeeController.prototype, "update", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
+    (0, common_1.Delete)('/remove/:id'),
+    (0, common_1.UseGuards)(schema_guard_1.SetSchemaGuard),
     __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", void 0)
 ], EmployeeController.prototype, "remove", null);
 exports.EmployeeController = EmployeeController = __decorate([

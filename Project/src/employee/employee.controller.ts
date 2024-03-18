@@ -13,7 +13,7 @@ export class EmployeeController {
   @Post('/registration')
   async register(@Body(ValidationPipe) createEmployeeDto: CreateEmployeeDto, @Req() req: any): Promise<void> {
     const { company, packageId } = req.user;
-    await this.employeeService.registerEmployee(createEmployeeDto, company, packageId);
+    return this.employeeService.registerEmployee(createEmployeeDto, company, packageId);
   }
 
   @Get()
@@ -34,8 +34,10 @@ export class EmployeeController {
     return this.employeeService.update(+id, updateEmployeeDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.employeeService.remove(+id);
+  @Delete('/remove/:id')
+  @UseGuards(SetSchemaGuard)
+  remove(@Param('id') id: string ,@Request() req) {
+    const company =req.company;
+    return this.employeeService.remove(+id,company);
   }
 }

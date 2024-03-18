@@ -16,10 +16,10 @@ exports.PackageController = void 0;
 const common_1 = require("@nestjs/common");
 const package_service_1 = require("./package.service");
 const create_package_dto_1 = require("./dto/create-package.dto");
-const passport_1 = require("@nestjs/passport");
 const common_2 = require("@nestjs/common");
 const valid_package_guard_1 = require("../guards/valid-package.guard");
 const update_package_dto_1 = require("./dto/update-package.dto");
+const jwt_guard_1 = require("../guards/jwt.guard");
 let PackageController = class PackageController {
     constructor(packageService) {
         this.packageService = packageService;
@@ -29,8 +29,11 @@ let PackageController = class PackageController {
         return this.packageService.createPackage(userId, createPackageDto);
     }
     async getUserPackage(req) {
-        const userId = req.user.packageId;
-        return this.packageService.findById(userId);
+        const packageId = req.user.packageId;
+        if (!packageId) {
+            throw new common_1.NotFoundException('User does not have an associated package');
+        }
+        return this.packageService.findById(packageId);
     }
     async updatePackage(updatePackageDto, req) {
         const packageId = req.user.packageId;
@@ -40,7 +43,6 @@ let PackageController = class PackageController {
 exports.PackageController = PackageController;
 __decorate([
     (0, common_1.Post)('/purchase'),
-    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt'), valid_package_guard_1.ValidPackageGuard),
     __param(0, (0, common_2.Request)()),
     __param(1, (0, common_1.Body)(common_1.ValidationPipe)),
     __metadata("design:type", Function),
@@ -49,7 +51,6 @@ __decorate([
 ], PackageController.prototype, "createPackage", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt'), valid_package_guard_1.ValidPackageGuard),
     __param(0, (0, common_2.Request)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -57,7 +58,6 @@ __decorate([
 ], PackageController.prototype, "getUserPackage", null);
 __decorate([
     (0, common_1.Put)('/renew'),
-    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt'), valid_package_guard_1.ValidPackageGuard),
     __param(0, (0, common_1.Body)(common_1.ValidationPipe)),
     __param(1, (0, common_2.Request)()),
     __metadata("design:type", Function),
@@ -66,6 +66,7 @@ __decorate([
 ], PackageController.prototype, "updatePackage", null);
 exports.PackageController = PackageController = __decorate([
     (0, common_1.Controller)('packages'),
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, new valid_package_guard_1.ValidPackageGuard(['owner'])),
     __metadata("design:paramtypes", [package_service_1.PackageService])
 ], PackageController);
 //# sourceMappingURL=package.controller.js.map

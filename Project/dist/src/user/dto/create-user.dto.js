@@ -17,14 +17,6 @@ var Gender;
     Gender["FEMALE"] = "female";
     Gender["OTHER"] = "other";
 })(Gender || (Gender = {}));
-var UserType;
-(function (UserType) {
-    UserType["OWNER"] = "owner";
-    UserType["HR"] = "hr";
-    UserType["ACCOUNTANT"] = "accountant";
-    UserType["INVENTORY_MANAGER"] = "inventory_manager";
-    UserType["SALESMAN"] = "salesman";
-})(UserType || (UserType = {}));
 class CreateUserDto {
 }
 exports.CreateUserDto = CreateUserDto;
@@ -77,8 +69,4 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "profilePicture", void 0);
-__decorate([
-    (0, class_validator_1.IsEnum)(UserType),
-    __metadata("design:type", String)
-], CreateUserDto.prototype, "userType", void 0);
 //# sourceMappingURL=create-user.dto.js.map

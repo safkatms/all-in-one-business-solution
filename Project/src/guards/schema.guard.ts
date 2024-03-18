@@ -7,7 +7,6 @@ export class SetSchemaGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = context.switchToHttp().getRequest();
-    console.log('User:', req.user); // Debugging: Log user object
 
     const user = req.user as any;
 
