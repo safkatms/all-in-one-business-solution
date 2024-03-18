@@ -9,12 +9,12 @@ import { CreateAuthDto } from './dto/create-auth.dto';
 export class AuthService {
   constructor(
     private userService: UserService,
-    private jwtService: JwtService // Inject JwtService
+    private jwtService: JwtService, // Inject JwtService
   ) {}
 
   async validateUser(username: string, pass: string): Promise<any> {
     const user = await this.userService.findByUsername(username);
-    
+
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
@@ -30,12 +30,10 @@ export class AuthService {
   async login(loginDto: CreateAuthDto) {
     const user = await this.validateUser(loginDto.username, loginDto.password);
 
-    const payload = { username: user.username, sub: user.userId, ...user }; 
+    const payload = { username: user.username, sub: user.userId, ...user };
 
     return {
-      access_token: this.jwtService.sign(payload), 
+      access_token: this.jwtService.sign(payload),
     };
   }
-
-
 }
