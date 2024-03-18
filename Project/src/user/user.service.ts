@@ -12,7 +12,7 @@ export class UserService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
     private connection: Connection,
-  ) {}
+  ) { }
 
   async registerUser(createUserDto: CreateUserDto): Promise<User> {
     const { username, email, password, company } = createUserDto;
@@ -27,7 +27,7 @@ export class UserService {
     }
 
     const existingCompany = await this.usersRepository.findOne({
-      where: [ { company }],
+      where: [{ company }],
     });
 
     if (existingCompany) {
@@ -51,8 +51,18 @@ export class UserService {
   private async createSchemaForUser(company: string): Promise<void> {
     const schemaName = `${company}`;
     await this.connection.query(`CREATE SCHEMA IF NOT EXISTS "${schemaName}"`);
+  
+    await this.connection.query(`
+    CREATE TABLE IF NOT EXISTS "${schemaName}".Employee (
+      employeeId SERIAL PRIMARY KEY,
+      userId INT REFERENCES public."user"("userId") ON DELETE CASCADE ON UPDATE CASCADE,
+      employeeSalary NUMERIC,
+      employeeJoiningDate TIMESTAMP
+    )    
+    `);
   }
-
+   
+  
   async findByUsername(username: string): Promise<User | undefined> {
     return this.usersRepository.findOneBy({ username });
   }

@@ -1,4 +1,5 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, Matches, MinLength } from 'class-validator';
+ import { Type } from 'class-transformer';
+import { IsDate, IsEmail, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, Matches, MinLength } from 'class-validator';
 
 enum Gender {
   MALE = 'male',
@@ -7,14 +8,13 @@ enum Gender {
 }
 
 enum UserType {
-  OWNER = 'owner',
   HR = 'hr',
   ACCOUNTANT = 'accountant',
   INVENTORY_MANAGER = 'inventory_manager',
   SALESMAN = 'salesman',
 }
 
-export class CreateUserDto {
+export class CreateEmployeeDto {
   @IsNotEmpty()
   @IsString()
   @Matches(/^[A-Z][a-z]*$/, { message: 'First name must start with a capital letter and contain no numbers or special characters.' })
@@ -30,6 +30,7 @@ export class CreateUserDto {
   @Matches(/^[a-z0-9_]+$/, { message: 'Username must be lowercase, may include underscores and numbers, but no spaces or special characters.' })
   username: string;
 
+  @IsNotEmpty()
   @IsEmail()
   email: string;
 
@@ -38,16 +39,13 @@ export class CreateUserDto {
   @Matches(/^01[3-9]\d{8}$/, { message: 'Mobile number must be a valid Bangladesh number.' })
   mobileNo: string;
 
+  @IsNotEmpty()
   @IsString()
   @MinLength(6)
   @Matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;'<>,.?\/\\~`\-]).*$/, { message: 'Password must be at least 6 characters long, include at least one uppercase letter, one number, and one special character.' })
   password: string;
 
   @IsNotEmpty()
-  @IsString()
-  @Matches(/^[A-Z]+$/, { message: 'Company must be all uppercase, with no numbers, spaces, or special characters.' })
-  company: string;
-
   @IsEnum(Gender)
   gender: Gender;
 
@@ -55,6 +53,16 @@ export class CreateUserDto {
   @IsOptional()
   profilePicture?: string;
 
+  @IsNotEmpty()
   @IsEnum(UserType)
   userType: UserType;
+
+  @IsNotEmpty()
+  @IsNumber()
+  employeesalary:number;
+
+  @IsNotEmpty()
+  @Type(()=>Date)
+  @IsDate()
+  employeejoiningdate:Date;
 }

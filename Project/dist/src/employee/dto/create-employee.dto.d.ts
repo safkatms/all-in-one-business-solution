@@ -4,22 +4,22 @@ declare enum Gender {
     OTHER = "other"
 }
 declare enum UserType {
-    OWNER = "owner",
     HR = "hr",
     ACCOUNTANT = "accountant",
     INVENTORY_MANAGER = "inventory_manager",
     SALESMAN = "salesman"
 }
-export declare class CreateUserDto {
+export declare class CreateEmployeeDto {
     firstName: string;
     lastName: string;
     username: string;
     email: string;
     mobileNo: string;
     password: string;
-    company: string;
     gender: Gender;
     profilePicture?: string;
     userType: UserType;
+    employeesalary: number;
+    employeejoiningdate: Date;
 }
 export {};

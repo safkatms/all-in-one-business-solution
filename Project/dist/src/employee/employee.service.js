@@ -12,60 +12,60 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserService = void 0;
+exports.EmployeeService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const user_entity_1 = require("./entities/user.entity");
+const employee_entity_1 = require("./entities/employee.entity");
+const user_entity_1 = require("../user/entities/user.entity");
 const bcrypt = require("bcrypt");
-let UserService = class UserService {
-    constructor(usersRepository, connection) {
+let EmployeeService = class EmployeeService {
+    constructor(employeeRepository, usersRepository, connection) {
+        this.employeeRepository = employeeRepository;
         this.usersRepository = usersRepository;
         this.connection = connection;
     }
-    async registerUser(createUserDto) {
-        const { username, email, password, company } = createUserDto;
+    async registerEmployee(createEmployeeDto, company, packageId) {
+        const { employeesalary, employeejoiningdate, ...userDto } = createEmployeeDto;
+        const { username, email, password } = userDto;
+        const formattedJoiningDate = new Date(employeejoiningdate);
         const existingUser = await this.usersRepository.findOne({
             where: [{ username }, { email }],
         });
         if (existingUser) {
             throw new common_1.ConflictException('User already registered with given username or email');
         }
-        const existingCompany = await this.usersRepository.findOne({
-            where: [{ company }],
-        });
-        if (existingCompany) {
-            throw new common_1.ConflictException('User already registered with given company name');
-        }
         const saltOrRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltOrRounds);
-        createUserDto.password = hashedPassword;
-        const newUser = this.usersRepository.create(createUserDto);
+        userDto.password = hashedPassword;
+        const newUser = this.usersRepository.create({ ...userDto, company, packageId });
         const savedUser = await this.usersRepository.save(newUser);
-        await this.createSchemaForUser(savedUser.company);
+        await this.connection.query(`SET search_path TO "${company}"`);
+        const employeeData = { userid: savedUser.userId, employeesalary, employeejoiningdate: formattedJoiningDate };
+        await this.connection.getRepository(employee_entity_1.Employee).save(employeeData);
         return savedUser;
     }
-    async createSchemaForUser(company) {
-        const schemaName = `${company}`;
-        await this.connection.query(`CREATE SCHEMA IF NOT EXISTS "${schemaName}"`);
-        await this.connection.query(`
-    CREATE TABLE IF NOT EXISTS "${schemaName}".Employee (
-      employeeId SERIAL PRIMARY KEY,
-      userId INT REFERENCES public."user"("userId") ON DELETE CASCADE ON UPDATE CASCADE,
-      employeeSalary NUMERIC,
-      employeeJoiningDate TIMESTAMP
-    )    
-    `);
+    async findAll() {
+        const employees = await this.employeeRepository.find();
+        return employees;
     }
-    async findByUsername(username) {
-        return this.usersRepository.findOneBy({ username });
+    findOne(id) {
+        return `This action returns a #${id} employee`;
+    }
+    update(id, updateEmployeeDto) {
+        return `This action updates a #${id} employee`;
+    }
+    remove(id) {
+        return `This action removes a #${id} employee`;
     }
 };
-exports.UserService = UserService;
-exports.UserService = UserService = __decorate([
+exports.EmployeeService = EmployeeService;
+exports.EmployeeService = EmployeeService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
+    __param(0, (0, typeorm_1.InjectRepository)(employee_entity_1.Employee)),
+    __param(1, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Connection])
-], UserService);
-//# sourceMappingURL=user.service.js.map
+], EmployeeService);
+//# sourceMappingURL=employee.service.js.map
