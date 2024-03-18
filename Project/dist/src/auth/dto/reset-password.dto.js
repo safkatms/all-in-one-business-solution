@@ -9,24 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RoleGuard = void 0;
-const common_1 = require("@nestjs/common");
-let RoleGuard = class RoleGuard {
-    constructor(roles) {
-        this.rolesPassed = roles;
-    }
-    canActivate(context) {
-        const user = context.switchToHttp().getRequest().user;
-        const userType = user.userType;
-        if (this.rolesPassed.includes(userType)) {
-            return true;
-        }
-        throw new common_1.HttpException('You are not authorized to access this resource', common_1.HttpStatus.UNAUTHORIZED);
-    }
-};
-exports.RoleGuard = RoleGuard;
-exports.RoleGuard = RoleGuard = __decorate([
-    (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [Array])
-], RoleGuard);
-//# sourceMappingURL=valid-package.guard.js.map
+exports.ResetPasswordDto = void 0;
+const class_validator_1 = require("class-validator");
+class ResetPasswordDto {
+}
+exports.ResetPasswordDto = ResetPasswordDto;
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], ResetPasswordDto.prototype, "token", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MinLength)(6),
+    (0, class_validator_1.Matches)(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;'<>,.?\/\\~`\-]).*$/, { message: 'Password must be at least 6 characters long, include at least one uppercase letter, one number, and one special character.' }),
+    __metadata("design:type", String)
+], ResetPasswordDto.prototype, "password", void 0);
+//# sourceMappingURL=reset-password.dto.js.map

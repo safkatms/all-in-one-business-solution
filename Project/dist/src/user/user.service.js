@@ -18,6 +18,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const user_entity_1 = require("./entities/user.entity");
 const bcrypt = require("bcrypt");
+const uuid_1 = require("uuid");
 let UserService = class UserService {
     constructor(usersRepository, connection) {
         this.usersRepository = usersRepository;
@@ -87,6 +88,35 @@ let UserService = class UserService {
     }
     async findByUsername(username) {
         return this.usersRepository.findOneBy({ username });
+    }
+    async createPasswordResetToken(email) {
+        const user = await this.usersRepository.findOne({ where: { email } });
+        if (!user) {
+            throw new Error('User not found');
+        }
+        const token = (0, uuid_1.v4)();
+        const expiration = new Date();
+        expiration.setHours(expiration.getHours() + 1);
+        await this.usersRepository.update(user.userId, {
+            passwordResetToken: token,
+            passwordResetTokenExpires: expiration,
+        });
+    }
+    async resetPassword(token, newPassword) {
+        const user = await this.usersRepository.findOne({
+            where: {
+                passwordResetToken: token,
+                passwordResetTokenExpires: (0, typeorm_2.MoreThan)(new Date()),
+            },
+        });
+        if (!user) {
+            throw new Error('Invalid or expired password reset token');
+        }
+        await this.usersRepository.update(user.userId, {
+            password: newPassword,
+            passwordResetToken: null,
+            passwordResetTokenExpires: null,
+        });
     }
 };
 exports.UserService = UserService;

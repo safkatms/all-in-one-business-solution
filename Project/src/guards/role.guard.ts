@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Reflector } from '@nestjs/core';
 
 @Injectable()
-export class ValidPackageGuard implements CanActivate {
+export class RoleGuard implements CanActivate {
   private rolesPassed: string[];
 
   constructor(roles: string[]) {

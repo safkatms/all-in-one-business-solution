@@ -23,21 +23,19 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    // Omit the password from the user object before returning
     const { password, ...result } = user;
     return result;
   }
 
-  // Method for logging in users and generating a JWT token
   async login(loginDto: CreateAuthDto) {
-    // Validate the user with provided credentials
     const user = await this.validateUser(loginDto.username, loginDto.password);
 
-    // Payload to include in the JWT token
-    const payload = { username: user.username, sub: user.userId, ...user }; // Adjust payload as needed
+    const payload = { username: user.username, sub: user.userId, ...user }; 
 
     return {
-      access_token: this.jwtService.sign(payload), // Sign and return the JWT token
+      access_token: this.jwtService.sign(payload), 
     };
   }
+
+
 }

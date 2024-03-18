@@ -39,6 +39,12 @@ export class User {
   @Column({ nullable: true })
   packageId: number;
 
+  @Column({ nullable: true })
+  passwordResetToken: string;
+
+  @Column({ type: 'timestamp', nullable: true })
+  passwordResetTokenExpires: Date;
+
   @ManyToOne(() => Package)
   @JoinColumn({ name: "packageId" })
   package: Package;

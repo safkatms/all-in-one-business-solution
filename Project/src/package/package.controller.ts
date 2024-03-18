@@ -1,15 +1,13 @@
-// package.controller.ts
 import { Controller, Post, Body, Param, ParseIntPipe, ValidationPipe, UseGuards, Get, Put, NotFoundException } from '@nestjs/common';
 import { PackageService } from './package.service';
 import { CreatePackageDto } from './dto/create-package.dto';
-import { AuthGuard } from '@nestjs/passport';
 import { Request } from '@nestjs/common';
-import { ValidPackageGuard } from 'src/guards/valid-package.guard';
+import { RoleGuard } from 'src/guards/role.guard';
 import { UpdatePackageDto } from './dto/update-package.dto';
 import { JwtAuthGuard } from 'src/guards/jwt.guard';
 
 @Controller('packages')
-@UseGuards(JwtAuthGuard,new ValidPackageGuard(['owner']))
+@UseGuards(JwtAuthGuard,new RoleGuard(['owner']))
 export class PackageController {
   constructor(private readonly packageService: PackageService) { }
 

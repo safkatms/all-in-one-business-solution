@@ -8,4 +8,6 @@ export declare class UserService {
     registerUser(createUserDto: CreateUserDto): Promise<User>;
     private createSchemaForUser;
     findByUsername(username: string): Promise<User | undefined>;
+    createPasswordResetToken(email: string): Promise<void>;
+    resetPassword(token: string, newPassword: string): Promise<void>;
 }

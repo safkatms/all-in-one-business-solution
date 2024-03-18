@@ -17,7 +17,7 @@ const common_1 = require("@nestjs/common");
 const package_service_1 = require("./package.service");
 const create_package_dto_1 = require("./dto/create-package.dto");
 const common_2 = require("@nestjs/common");
-const valid_package_guard_1 = require("../guards/valid-package.guard");
+const role_guard_1 = require("../guards/role.guard");
 const update_package_dto_1 = require("./dto/update-package.dto");
 const jwt_guard_1 = require("../guards/jwt.guard");
 let PackageController = class PackageController {
@@ -66,7 +66,7 @@ __decorate([
 ], PackageController.prototype, "updatePackage", null);
 exports.PackageController = PackageController = __decorate([
     (0, common_1.Controller)('packages'),
-    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, new valid_package_guard_1.ValidPackageGuard(['owner'])),
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, new role_guard_1.RoleGuard(['owner'])),
     __metadata("design:paramtypes", [package_service_1.PackageService])
 ], PackageController);
 //# sourceMappingURL=package.controller.js.map

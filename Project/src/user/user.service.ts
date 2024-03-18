@@ -1,9 +1,10 @@
 import { Injectable, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Connection } from 'typeorm';
+import { Repository, Connection, MoreThan } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class UserService {
@@ -92,4 +93,46 @@ export class UserService {
   async findByUsername(username: string): Promise<User | undefined> {
     return this.usersRepository.findOneBy({ username });
   }
+
+  // In UserService
+
+async createPasswordResetToken(email: string): Promise<void> {
+  const user = await this.usersRepository.findOne({ where: { email } });
+  if (!user) {
+    throw new Error('User not found');
+  }
+
+  const token = uuidv4(); // Generate a unique token
+  const expiration = new Date();
+  expiration.setHours(expiration.getHours() + 1); // Token expires in 1 hour
+
+  await this.usersRepository.update(user.userId, {
+    passwordResetToken: token,
+    passwordResetTokenExpires: expiration,
+  });
+
+  // Send email with reset instructions including the token
+  // The email content should include a link to your frontend reset password page with the token as a parameter
+}
+
+async resetPassword(token: string, newPassword: string): Promise<void> {
+  const user = await this.usersRepository.findOne({
+    where: {
+      passwordResetToken: token,
+      passwordResetTokenExpires: MoreThan(new Date()),
+    },
+  });
+
+  if (!user) {
+    throw new Error('Invalid or expired password reset token');
+  }
+
+  // Here, hash the new password before saving
+  await this.usersRepository.update(user.userId, {
+    password: newPassword, // Make sure to hash the password
+    passwordResetToken: null, // Clear the reset token
+    passwordResetTokenExpires: null, // Clear the token expiration
+  });
+}
+
 }

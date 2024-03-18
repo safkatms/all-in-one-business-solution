@@ -12,5 +12,7 @@ export declare class User {
     profilePicture: string;
     userType: string;
     packageId: number;
+    passwordResetToken: string;
+    passwordResetTokenExpires: Date;
     package: Package;
 }

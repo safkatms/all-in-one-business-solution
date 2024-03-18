@@ -64,6 +64,14 @@ __decorate([
     __metadata("design:type", Number)
 ], User.prototype, "packageId", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], User.prototype, "passwordResetToken", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'timestamp', nullable: true }),
+    __metadata("design:type", Date)
+], User.prototype, "passwordResetTokenExpires", void 0);
+__decorate([
     (0, typeorm_1.ManyToOne)(() => package_entity_1.Package),
     (0, typeorm_1.JoinColumn)({ name: "packageId" }),
     __metadata("design:type", package_entity_1.Package)
