@@ -9,6 +9,7 @@ import { PackageModule } from './package/package.module';
 import { EmployeeModule } from './employee/employee.module';
 import { InventoryManagementModule } from './inventory-management/inventory-management.module';
 import { PurchaseManagementModule } from './purchase-management/purchase-management.module';
+import { SearchModule } from './search/search.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { PurchaseManagementModule } from './purchase-management/purchase-managem
     EmployeeModule,
     InventoryManagementModule,
     PurchaseManagementModule,
+    SearchModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,14 +1,18 @@
-import { IsString } from 'class-validator';
+import { IsNumber, IsString } from 'class-validator';
 
-export class FindPurchaseDto {
+export class FindProductDto {
   @IsString()
-  vendorName?: string;
+  productName?: string;
   @IsString()
-  vendorContact?: string;
+  productDetails?: string;
+  @IsNumber()
+  productPurchasePrice?: number;
+  @IsNumber()
+  productSellPrice?: number;
   @IsString()
-  vendorEmail?: string;
-  @IsString()
-  purchaseDate?: string;
+  porductBrand?: string;
+  @IsNumber()
+  productQuantity?: number;
 
   search?: string;
 }
