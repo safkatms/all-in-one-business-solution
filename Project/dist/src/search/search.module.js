@@ -12,6 +12,7 @@ const search_service_1 = require("./search.service");
 const search_controller_1 = require("./search.controller");
 const inventory_management_entity_1 = require("../inventory-management/entities/inventory-management.entity");
 const typeorm_1 = require("@nestjs/typeorm");
+const purchase_management_entity_1 = require("../purchase-management/entities/purchase-management.entity");
 let SearchModule = class SearchModule {
 };
 exports.SearchModule = SearchModule;
@@ -19,7 +20,9 @@ exports.SearchModule = SearchModule = __decorate([
     (0, common_1.Module)({
         controllers: [search_controller_1.SearchController],
         providers: [search_service_1.SearchService],
-        imports: [typeorm_1.TypeOrmModule.forFeature([inventory_management_entity_1.InventoryManagement])],
+        imports: [
+            typeorm_1.TypeOrmModule.forFeature([inventory_management_entity_1.InventoryManagement, purchase_management_entity_1.PurchaseManagement]),
+        ],
     })
 ], SearchModule);
 //# sourceMappingURL=search.module.js.map

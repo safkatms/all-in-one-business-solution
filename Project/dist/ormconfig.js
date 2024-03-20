@@ -12,7 +12,7 @@ exports.config = {
     host: 'localhost',
     port: 5432,
     username: 'postgres',
-    password: '123',
+    password: 'admin',
     entities: [user_entity_1.User, package_entity_1.Package, employee_entity_1.Employee, inventory_management_entity_1.InventoryManagement, purchase_management_entity_1.PurchaseManagement],
     synchronize: true,
 };
