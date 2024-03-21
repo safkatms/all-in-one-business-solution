@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePayrollDto } from './dto/create-payroll.dto';
 import { UpdatePayrollDto } from './dto/update-payroll.dto';
 import { Payroll } from './entities/payroll.entity';
@@ -15,22 +15,39 @@ export class PayrollService {
     private readonly employeeRepository: Repository<Employee>,
   ) {}
   async create(createPayrollDto: CreatePayrollDto): Promise<Payroll> {
+    // Find the employee by ID
     const employee = await this.employeeRepository.findOneBy({ employeeid: createPayrollDto.employeeId });
     if (!employee) {
       throw new NotFoundException(`Employee with ID ${createPayrollDto.employeeId} not found`);
     }
-
+  
+    // Check if payroll for the given month and employee already exists
+    const existingPayroll = await this.payrollRepository.findOne({
+      where: {
+        employee: { employeeid: employee.employeeid },
+        payrollMonth: createPayrollDto.payrollMonth,
+      },
+    });
+  
+    // If a payroll record already exists for the given month, throw an exception or handle as necessary
+    if (existingPayroll) {
+      throw new ConflictException(`Payroll for employee ID ${createPayrollDto.employeeId} and month ${createPayrollDto.payrollMonth} already exists`);
+    }
+  
+    // Create a new payroll record if it doesn't exist for the given month
     const payroll = this.payrollRepository.create({
-      employee, // Reference the Employee entity instance here
+      employee,
       salary: employee.employeesalary,
-      bonus: createPayrollDto.bonus,
+      bonus: createPayrollDto.bonus || 0, // If bonus is optional, ensure a default value is set
       payrollMonth: createPayrollDto.payrollMonth,
       status: createPayrollDto.status,
     });
-
+  
+    // Save the new payroll record
     await this.payrollRepository.save(payroll);
     return payroll;
   }
+  
 
 
   findAll() : Promise<Payroll[]> {

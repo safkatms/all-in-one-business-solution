@@ -8,6 +8,5 @@ export declare class UpdateProfileDto {
     lastName: string;
     mobileNo: string;
     gender: Gender;
-    profilePicture?: string;
 }
 export {};

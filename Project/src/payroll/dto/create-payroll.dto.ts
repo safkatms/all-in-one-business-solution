@@ -6,20 +6,20 @@ export enum PayrollStatus {
 }
 
 export class CreatePayrollDto {
-  @IsNotEmpty()
-  @IsNumber()
+  @IsNotEmpty({ message: 'Employee ID is required' })
+  @IsNumber({}, { message: 'Employee ID must be a number' })
   employeeId: number;
 
   @IsOptional()
-  @IsNumber()
+  @IsNumber({}, { message: 'Bonus must be a number' })
   bonus?: number;
 
-  @IsNotEmpty()
-  @IsString()
-  @Matches(/^\d{4}-\d{2}$/, { message: 'payrollMonth must be in YYYY-MM format' })
+  @IsNotEmpty({ message: 'Payroll month is required' })
+  @IsString({ message: 'Payroll month must be a string' })
+  @Matches(/^\d{4}-\d{2}$/, { message: 'Payroll month must be in YYYY-MM format' })
   payrollMonth: string;
 
-  @IsNotEmpty()
-  @IsEnum(PayrollStatus)
+  @IsNotEmpty({ message: 'Status is required' })
+  @IsEnum(PayrollStatus, { message: 'Status must be either "Paid" or "Unpaid"' })
   status: PayrollStatus;
 }

@@ -69,11 +69,6 @@ __decorate([
     __metadata("design:type", String)
 ], CreateEmployeeDto.prototype, "gender", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", String)
-], CreateEmployeeDto.prototype, "profilePicture", void 0);
-__decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsEnum)(UserType),
     __metadata("design:type", String)

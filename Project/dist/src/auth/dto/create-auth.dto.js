@@ -15,13 +15,13 @@ class CreateAuthDto {
 }
 exports.CreateAuthDto = CreateAuthDto;
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)({ message: 'The username must be a string' }),
+    (0, class_validator_1.IsNotEmpty)({ message: 'The username is required and cannot be empty' }),
     __metadata("design:type", String)
 ], CreateAuthDto.prototype, "username", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)({ message: 'The password must be a string' }),
+    (0, class_validator_1.IsNotEmpty)({ message: 'The password is required and cannot be empty' }),
     __metadata("design:type", String)
 ], CreateAuthDto.prototype, "password", void 0);
 //# sourceMappingURL=create-auth.dto.js.map

@@ -29,7 +29,4 @@ export class UpdateProfileDto {
     @IsOptional()
     gender: Gender;
   
-    @IsString()
-    @IsOptional()
-    profilePicture?: string;
 }

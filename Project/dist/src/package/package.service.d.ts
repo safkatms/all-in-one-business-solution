@@ -8,6 +8,6 @@ export declare class PackageService {
     private packageRepository;
     constructor(userRepository: Repository<User>, packageRepository: Repository<Package>);
     createPackage(userId: number, createPackageDto: CreatePackageDto): Promise<any>;
-    findById(userId: number): Promise<Package>;
+    findById(userPackage: number): Promise<Package>;
     updatePackage(packageId: number, updatePackageDto: UpdatePackageDto): Promise<any>;
 }

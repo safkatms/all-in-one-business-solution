@@ -49,10 +49,6 @@ export class CreateEmployeeDto {
   @IsEnum(Gender)
   gender: Gender;
 
-  @IsString()
-  @IsOptional()
-  profilePicture?: string;
-
   @IsNotEmpty()
   @IsEnum(UserType)
   userType: UserType;

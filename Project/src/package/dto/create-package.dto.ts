@@ -1,5 +1,4 @@
-// create-package.dto.ts
-import { IsNotEmpty, IsString, IsEnum } from 'class-validator';
+import { IsNotEmpty, IsEnum } from 'class-validator';
 
 enum PackageName {
   STANDARD = 'standard',
@@ -7,7 +6,6 @@ enum PackageName {
 }
 
 export class CreatePackageDto {
-  @IsEnum(PackageName)
-  @IsNotEmpty()
+  @IsEnum(PackageName, { message: 'Name must be either "standard" or "premium"' })
   name: PackageName;
 }

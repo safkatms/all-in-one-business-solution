@@ -20,8 +20,7 @@ class CreatePackageDto {
 }
 exports.CreatePackageDto = CreatePackageDto;
 __decorate([
-    (0, class_validator_1.IsEnum)(PackageName),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsEnum)(PackageName, { message: 'Name must be either "standard" or "premium"' }),
     __metadata("design:type", String)
 ], CreatePackageDto.prototype, "name", void 0);
 //# sourceMappingURL=create-package.dto.js.map

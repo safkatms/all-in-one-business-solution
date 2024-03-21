@@ -26,7 +26,7 @@ let PackageService = class PackageService {
     async createPackage(userId, createPackageDto) {
         const user = await this.userRepository.findOneBy({ userId: userId });
         if (user.packageId) {
-            const existingPackage = await this.findById(user.packageId);
+            const existingPackage = await this.packageRepository.findOne({ where: { id: user.packageId } });
             if (existingPackage && existingPackage.validTill >= new Date()) {
                 throw new common_1.ConflictException('User already has an active package');
             }
@@ -44,12 +44,10 @@ let PackageService = class PackageService {
             package: packageEntity,
         };
     }
-    async findById(userId) {
-        const packageEntity = await this.packageRepository.findOneBy({
-            id: userId,
-        });
+    async findById(userPackage) {
+        const packageEntity = await this.packageRepository.findOne({ where: { id: userPackage } });
         if (!packageEntity) {
-            throw new common_1.NotFoundException(`Package with ID ${userId} not found`);
+            throw new common_1.NotFoundException(`Package with ID ${userPackage} not found`);
         }
         return packageEntity;
     }

@@ -17,7 +17,6 @@ export declare class CreateEmployeeDto {
     mobileNo: string;
     password: string;
     gender: Gender;
-    profilePicture?: string;
     userType: UserType;
     employeesalary: number;
     employeejoiningdate: Date;

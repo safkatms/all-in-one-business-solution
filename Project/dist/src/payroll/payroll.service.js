@@ -28,10 +28,19 @@ let PayrollService = class PayrollService {
         if (!employee) {
             throw new common_1.NotFoundException(`Employee with ID ${createPayrollDto.employeeId} not found`);
         }
+        const existingPayroll = await this.payrollRepository.findOne({
+            where: {
+                employee: { employeeid: employee.employeeid },
+                payrollMonth: createPayrollDto.payrollMonth,
+            },
+        });
+        if (existingPayroll) {
+            throw new common_1.ConflictException(`Payroll for employee ID ${createPayrollDto.employeeId} and month ${createPayrollDto.payrollMonth} already exists`);
+        }
         const payroll = this.payrollRepository.create({
             employee,
             salary: employee.employeesalary,
-            bonus: createPayrollDto.bonus,
+            bonus: createPayrollDto.bonus || 0,
             payrollMonth: createPayrollDto.payrollMonth,
             status: createPayrollDto.status,
         });

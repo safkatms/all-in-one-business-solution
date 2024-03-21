@@ -2,8 +2,6 @@ import {
   Controller,
   Post,
   Body,
-  Param,
-  ParseIntPipe,
   ValidationPipe,
   UseGuards,
   Get,
@@ -33,11 +31,11 @@ export class PackageController {
 
   @Get()
   async getUserPackage(@Request() req) {
-    const userId = req.user.userId;
-    if (!userId) {
+    const userPackage = req.user.packageId;
+    if (!userPackage) {
       throw new NotFoundException('User does not have an associated package');
     }
-    return this.packageService.findById(userId);
+    return this.packageService.findById(userPackage);
   }
 
   @Put('/renew')

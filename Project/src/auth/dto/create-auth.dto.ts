@@ -1,11 +1,11 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateAuthDto {
-  @IsString()
-  @IsNotEmpty()
+  @IsString({ message: 'The username must be a string' })
+  @IsNotEmpty({ message: 'The username is required and cannot be empty' })
   readonly username: string;
 
-  @IsString()
-  @IsNotEmpty()
+  @IsString({ message: 'The password must be a string' })
+  @IsNotEmpty({ message: 'The password is required and cannot be empty' })
   readonly password: string;
 }
