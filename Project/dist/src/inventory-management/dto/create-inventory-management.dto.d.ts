@@ -3,6 +3,6 @@ export declare class CreateInventoryManagementDto {
     productDetails: string;
     productPurchasePrice: number;
     productSellPrice: number;
-    porductBrand: string;
+    productBrand: string;
     productQuantity: number;
 }

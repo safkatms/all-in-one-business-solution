@@ -16,28 +16,47 @@ exports.SearchService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const inventory_management_entity_1 = require("../inventory-management/entities/inventory-management.entity");
+const purchase_management_entity_1 = require("../purchase-management/entities/purchase-management.entity");
 const typeorm_2 = require("typeorm");
 let SearchService = class SearchService {
-    constructor(inventoryRepo) {
+    constructor(inventoryRepo, purchaseRepo) {
         this.inventoryRepo = inventoryRepo;
+        this.purchaseRepo = purchaseRepo;
     }
     async findAny(dto) {
-        const { productName, productDetails, porductBrand, productPurchasePrice, productSellPrice, productQuantity, } = dto;
-        const conditions = {
-            ...(productName ? { productName } : {}),
-            ...(productDetails ? { productDetails } : {}),
-            ...(porductBrand ? { porductBrand } : {}),
-            ...(productPurchasePrice ? { productPurchasePrice } : {}),
-            ...(productSellPrice ? { productSellPrice } : {}),
-            ...(productQuantity ? { productQuantity } : {}),
-        };
-        return await this.inventoryRepo.find({ where: conditions });
+        if ('productName' in dto) {
+            console.log('Searching in InventoryManagement:', dto);
+            const { productName, productDetails, porductBrand, productPurchasePrice, productSellPrice, productQuantity, } = dto;
+            const conditions = {
+                ...(productName ? { productName } : {}),
+                ...(productDetails ? { productDetails } : {}),
+                ...(porductBrand ? { porductBrand } : {}),
+                ...(productPurchasePrice ? { productPurchasePrice } : {}),
+                ...(productSellPrice ? { productSellPrice } : {}),
+                ...(productQuantity ? { productQuantity } : {}),
+            };
+            return await this.inventoryRepo.find({ where: conditions });
+        }
+        else {
+            console.log('Searching in PurchaseManagement:', dto);
+            const { vendorName, vendorContact, vendorEmail, purchaseDate } = dto;
+            const conditions = {
+                ...(vendorName ? { vendorName } : {}),
+                ...(vendorContact ? { vendorContact } : {}),
+                ...(vendorEmail ? { vendorEmail } : {}),
+                ...(purchaseDate ? { purchaseDate } : {}),
+            };
+            console.log('Conditions:', conditions);
+            return await this.purchaseRepo.find({ where: conditions });
+        }
     }
 };
 exports.SearchService = SearchService;
 exports.SearchService = SearchService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(inventory_management_entity_1.InventoryManagement)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __param(1, (0, typeorm_1.InjectRepository)(purchase_management_entity_1.PurchaseManagement)),
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository])
 ], SearchService);
 //# sourceMappingURL=search.service.js.map

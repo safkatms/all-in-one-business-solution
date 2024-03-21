@@ -9,33 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FindProductDto = void 0;
+exports.FindPurchaseDto = void 0;
 const class_validator_1 = require("class-validator");
-class FindProductDto {
+class FindPurchaseDto {
 }
-exports.FindProductDto = FindProductDto;
+exports.FindPurchaseDto = FindPurchaseDto;
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], FindProductDto.prototype, "productName", void 0);
+], FindPurchaseDto.prototype, "vendorName", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], FindProductDto.prototype, "productDetails", void 0);
-__decorate([
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], FindProductDto.prototype, "productPurchasePrice", void 0);
-__decorate([
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], FindProductDto.prototype, "productSellPrice", void 0);
+], FindPurchaseDto.prototype, "vendorContact", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], FindProductDto.prototype, "porductBrand", void 0);
+], FindPurchaseDto.prototype, "vendorEmail", void 0);
 __decorate([
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], FindProductDto.prototype, "productQuantity", void 0);
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], FindPurchaseDto.prototype, "purchaseDate", void 0);
 //# sourceMappingURL=find-purchase.dto.js.map

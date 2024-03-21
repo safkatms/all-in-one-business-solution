@@ -36,7 +36,7 @@ export class InventoryManagementService {
     updatenew.productDetails = updateInventoryDto.productDetails;
     updatenew.productPurchasePrice = updateInventoryDto.productPurchasePrice;
     updatenew.productSellPrice = updateInventoryDto.productSellPrice;
-    updatenew.porductBrand = updateInventoryDto.porductBrand;
+    updatenew.porductBrand = updateInventoryDto.productBrand;
     updatenew.productQuantity = updateInventoryDto.productQuantity;
     updatenew.productId = id;
 
