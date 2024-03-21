@@ -22,32 +22,60 @@ let PurchaseManagementService = class PurchaseManagementService {
         this.purchaseRepo = purchaseRepo;
     }
     async insertPurchase(createPurchaseManagementDto) {
-        const invetoryItem = await this.purchaseRepo.create(createPurchaseManagementDto);
-        return await this.purchaseRepo.save(invetoryItem);
+        try {
+            const purchaseItem = await this.purchaseRepo.create(createPurchaseManagementDto);
+            const insertedPurchase = await this.purchaseRepo.save(purchaseItem);
+            return {
+                message: 'Purchase inserted successfully',
+                purchase: insertedPurchase,
+            };
+        }
+        catch (error) {
+            return { message: 'Failed to insert purchase' };
+        }
     }
     async findAllPurchaseDetails() {
         return await this.purchaseRepo.find();
     }
     async findPurchaseById(id) {
-        return await this.purchaseRepo.findOne({ where: { purchaseId: id } });
+        const purchaseCheck = await this.purchaseRepo.findOne({
+            where: { purchaseId: id },
+        });
+        if (!purchaseCheck) {
+            throw new common_1.NotFoundException(`Purchase with ID ${id} not found`);
+        }
+        return purchaseCheck;
     }
     async modifyPurchaseInfo(id, updatePurchaseManagementDto) {
-        const updatenew = new purchase_management_entity_1.PurchaseManagement();
-        updatenew.vendorName = updatePurchaseManagementDto.vendorName;
-        updatenew.vendorContact = updatePurchaseManagementDto.vendorContact;
-        updatenew.vendorEmail = updatePurchaseManagementDto.vendorEmail;
-        updatenew.productName = updatePurchaseManagementDto.productName;
-        updatenew.productQuantity = updatePurchaseManagementDto.productQuantity;
-        updatenew.productPurchasePrice =
-            updatePurchaseManagementDto.productPurchasePrice;
-        updatenew.purchaseTotalPrice =
-            updatePurchaseManagementDto.productPurchasePrice;
-        updatenew.purchaseDate = updatePurchaseManagementDto.purchaseDate;
-        updatenew.purchaseId = id;
-        return await this.purchaseRepo.save(updatenew);
+        const existingPurchase = await this.purchaseRepo.findOne({
+            where: { purchaseId: id },
+        });
+        if (!existingPurchase) {
+            throw new common_1.NotFoundException(`Purchase with ID ${id} not found`);
+        }
+        Object.assign(existingPurchase, updatePurchaseManagementDto);
+        await this.purchaseRepo.save(existingPurchase);
+        const updatedPurchase = await this.purchaseRepo.findOne({
+            where: { purchaseId: id },
+        });
+        return {
+            message: 'Update successful',
+            product: updatedPurchase,
+        };
     }
     async remove(id) {
-        return await this.purchaseRepo.delete(id);
+        const existingPurchase = await this.purchaseRepo.findOne({
+            where: { purchaseId: id },
+        });
+        if (!existingPurchase) {
+            throw new common_1.NotFoundException(`Purchase with ID ${id} not found`);
+        }
+        const deletedPurchase = { ...existingPurchase };
+        await this.purchaseRepo.delete(id);
+        return {
+            message: `Purchase with ID ${id} has been successfully deleted`,
+            deletedPurchase,
+        };
     }
 };
 exports.PurchaseManagementService = PurchaseManagementService;
