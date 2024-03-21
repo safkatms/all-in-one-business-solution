@@ -66,7 +66,7 @@ __decorate([
 ], CreatePurchaseManagementDto.prototype, "purchaseTotalPrice", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'empty value. Date cannot be empty' }),
-    (0, class_validator_1.IsDate)(),
+    (0, class_validator_1.IsDateString)(),
     __metadata("design:type", String)
 ], CreatePurchaseManagementDto.prototype, "purchaseDate", void 0);
 //# sourceMappingURL=create-purchase-management.dto.js.map

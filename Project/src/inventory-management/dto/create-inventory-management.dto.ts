@@ -41,7 +41,7 @@ export class CreateInventoryManagementDto {
   @IsNotEmpty({ message: 'Brand cannot be empty' })
   @IsString({ message: 'Brand must be a string' })
   @Length(2, 20, { message: 'Brand must be between 2 and 20 characters' })
-  productBrand: string;
+  porductBrand: string;
 
   @IsNotEmpty({ message: 'Product quantity cannot be empty' })
   @IsNumber({}, { message: 'Product quantity must be a number' })

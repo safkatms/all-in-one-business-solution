@@ -50,7 +50,7 @@ __decorate([
     (0, class_validator_1.IsString)({ message: 'Brand must be a string' }),
     (0, class_validator_1.Length)(2, 20, { message: 'Brand must be between 2 and 20 characters' }),
     __metadata("design:type", String)
-], CreateInventoryManagementDto.prototype, "productBrand", void 0);
+], CreateInventoryManagementDto.prototype, "porductBrand", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'Product quantity cannot be empty' }),
     (0, class_validator_1.IsNumber)({}, { message: 'Product quantity must be a number' }),
