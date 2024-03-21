@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  ValidationPipe,
 } from '@nestjs/common';
 import { PurchaseManagementService } from './purchase-management.service';
 import { CreatePurchaseManagementDto } from './dto/create-purchase-management.dto';
@@ -25,9 +26,11 @@ export class PurchaseManagementController {
   constructor(
     private readonly purchaseManagementService: PurchaseManagementService,
   ) {}
-
   @Post()
-  create(@Body() createPurchaseManagementDto: CreatePurchaseManagementDto) {
+  create(
+    @Body(ValidationPipe)
+    createPurchaseManagementDto: CreatePurchaseManagementDto,
+  ) {
     return this.purchaseManagementService.insertPurchase(
       createPurchaseManagementDto,
     );
@@ -45,7 +48,8 @@ export class PurchaseManagementController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() updatePurchaseManagementDto: UpdatePurchaseManagementDto,
+    @Body(ValidationPipe)
+    updatePurchaseManagementDto: UpdatePurchaseManagementDto,
   ) {
     return this.purchaseManagementService.modifyPurchaseInfo(
       +id,

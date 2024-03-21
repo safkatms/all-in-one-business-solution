@@ -48,7 +48,6 @@ export class CreatePurchaseManagementDto {
   })
   purchaseTotalPrice: number;
   @IsNotEmpty({ message: 'empty value. Date cannot be empty' })
-  @IsNumber()
   @IsDate()
   purchaseDate: string;
 }
