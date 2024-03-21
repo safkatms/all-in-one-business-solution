@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePurchaseManagementDto } from './dto/create-purchase-management.dto';
 import { UpdatePurchaseManagementDto } from './dto/update-purchase-management.dto';
 import { PurchaseManagement } from './entities/purchase-management.entity';
@@ -15,10 +15,18 @@ export class PurchaseManagementService {
   async insertPurchase(
     createPurchaseManagementDto: CreatePurchaseManagementDto,
   ) {
-    const invetoryItem = await this.purchaseRepo.create(
-      createPurchaseManagementDto,
-    );
-    return await this.purchaseRepo.save(invetoryItem);
+    try {
+      const purchaseItem = await this.purchaseRepo.create(
+        createPurchaseManagementDto,
+      );
+      const insertedPurchase = await this.purchaseRepo.save(purchaseItem);
+      return {
+        message: 'Purchase inserted successfully',
+        purchase: insertedPurchase,
+      };
+    } catch (error) {
+      return { message: 'Failed to insert purchase' };
+    }
   }
 
   //fetch all purchase from db
@@ -27,7 +35,13 @@ export class PurchaseManagementService {
   }
 
   async findPurchaseById(id: number) {
-    return await this.purchaseRepo.findOne({ where: { purchaseId: id } });
+    const purchaseCheck = await this.purchaseRepo.findOne({
+      where: { purchaseId: id },
+    });
+    if (!purchaseCheck) {
+      throw new NotFoundException(`Purchase with ID ${id} not found`);
+    }
+    return purchaseCheck;
   }
 
   //modify
@@ -35,24 +49,42 @@ export class PurchaseManagementService {
     id: number,
     updatePurchaseManagementDto: UpdatePurchaseManagementDto,
   ) {
-    const updatenew: PurchaseManagement = new PurchaseManagement();
-    updatenew.vendorName = updatePurchaseManagementDto.vendorName;
-    updatenew.vendorContact = updatePurchaseManagementDto.vendorContact;
-    updatenew.vendorEmail = updatePurchaseManagementDto.vendorEmail;
-    updatenew.productName = updatePurchaseManagementDto.productName;
-    updatenew.productQuantity = updatePurchaseManagementDto.productQuantity;
-    updatenew.productPurchasePrice =
-      updatePurchaseManagementDto.productPurchasePrice;
-    updatenew.purchaseTotalPrice =
-      updatePurchaseManagementDto.productPurchasePrice;
-    updatenew.purchaseDate = updatePurchaseManagementDto.purchaseDate;
+    //check value in the db
+    const existingPurchase = await this.purchaseRepo.findOne({
+      where: { purchaseId: id },
+    });
+    if (!existingPurchase) {
+      throw new NotFoundException(`Purchase with ID ${id} not found`);
+    }
 
-    updatenew.purchaseId = id;
+    Object.assign(existingPurchase, updatePurchaseManagementDto);
 
-    return await this.purchaseRepo.save(updatenew);
+    await this.purchaseRepo.save(existingPurchase);
+
+    //retriveing updated product info
+    const updatedPurchase = await this.purchaseRepo.findOne({
+      where: { purchaseId: id },
+    });
+
+    return {
+      message: 'Update successful',
+      product: updatedPurchase,
+    };
   }
-
+  //find and remove
   async remove(id: number) {
-    return await this.purchaseRepo.delete(id);
+    const existingPurchase = await this.purchaseRepo.findOne({
+      where: { purchaseId: id },
+    });
+    if (!existingPurchase) {
+      throw new NotFoundException(`Purchase with ID ${id} not found`);
+    }
+    const deletedPurchase = { ...existingPurchase };
+
+    await this.purchaseRepo.delete(id);
+    return {
+      message: `Purchase with ID ${id} has been successfully deleted`,
+      deletedPurchase,
+    };
   }
 }
