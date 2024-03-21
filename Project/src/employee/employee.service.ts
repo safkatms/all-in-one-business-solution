@@ -20,7 +20,6 @@ export class EmployeeService {
   async registerEmployee(createEmployeeDto: CreateEmployeeDto, company: string, packageId: number): Promise<any> {
     const { employeesalary, employeejoiningdate, ...userDto } = createEmployeeDto;
     const { username, email, password } = userDto;
-    const formattedJoiningDate = new Date(employeejoiningdate);
 
     const existingUser = await this.usersRepository.findOne({
       where: [{ username }, { email }],
@@ -39,10 +38,10 @@ export class EmployeeService {
 
     await this.connection.query(`SET search_path TO "${company}"`);
 
-    const employeeData = { userid: savedUser.userId, employeesalary, employeejoiningdate: formattedJoiningDate };
+    const employeeData = { userid: savedUser.userId, employeesalary, employeejoiningdate};
     await this.connection.getRepository(Employee).save(employeeData);
 
-    return { message: 'Employee registered successfully', package: newUser };
+    return { message: 'Employee registered successfully'};
   }
 
 

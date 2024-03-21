@@ -1,5 +1,5 @@
  import { Type } from 'class-transformer';
-import { IsDate, IsEmail, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, Matches, MinLength } from 'class-validator';
+import { IsDate, IsDateString, IsEmail, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, Matches, MinLength } from 'class-validator';
 
 enum Gender {
   MALE = 'male',
@@ -62,7 +62,6 @@ export class CreateEmployeeDto {
   employeesalary:number;
 
   @IsNotEmpty()
-  @Type(()=>Date)
-  @IsDate()
+  @IsDateString()
   employeejoiningdate:Date;
 }

@@ -1,5 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
-import { User } from 'src/user/entities/user.entity'; // Assuming this is correctly defined elsewhere
+// employee.entity.ts
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, OneToMany } from 'typeorm';
+import { User } from 'src/user/entities/user.entity';
+import { Payroll } from 'src/payroll/entities/payroll.entity';
 
 @Entity()
 export class Employee {
@@ -18,4 +20,5 @@ export class Employee {
 
   @Column()
   employeejoiningdate: Date;
+
 }

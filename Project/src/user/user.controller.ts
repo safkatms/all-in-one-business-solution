@@ -21,14 +21,14 @@ export class UserController {
   // }
 
   @Get('profile')
-  @UseGuards(JwtAuthGuard) // Use the JWT guard
+  @UseGuards(JwtAuthGuard)
   async viewProfile(@Request() req) {
     const user = req.user; 
     return await this.userService.findProfileByUsername(user.username);
   }
 
   @Patch('profile/update')
-  @UseGuards(JwtAuthGuard) // Ensure this route is protected
+  @UseGuards(JwtAuthGuard)
   async updateProfile(@Request() req, @Body(ValidationPipe) updateProfileDto: UpdateProfileDto) {
     await this.userService.updateProfile(req.user.userId, updateProfileDto);
     return {message:"Profile updated successfully"};

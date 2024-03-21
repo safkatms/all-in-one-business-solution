@@ -6,10 +6,10 @@ export class User {
   @PrimaryGeneratedColumn()
   userId: number;
 
-  @Column()
+  @Column({ nullable: false })
   firstName: string;
 
-  @Column()
+  @Column({ nullable: false })
   lastName: string;
 
   @Column({ unique: true })
@@ -18,22 +18,22 @@ export class User {
   @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ nullable: false })
   mobileNo: string;
 
-  @Column()
+  @Column({ nullable: false })
   password: string;
 
-  @Column()
+  @Column({ nullable: false })
   company: string;
 
-  @Column()
+  @Column({ nullable: false })
   gender: string;
 
   @Column({ nullable: true })
   profilePicture: string;
 
-  @Column()
+  @Column({ nullable: false })
   userType: string;
 
   @Column({ nullable: true })

@@ -28,7 +28,6 @@ let EmployeeService = class EmployeeService {
     async registerEmployee(createEmployeeDto, company, packageId) {
         const { employeesalary, employeejoiningdate, ...userDto } = createEmployeeDto;
         const { username, email, password } = userDto;
-        const formattedJoiningDate = new Date(employeejoiningdate);
         const existingUser = await this.usersRepository.findOne({
             where: [{ username }, { email }],
         });
@@ -41,9 +40,9 @@ let EmployeeService = class EmployeeService {
         const newUser = this.usersRepository.create({ ...userDto, company, packageId });
         const savedUser = await this.usersRepository.save(newUser);
         await this.connection.query(`SET search_path TO "${company}"`);
-        const employeeData = { userid: savedUser.userId, employeesalary, employeejoiningdate: formattedJoiningDate };
+        const employeeData = { userid: savedUser.userId, employeesalary, employeejoiningdate };
         await this.connection.getRepository(employee_entity_1.Employee).save(employeeData);
-        return { message: 'Employee registered successfully', package: newUser };
+        return { message: 'Employee registered successfully' };
     }
     async findAll() {
         const employees = await this.employeeRepository.find();
