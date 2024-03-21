@@ -48,21 +48,21 @@ let UserService = class UserService {
         const newUser = this.usersRepository.create(newUserDto);
         const savedUser = await this.usersRepository.save(newUser);
         await this.createSchemaForUser(savedUser.company);
-        return savedUser;
+        return { massege: "Registation successful." };
     }
     async createSchemaForUser(company) {
         const schemaName = `${company}`;
         await this.connection.query(`CREATE SCHEMA IF NOT EXISTS "${schemaName}"`);
         await this.connection.query(`
     CREATE TABLE IF NOT EXISTS "${schemaName}".Employee (
-      employeeId SERIAL PRIMARY KEY,
-      userId INT REFERENCES public."user"("userId") ON DELETE CASCADE ON UPDATE CASCADE,
-      employeeSalary NUMERIC,
-      employeeJoiningDate TIMESTAMP
+      "employeeid" SERIAL PRIMARY KEY,
+      "userid" INT REFERENCES public."user"("userId") ON DELETE CASCADE ON UPDATE CASCADE,
+      "employeesalary" NUMERIC,
+      "employeejoiningdate" DATE NOT NULL
     )    
     `);
         await this.connection.query(`
-  CREATE TABLE IF NOT EXISTS "${schemaName}"."productInfo" (
+    CREATE TABLE IF NOT EXISTS "${schemaName}"."productInfo" (
     "productId" SERIAL PRIMARY KEY,
     "productName" VARCHAR NOT NULL,
     "productDetails" TEXT NOT NULL,
@@ -70,8 +70,8 @@ let UserService = class UserService {
     "productSellPrice" NUMERIC NOT NULL,
     "porductBrand" VARCHAR NOT NULL,
     "productQuantity" INT NOT NULL
-  )
-`);
+    )
+  `);
         await this.connection.query(`
   CREATE TABLE IF NOT EXISTS "${schemaName}"."purchaseInfo" (
     "purchaseId" SERIAL PRIMARY KEY,
@@ -84,6 +84,16 @@ let UserService = class UserService {
     "purchaseTotalPrice" NUMERIC NOT NULL,
     "purchaseDate" DATE NOT NULL
   )
+`);
+        await this.connection.query(`
+    CREATE TABLE IF NOT EXISTS "${schemaName}"."payroll" (
+      "payrollId" SERIAL PRIMARY KEY,
+      "employeeId" INT REFERENCES "${schemaName}".Employee("employeeid") ON DELETE CASCADE ON UPDATE CASCADE,
+      "salary" NUMERIC NOT NULL,
+      "bonus" NUMERIC DEFAULT 0,
+      "payrollMonth" VARCHAR NOT NULL,
+      "status" VARCHAR NOT NULL
+    )    
 `);
     }
     async updateProfile(userId, updateProfileDto) {

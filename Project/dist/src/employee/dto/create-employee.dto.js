@@ -10,7 +10,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateEmployeeDto = void 0;
-const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
 var Gender;
 (function (Gender) {
@@ -86,8 +85,7 @@ __decorate([
 ], CreateEmployeeDto.prototype, "employeesalary", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
-    (0, class_transformer_1.Type)(() => Date),
-    (0, class_validator_1.IsDate)(),
+    (0, class_validator_1.IsDateString)(),
     __metadata("design:type", Date)
 ], CreateEmployeeDto.prototype, "employeejoiningdate", void 0);
 //# sourceMappingURL=create-employee.dto.js.map

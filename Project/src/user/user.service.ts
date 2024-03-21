@@ -15,7 +15,7 @@ export class UserService {
     private connection: Connection,
   ) { }
 
-  async registerUser(createUserDto: CreateUserDto): Promise<User> {
+  async registerUser(createUserDto: CreateUserDto): Promise<any> {
     const { username, email, password, company } = createUserDto;
 
     const existingUser = await this.usersRepository.findOne({
@@ -47,24 +47,28 @@ export class UserService {
 
     await this.createSchemaForUser(savedUser.company);
 
-    return savedUser;
+    return {massege:"Registation successful."};
   }
 
   private async createSchemaForUser(company: string): Promise<void> {
     const schemaName = `${company}`;
+
+    //create schema for separate company
     await this.connection.query(`CREATE SCHEMA IF NOT EXISTS "${schemaName}"`);
 
+    //create employee table for separate company
     await this.connection.query(`
     CREATE TABLE IF NOT EXISTS "${schemaName}".Employee (
-      employeeId SERIAL PRIMARY KEY,
-      userId INT REFERENCES public."user"("userId") ON DELETE CASCADE ON UPDATE CASCADE,
-      employeeSalary NUMERIC,
-      employeeJoiningDate TIMESTAMP
+      "employeeid" SERIAL PRIMARY KEY,
+      "userid" INT REFERENCES public."user"("userId") ON DELETE CASCADE ON UPDATE CASCADE,
+      "employeesalary" NUMERIC,
+      "employeejoiningdate" DATE NOT NULL
     )    
     `);
 
+    //create productInfo table for separate company
     await this.connection.query(`
-  CREATE TABLE IF NOT EXISTS "${schemaName}"."productInfo" (
+    CREATE TABLE IF NOT EXISTS "${schemaName}"."productInfo" (
     "productId" SERIAL PRIMARY KEY,
     "productName" VARCHAR NOT NULL,
     "productDetails" TEXT NOT NULL,
@@ -72,8 +76,10 @@ export class UserService {
     "productSellPrice" NUMERIC NOT NULL,
     "porductBrand" VARCHAR NOT NULL,
     "productQuantity" INT NOT NULL
-  )
-`);
+    )
+  `);
+
+    //create purchaseInfo table for separate company
     await this.connection.query(`
   CREATE TABLE IF NOT EXISTS "${schemaName}"."purchaseInfo" (
     "purchaseId" SERIAL PRIMARY KEY,
@@ -86,6 +92,17 @@ export class UserService {
     "purchaseTotalPrice" NUMERIC NOT NULL,
     "purchaseDate" DATE NOT NULL
   )
+`);
+
+    await this.connection.query(`
+    CREATE TABLE IF NOT EXISTS "${schemaName}"."payroll" (
+      "payrollId" SERIAL PRIMARY KEY,
+      "employeeId" INT REFERENCES "${schemaName}".Employee("employeeid") ON DELETE CASCADE ON UPDATE CASCADE,
+      "salary" NUMERIC NOT NULL,
+      "bonus" NUMERIC DEFAULT 0,
+      "payrollMonth" VARCHAR NOT NULL,
+      "status" VARCHAR NOT NULL
+    )    
 `);
 
   }
@@ -124,45 +141,45 @@ export class UserService {
     await this.usersRepository.update(userId, { password: hashedNewPassword });
   }
 
-async createPasswordResetToken(email: string): Promise<void> {
-  const user = await this.usersRepository.findOne({ where: { email } });
-  if (!user) {
-    throw new Error('User not found');
-  }
+  async createPasswordResetToken(email: string): Promise<void> {
+    const user = await this.usersRepository.findOne({ where: { email } });
+    if (!user) {
+      throw new Error('User not found');
+    }
 
-  const token = uuidv4(); 
-  const expiration = new Date();
-  expiration.setHours(expiration.getHours() + 1); 
+    const token = uuidv4();
+    const expiration = new Date();
+    expiration.setHours(expiration.getHours() + 1);
 
-  await this.usersRepository.update(user.userId, {
-    passwordResetToken: token,
-    passwordResetTokenExpires: expiration,
-  });
-
-}
-
-
-
-async resetPassword(token: string, newPassword: string): Promise<void> {
-  const user = await this.usersRepository.findOne({
-    where: {
+    await this.usersRepository.update(user.userId, {
       passwordResetToken: token,
-      passwordResetTokenExpires: MoreThan(new Date()),
-    },
-  });
+      passwordResetTokenExpires: expiration,
+    });
 
-  if (!user) {
-    throw new Error('Invalid or expired password reset token');
   }
 
-  const saltOrRounds = 10;
+
+
+  async resetPassword(token: string, newPassword: string): Promise<void> {
+    const user = await this.usersRepository.findOne({
+      where: {
+        passwordResetToken: token,
+        passwordResetTokenExpires: MoreThan(new Date()),
+      },
+    });
+
+    if (!user) {
+      throw new Error('Invalid or expired password reset token');
+    }
+
+    const saltOrRounds = 10;
     const hashedPassword = await bcrypt.hash(newPassword, saltOrRounds);
 
-  await this.usersRepository.update(user.userId, {
-    password: hashedPassword,
-    passwordResetToken: null,
-    passwordResetTokenExpires: null, 
-  });
-}
+    await this.usersRepository.update(user.userId, {
+      password: hashedPassword,
+      passwordResetToken: null,
+      passwordResetTokenExpires: null,
+    });
+  }
 
 }

@@ -10,6 +10,7 @@ import { EmployeeModule } from './employee/employee.module';
 import { InventoryManagementModule } from './inventory-management/inventory-management.module';
 import { PurchaseManagementModule } from './purchase-management/purchase-management.module';
 import { SearchModule } from './search/search.module';
+import { PayrollModule } from './payroll/payroll.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { SearchModule } from './search/search.module';
     InventoryManagementModule,
     PurchaseManagementModule,
     SearchModule,
+    PayrollModule,
   ],
   controllers: [AppController],
   providers: [AppService],
