@@ -12,7 +12,7 @@ export const config: PostgresConnectionOptions = {
   host: 'localhost',
   port: 5432,
   username: 'postgres',
-  password: 'admin',
+  password: '123',
   entities: [User, Package, Employee, Payroll, InventoryManagement, PurchaseManagement],
   synchronize: true,
 };

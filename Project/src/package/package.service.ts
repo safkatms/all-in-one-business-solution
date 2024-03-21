@@ -27,7 +27,7 @@ export class PackageService {
 
     // Ensure the user does not already have an active package
     if (user.packageId) {
-      const existingPackage = await this.findById(user.packageId);
+      const existingPackage = await this.packageRepository.findOne({where:{id:user.packageId}});
       if (existingPackage && existingPackage.validTill >= new Date()) {
         throw new ConflictException('User already has an active package');
       }
@@ -51,12 +51,10 @@ export class PackageService {
     };
   }
 
-  async findById(userId: number): Promise<Package> {
-    const packageEntity = await this.packageRepository.findOneBy({
-      id: userId,
-    });
+  async findById(userPackage: number): Promise<Package> {
+    const packageEntity = await this.packageRepository.findOne({where:{id: userPackage}});
     if (!packageEntity) {
-      throw new NotFoundException(`Package with ID ${userId} not found`);
+      throw new NotFoundException(`Package with ID ${userPackage} not found`);
     }
     return packageEntity;
   }

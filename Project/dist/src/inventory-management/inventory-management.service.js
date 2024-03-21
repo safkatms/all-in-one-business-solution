@@ -21,9 +21,26 @@ let InventoryManagementService = class InventoryManagementService {
     constructor(inventoryRepo) {
         this.inventoryRepo = inventoryRepo;
     }
+    async checkProductExists(productName) {
+        const existingProduct = await this.inventoryRepo.findOne({
+            where: { productName },
+        });
+        if (existingProduct) {
+            throw new common_1.ConflictException(`Product ${productName} already exists`);
+        }
+    }
     async create(createInventoryManagementDto) {
+        const { productName } = createInventoryManagementDto;
+        await this.checkProductExists(productName);
         const invetoryItem = await this.inventoryRepo.create(createInventoryManagementDto);
-        return await this.inventoryRepo.save(invetoryItem);
+        await this.inventoryRepo.save(invetoryItem);
+        const createdProduct = await this.inventoryRepo.findOne({
+            where: { productName },
+        });
+        return {
+            message: 'Product created successfully',
+            product: createdProduct,
+        };
     }
     async findAll() {
         return await this.inventoryRepo.find();
@@ -32,18 +49,41 @@ let InventoryManagementService = class InventoryManagementService {
         return await this.inventoryRepo.findOne({ where: { productId: id } });
     }
     async update(id, updateInventoryDto) {
-        const updatenew = new inventory_management_entity_1.InventoryManagement();
-        updatenew.productName = updateInventoryDto.productName;
-        updatenew.productDetails = updateInventoryDto.productDetails;
-        updatenew.productPurchasePrice = updateInventoryDto.productPurchasePrice;
-        updatenew.productSellPrice = updateInventoryDto.productSellPrice;
-        updatenew.porductBrand = updateInventoryDto.productBrand;
-        updatenew.productQuantity = updateInventoryDto.productQuantity;
-        updatenew.productId = id;
-        return await this.inventoryRepo.save(updatenew);
+        const existingProduct = await this.inventoryRepo.findOne({
+            where: { productId: id },
+        });
+        if (!existingProduct) {
+            throw new common_1.NotFoundException(`Product with ID ${id} not found`);
+        }
+        if (updateInventoryDto.productName &&
+            updateInventoryDto.productName !== existingProduct.productName) {
+            await this.checkProductExists(updateInventoryDto.productName);
+        }
+        Object.assign(existingProduct, updateInventoryDto);
+        await this.inventoryRepo.save(existingProduct);
+        const updatedProduct = await this.inventoryRepo.findOne({
+            where: { productId: id },
+        });
+        return {
+            message: 'Update successful',
+            product: updatedProduct,
+        };
     }
     async remove(id) {
-        return await this.inventoryRepo.delete(id);
+        const existingProduct = await this.inventoryRepo.findOne({
+            where: { productId: id },
+        });
+        if (!existingProduct) {
+            throw new common_1.NotFoundException(`Product with ID ${id} not found`);
+        }
+        else {
+            const deletedProduct = { ...existingProduct };
+            await this.inventoryRepo.delete(id);
+            return {
+                message: `Product with ID ${id} has been successfully deleted`,
+                deletedProduct,
+            };
+        }
     }
     async findByItemName(itemName) {
         return await this.inventoryRepo.findOne({

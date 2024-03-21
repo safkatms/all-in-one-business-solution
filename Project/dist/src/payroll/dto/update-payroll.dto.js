@@ -10,19 +10,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdatePayrollDto = void 0;
-const create_payroll_dto_1 = require("./create-payroll.dto");
 const class_validator_1 = require("class-validator");
+const create_payroll_dto_1 = require("./create-payroll.dto");
 class UpdatePayrollDto {
 }
 exports.UpdatePayrollDto = UpdatePayrollDto;
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsNumber)({}, { message: 'Bonus must be a number if provided' }),
     __metadata("design:type", Number)
 ], UpdatePayrollDto.prototype, "bonus", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsEnum)(create_payroll_dto_1.PayrollStatus),
+    (0, class_validator_1.IsEnum)(create_payroll_dto_1.PayrollStatus, { message: 'Status must be either "Paid" or "Unpaid" if provided' }),
     __metadata("design:type", String)
 ], UpdatePayrollDto.prototype, "status", void 0);
 //# sourceMappingURL=update-payroll.dto.js.map

@@ -12,6 +12,5 @@ export declare class CreateUserDto {
     password: string;
     company: string;
     gender: Gender;
-    profilePicture?: string;
 }
 export {};

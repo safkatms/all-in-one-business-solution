@@ -43,8 +43,5 @@ export class CreateUserDto {
   @IsEnum(Gender)
   gender: Gender;
 
-  @IsString()
-  @IsOptional()
-  profilePicture?: string;
 
 }
