@@ -11,6 +11,7 @@ import { InventoryManagementModule } from './inventory-management/inventory-mana
 import { PurchaseManagementModule } from './purchase-management/purchase-management.module';
 import { SearchModule } from './search/search.module';
 import { PayrollModule } from './payroll/payroll.module';
+import { CustomerModule } from './customer/customer.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { PayrollModule } from './payroll/payroll.module';
     PurchaseManagementModule,
     SearchModule,
     PayrollModule,
+    CustomerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
