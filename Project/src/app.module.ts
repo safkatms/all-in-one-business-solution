@@ -12,6 +12,8 @@ import { PurchaseManagementModule } from './purchase-management/purchase-managem
 import { SearchModule } from './search/search.module';
 import { PayrollModule } from './payroll/payroll.module';
 import { CustomerModule } from './customer/customer.module';
+import { OrderModule } from './order/order.module';
+import { OrderItemModule } from './order-item/order-item.module';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { CustomerModule } from './customer/customer.module';
     SearchModule,
     PayrollModule,
     CustomerModule,
+    OrderModule,
+    OrderItemModule,
   ],
   controllers: [AppController],
   providers: [AppService],

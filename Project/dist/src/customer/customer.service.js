@@ -43,6 +43,15 @@ let CustomerService = class CustomerService {
         }
         return customer;
     }
+    async updateCustomer(contact, updateCustomerDto) {
+        const customer = await this.customersRepository.findOneBy({ contact });
+        if (!customer) {
+            throw new common_1.NotFoundException(`Customer with Contact ${contact} not found.`);
+        }
+        Object.assign(customer, updateCustomerDto);
+        await this.customersRepository.save(customer);
+        return customer;
+    }
 };
 exports.CustomerService = CustomerService;
 exports.CustomerService = CustomerService = __decorate([

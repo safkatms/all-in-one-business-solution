@@ -16,6 +16,7 @@ exports.CustomerController = void 0;
 const common_1 = require("@nestjs/common");
 const customer_service_1 = require("./customer.service");
 const create_customer_dto_1 = require("./dto/create-customer.dto");
+const update_customer_dto_1 = require("./dto/update-customer.dto");
 const jwt_guard_1 = require("../guards/jwt.guard");
 const schema_guard_1 = require("../guards/schema.guard");
 const role_guard_1 = require("../guards/role.guard");
@@ -31,6 +32,9 @@ let CustomerController = class CustomerController {
     }
     findOne(contact) {
         return this.customerService.findOne(contact);
+    }
+    async updateCustomer(contact, updateCustomerDto) {
+        return this.customerService.updateCustomer(contact, updateCustomerDto);
     }
 };
 exports.CustomerController = CustomerController;
@@ -48,12 +52,20 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CustomerController.prototype, "findAll", null);
 __decorate([
-    (0, common_1.Get)(':contact'),
+    (0, common_1.Get)('/:contact'),
     __param(0, (0, common_1.Param)('contact')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], CustomerController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Patch)('/update/:contact'),
+    __param(0, (0, common_1.Param)('contact')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, update_customer_dto_1.UpdateCustomerDto]),
+    __metadata("design:returntype", Promise)
+], CustomerController.prototype, "updateCustomer", null);
 exports.CustomerController = CustomerController = __decorate([
     (0, common_1.Controller)('customer'),
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, schema_guard_1.SetSchemaGuard, new role_guard_1.RoleGuard(['owner', 'salesman'])),

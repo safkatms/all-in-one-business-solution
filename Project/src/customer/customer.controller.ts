@@ -21,7 +21,7 @@ export class CustomerController {
     return this.customerService.findAll();
   }
 
-  @Get(':contact')
+  @Get('/:contact')
   findOne(@Param('contact') contact: string) {
     return this.customerService.findOne(contact);
   }
@@ -30,6 +30,14 @@ export class CustomerController {
   // update(@Param('id') id: string, @Body() updateCustomerDto: UpdateCustomerDto) {
   //   return this.customerService.update(+id, updateCustomerDto);
   // }
+
+  // Within CustomersController
+
+@Patch('/update/:contact')
+async updateCustomer(@Param('contact') contact: string, @Body() updateCustomerDto: UpdateCustomerDto) {
+  return this.customerService.updateCustomer(contact, updateCustomerDto);
+}
+
 
   // @Delete(':id')
   // remove(@Param('id') id: string) {
