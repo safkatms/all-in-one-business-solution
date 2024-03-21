@@ -18,11 +18,17 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'empty value. Vendor Name cannot be empty' }),
     (0, class_validator_1.Length)(4),
     (0, class_validator_1.IsString)(),
+    (0, class_validator_1.Matches)(/^[A-Z][a-z]*$/, {
+        message: 'Vendor name must start with a capital letter and contain no numbers or special characters.',
+    }),
     __metadata("design:type", String)
 ], CreatePurchaseManagementDto.prototype, "vendorName", void 0);
 __decorate([
-    (0, class_validator_1.Length)(1),
+    (0, class_validator_1.Length)(11),
     (0, class_validator_1.IsNotEmpty)({ message: 'empty value. Vendor contact cannot be empty' }),
+    (0, class_validator_1.Matches)(/^01[3-9]\d{8}$/, {
+        message: 'Mobile number must be a valid.',
+    }),
     __metadata("design:type", String)
 ], CreatePurchaseManagementDto.prototype, "vendorContact", void 0);
 __decorate([
@@ -47,11 +53,15 @@ __decorate([
         message: 'empty value. Product Purchase price cannot be empty',
     }),
     (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsPositive)({ message: 'Product purchase price must be a positive number' }),
     __metadata("design:type", Number)
 ], CreatePurchaseManagementDto.prototype, "productPurchasePrice", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'empty value. Purchase total Price cannot be empty' }),
     (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsPositive)({
+        message: 'Product purchase total price must be a positive number',
+    }),
     __metadata("design:type", Number)
 ], CreatePurchaseManagementDto.prototype, "purchaseTotalPrice", void 0);
 __decorate([
