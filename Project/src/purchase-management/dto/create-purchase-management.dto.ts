@@ -1,5 +1,5 @@
 import {
-  IsDate,
+  IsDateString,
   IsEmail,
   IsNotEmpty,
   IsNumber,
@@ -48,6 +48,6 @@ export class CreatePurchaseManagementDto {
   })
   purchaseTotalPrice: number;
   @IsNotEmpty({ message: 'empty value. Date cannot be empty' })
-  @IsDate()
+  @IsDateString()
   purchaseDate: string;
 }

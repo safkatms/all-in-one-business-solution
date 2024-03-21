@@ -5,11 +5,29 @@ import { Repository } from 'typeorm';
 export declare class InventoryManagementService {
     private readonly inventoryRepo;
     constructor(inventoryRepo: Repository<InventoryManagement>);
-    create(createInventoryManagementDto: CreateInventoryManagementDto): Promise<InventoryManagement>;
+    checkProductExists(productName: string): Promise<void>;
+    create(createInventoryManagementDto: CreateInventoryManagementDto): Promise<{
+        message: string;
+        product: InventoryManagement;
+    }>;
     findAll(): Promise<InventoryManagement[]>;
     findOne(id: number): Promise<InventoryManagement>;
-    update(id: number, updateInventoryDto: UpdateInventoryManagementDto): Promise<InventoryManagement>;
-    remove(id: number): Promise<import("typeorm").DeleteResult>;
+    update(id: number, updateInventoryDto: UpdateInventoryManagementDto): Promise<{
+        message: string;
+        product: InventoryManagement;
+    }>;
+    remove(id: number): Promise<{
+        message: string;
+        deletedProduct: {
+            productId: number;
+            productName: string;
+            productDetails: string;
+            productPurchasePrice: number;
+            productSellPrice: number;
+            porductBrand: string;
+            productQuantity: number;
+        };
+    }>;
     findByItemName(itemName: string): Promise<InventoryManagement>;
     removebyItemName(itemName: string): Promise<import("typeorm").DeleteResult>;
 }

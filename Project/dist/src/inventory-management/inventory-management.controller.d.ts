@@ -4,10 +4,27 @@ import { UpdateInventoryManagementDto } from './dto/update-inventory-management.
 export declare class InventoryManagementController {
     private readonly inventoryManagementService;
     constructor(inventoryManagementService: InventoryManagementService);
-    create(createInventoryManagementDto: CreateInventoryManagementDto): Promise<import("src/inventory-management/entities/inventory-management.entity").InventoryManagement>;
+    create(createInventoryManagementDto: CreateInventoryManagementDto): Promise<{
+        message: string;
+        product: import("src/inventory-management/entities/inventory-management.entity").InventoryManagement;
+    }>;
     findAll(): Promise<import("src/inventory-management/entities/inventory-management.entity").InventoryManagement[]>;
     findByUsername(itemName: string): Promise<import("src/inventory-management/entities/inventory-management.entity").InventoryManagement>;
     findOne(id: string): Promise<import("src/inventory-management/entities/inventory-management.entity").InventoryManagement>;
-    update(id: number, updateInventoryManagementDto: UpdateInventoryManagementDto): Promise<import("src/inventory-management/entities/inventory-management.entity").InventoryManagement>;
-    remove(id: string): Promise<import("typeorm").DeleteResult>;
+    update(id: number, updateInventoryManagementDto: UpdateInventoryManagementDto): Promise<{
+        message: string;
+        product: import("src/inventory-management/entities/inventory-management.entity").InventoryManagement;
+    }>;
+    remove(id: string): Promise<{
+        message: string;
+        deletedProduct: {
+            productId: number;
+            productName: string;
+            productDetails: string;
+            productPurchasePrice: number;
+            productSellPrice: number;
+            porductBrand: string;
+            productQuantity: number;
+        };
+    }>;
 }
