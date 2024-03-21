@@ -105,6 +105,15 @@ export class UserService {
     )    
 `);
 
+await this.connection.query(`
+    CREATE TABLE IF NOT EXISTS "${schemaName}".Customer (
+      "id" SERIAL PRIMARY KEY,
+      "name" VARCHAR NOT NULL,
+      "contact" VARCHAR NOT NULL,
+      "email" VARCHAR NOT NULL
+    )    
+`);
+
   }
 
 

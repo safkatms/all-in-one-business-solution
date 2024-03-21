@@ -20,6 +20,7 @@ const inventory_management_module_1 = require("./inventory-management/inventory-
 const purchase_management_module_1 = require("./purchase-management/purchase-management.module");
 const search_module_1 = require("./search/search.module");
 const payroll_module_1 = require("./payroll/payroll.module");
+const customer_module_1 = require("./customer/customer.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -35,6 +36,7 @@ exports.AppModule = AppModule = __decorate([
             purchase_management_module_1.PurchaseManagementModule,
             search_module_1.SearchModule,
             payroll_module_1.PayrollModule,
+            customer_module_1.CustomerModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

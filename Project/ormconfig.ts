@@ -1,3 +1,4 @@
+import { Customer } from 'src/customer/entities/customer.entity';
 import { Employee } from 'src/employee/entities/employee.entity';
 import { InventoryManagement } from 'src/inventory-management/entities/inventory-management.entity';
 import { Package } from 'src/package/entities/package.entity';
@@ -13,6 +14,6 @@ export const config: PostgresConnectionOptions = {
   port: 5432,
   username: 'postgres',
   password: '123',
-  entities: [User, Package, Employee, Payroll, InventoryManagement, PurchaseManagement],
+  entities: [User, Package, Employee, Payroll, InventoryManagement, PurchaseManagement,Customer],
   synchronize: true,
 };

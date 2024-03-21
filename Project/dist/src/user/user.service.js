@@ -95,6 +95,14 @@ let UserService = class UserService {
       "status" VARCHAR NOT NULL
     )    
 `);
+        await this.connection.query(`
+    CREATE TABLE IF NOT EXISTS "${schemaName}".Customer (
+      "id" SERIAL PRIMARY KEY,
+      "name" VARCHAR NOT NULL,
+      "contact" VARCHAR NOT NULL,
+      "email" VARCHAR NOT NULL
+    )    
+`);
     }
     async updateProfile(userId, updateProfileDto) {
         await this.usersRepository.update(userId, updateProfileDto);
