@@ -14,14 +14,8 @@ exports.config = {
     port: 5432,
     username: 'postgres',
     password: 'admin',
-    entities: [
-        user_entity_1.User,
-        package_entity_1.Package,
-        employee_entity_1.Employee,
-        payroll_entity_1.Payroll,
-        inventory_management_entity_1.InventoryManagement,
-        purchase_management_entity_1.PurchaseManagement,
-    ],
+    entities: [user_entity_1.User, package_entity_1.Package, employee_entity_1.Employee, payroll_entity_1.Payroll, inventory_management_entity_1.InventoryManagement, purchase_management_entity_1.PurchaseManagement],
+
     synchronize: true,
 };
 //# sourceMappingURL=ormconfig.js.map
