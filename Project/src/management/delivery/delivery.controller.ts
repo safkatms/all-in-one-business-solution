@@ -22,11 +22,6 @@ export class DeliveryController {
     return this.deliveryService.makeDelivery(+id, updateDeliveryDto);
   }
 
-  @Get()
-  findAll() {
-    return this.deliveryService.findAll();
-  }
-
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.deliveryService.findOne(+id);

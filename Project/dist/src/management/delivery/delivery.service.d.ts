@@ -9,7 +9,6 @@ export declare class DeliveryService {
     private readonly orderItemRepository;
     constructor(orderRepository: Repository<Order>, inventoryRepository: Repository<InventoryManagement>, orderItemRepository: Repository<OrderItem>);
     makeDelivery(id: number, updateDeliveryDto: UpdateDeliveryDto): Promise<string>;
-    findAll(): string;
-    findOne(id: number): Promise<void>;
+    findOne(id: number): Promise<Order>;
     returnedDelivery(id: number, updateDeliveryDto: UpdateDeliveryDto): Promise<string>;
 }
