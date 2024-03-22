@@ -13,6 +13,7 @@ import { SearchModule } from './search/search.module';
 import { PayrollModule } from './payroll/payroll.module';
 import { CustomerModule } from './customer/customer.module';
 import { OrderModule } from './order/order.module';
+import { DeliveryModule } from './management/delivery/delivery.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { OrderModule } from './order/order.module';
     PayrollModule,
     CustomerModule,
     OrderModule,
+    DeliveryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -16,6 +16,17 @@ export const config: PostgresConnectionOptions = {
   port: 5432,
   username: 'postgres',
   password: 'admin',
-  entities: [User, Package, Employee, Payroll, InventoryManagement, PurchaseManagement, Customer, Order, OrderItem],
+
+  entities: [
+    User,
+    Package,
+    Employee,
+    Payroll,
+    InventoryManagement,
+    PurchaseManagement,
+    Customer,
+    Order,
+    OrderItem,
+  ],
   synchronize: true,
 };
