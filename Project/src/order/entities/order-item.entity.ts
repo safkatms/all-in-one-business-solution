@@ -1,7 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Order } from './order.entity';
 
-@Entity()
+@Entity("orderItem")
 export class OrderItem {
   @PrimaryGeneratedColumn()
   orderItemId: number;
@@ -10,6 +10,7 @@ export class OrderItem {
   orderId: number;
 
   @ManyToOne(() => Order, (order) => order.orderItems)
+  @JoinColumn({ name: "orderId" }) // Ensure this matches your DB schema
   order: Order;
 
   @Column()

@@ -1,3 +1,4 @@
 export declare class CreateOrderDto {
-    customerId: number;
+
+    customerContact: string;
 }

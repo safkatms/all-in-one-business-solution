@@ -41,6 +41,6 @@ __decorate([
     __metadata("design:type", String)
 ], Payroll.prototype, "status", void 0);
 exports.Payroll = Payroll = __decorate([
-    (0, typeorm_1.Entity)()
+    (0, typeorm_1.Entity)("payroll")
 ], Payroll);
 //# sourceMappingURL=payroll.entity.js.map

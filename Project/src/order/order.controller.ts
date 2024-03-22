@@ -1,25 +1,25 @@
+// src/orders/order.controller.ts
 
-import { Body, Controller, Post, Param, Get } from '@nestjs/common';
+import { Body, Controller, Post, Param, UseGuards, ValidationPipe } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { AddOrderItemDto } from './dto/add-order-item.dto';
+import { JwtAuthGuard } from 'src/guards/jwt.guard';
+import { SetSchemaGuard } from 'src/guards/schema.guard';
+import { RoleGuard } from 'src/guards/role.guard';
 
 @Controller('order')
+@UseGuards(JwtAuthGuard,SetSchemaGuard, new RoleGuard(['owner','salesman']))
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @Post()
-  createOrder(@Body() createOrderDto: CreateOrderDto) {
+  createOrder(@Body(ValidationPipe) createOrderDto: CreateOrderDto) {
     return this.orderService.createOrder(createOrderDto);
   }
 
   @Post(':orderId/items')
-  addOrderItem(@Param('orderId') orderId: number, @Body() addOrderItemDto: AddOrderItemDto) {
-    return this.orderService.addOrderItem(orderId, addOrderItemDto);
-  }
-
-  @Post(':orderId/multiple-items')
-  addMultipleOrderItems(@Param('orderId') orderId: number, @Body() itemsDto: AddOrderItemDto[]) {
-    return this.orderService.addMultipleOrderItems(orderId, itemsDto);
+  addOrderItems(@Param('orderId') orderId: number, @Body(ValidationPipe) itemsDto: AddOrderItemDto[]) {
+    return this.orderService.addOrderItems(orderId, itemsDto);
   }
 }

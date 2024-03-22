@@ -48,13 +48,13 @@ let UserService = class UserService {
         const newUser = this.usersRepository.create(newUserDto);
         const savedUser = await this.usersRepository.save(newUser);
         await this.createSchemaForUser(savedUser.company);
-        return { massege: "Registation successful." };
+        return { massege: 'Registation successful.' };
     }
     async createSchemaForUser(company) {
         const schemaName = `${company}`;
         await this.connection.query(`CREATE SCHEMA IF NOT EXISTS "${schemaName}"`);
         await this.connection.query(`
-    CREATE TABLE IF NOT EXISTS "${schemaName}".Employee (
+    CREATE TABLE IF NOT EXISTS "${schemaName}"."employee" (
       "employeeid" SERIAL PRIMARY KEY,
       "userid" INT REFERENCES public."user"("userId") ON DELETE CASCADE ON UPDATE CASCADE,
       "employeesalary" NUMERIC,
@@ -88,7 +88,7 @@ let UserService = class UserService {
         await this.connection.query(`
     CREATE TABLE IF NOT EXISTS "${schemaName}"."payroll" (
       "payrollId" SERIAL PRIMARY KEY,
-      "employeeId" INT REFERENCES "${schemaName}".Employee("employeeid") ON DELETE CASCADE ON UPDATE CASCADE,
+      "employeeId" INT REFERENCES "${schemaName}"."employee"("employeeid") ON DELETE CASCADE ON UPDATE CASCADE,
       "salary" NUMERIC NOT NULL,
       "bonus" NUMERIC DEFAULT 0,
       "payrollMonth" VARCHAR NOT NULL,
@@ -96,12 +96,39 @@ let UserService = class UserService {
     )    
 `);
         await this.connection.query(`
-    CREATE TABLE IF NOT EXISTS "${schemaName}".Customer (
+    CREATE TABLE IF NOT EXISTS "${schemaName}"."customer" (
       "id" SERIAL PRIMARY KEY,
       "name" VARCHAR NOT NULL,
       "contact" VARCHAR NOT NULL,
       "email" VARCHAR NOT NULL
     )    
+`);
+        await this.connection.query(`
+    CREATE TABLE IF NOT EXISTS "${schemaName}"."order" (
+      "orderId" SERIAL PRIMARY KEY,
+      "customerId" INT NOT NULL,
+      "customerContact" VARCHAR(255) NULL,
+      "totalPrice" NUMERIC NOT NULL DEFAULT 0,
+      "orderStatus" VARCHAR(255) NOT NULL DEFAULT 'pending',
+      CONSTRAINT fk_customer
+          FOREIGN KEY("customerId") 
+          REFERENCES "${schemaName}"."customer"("id")
+          ON DELETE CASCADE ON UPDATE CASCADE
+    )
+`);
+        await this.connection.query(`
+    CREATE TABLE IF NOT EXISTS "${schemaName}"."orderItem" (
+      "orderItemId" SERIAL PRIMARY KEY,
+      "orderId" INT NOT NULL,
+      "productId" INT NOT NULL,
+      "productName" VARCHAR(255) NOT NULL,
+      "quantity" INT NOT NULL,
+      "price" NUMERIC NOT NULL,
+      CONSTRAINT fk_order
+          FOREIGN KEY("orderId") 
+          REFERENCES "${schemaName}"."order"("orderId")
+          ON DELETE CASCADE ON UPDATE CASCADE
+    )
 `);
     }
     async updateProfile(userId, updateProfileDto) {
@@ -114,7 +141,16 @@ let UserService = class UserService {
     async findProfileByUsername(username) {
         return this.usersRepository.findOne({
             where: { username },
-            select: ['userId', 'firstName', 'lastName', 'email', 'username', 'mobileNo', 'gender', 'profilePicture'],
+            select: [
+                'userId',
+                'firstName',
+                'lastName',
+                'email',
+                'username',
+                'mobileNo',
+                'gender',
+                'profilePicture',
+            ],
         });
     }
     async changePassword(userId, currentPassword, newPassword) {
