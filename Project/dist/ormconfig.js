@@ -4,6 +4,7 @@ exports.config = void 0;
 const customer_entity_1 = require("./src/customer/entities/customer.entity");
 const employee_entity_1 = require("./src/employee/entities/employee.entity");
 const inventory_management_entity_1 = require("./src/inventory-management/entities/inventory-management.entity");
+const invoice_entity_1 = require("./src/invoice/entities/invoice.entity");
 const order_item_entity_1 = require("./src/order/entities/order-item.entity");
 const order_entity_1 = require("./src/order/entities/order.entity");
 const package_entity_1 = require("./src/package/entities/package.entity");
@@ -27,6 +28,7 @@ exports.config = {
         customer_entity_1.Customer,
         order_entity_1.Order,
         order_item_entity_1.OrderItem,
+        invoice_entity_1.Invoice,
     ],
     synchronize: true,
 };
