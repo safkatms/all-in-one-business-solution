@@ -56,7 +56,13 @@ export class InventoryManagementService {
   }
   //find the particular
   async findOne(id: number) {
-    return await this.inventoryRepo.findOne({ where: { productId: id } });
+    const productCheck = await this.inventoryRepo.findOne({
+      where: { productId: id },
+    });
+    if (!productCheck) {
+      throw new NotFoundException(`Product with ID ${id} not found`);
+    }
+    return productCheck;
   }
   //update inventory item using id
   async update(id: number, updateInventoryDto: UpdateInventoryManagementDto) {

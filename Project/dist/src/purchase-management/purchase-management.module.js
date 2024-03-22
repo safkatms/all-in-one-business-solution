@@ -12,7 +12,13 @@ const purchase_management_service_1 = require("./purchase-management.service");
 const purchase_management_controller_1 = require("./purchase-management.controller");
 const purchase_management_entity_1 = require("./entities/purchase-management.entity");
 const typeorm_1 = require("@nestjs/typeorm");
+const middleware_middleware_1 = require("./middleware/middleware.middleware");
 let PurchaseManagementModule = class PurchaseManagementModule {
+    configure(consumer) {
+        consumer
+            .apply(middleware_middleware_1.PurchaseValidationMiddleware)
+            .forRoutes('purchase-management');
+    }
 };
 exports.PurchaseManagementModule = PurchaseManagementModule;
 exports.PurchaseManagementModule = PurchaseManagementModule = __decorate([

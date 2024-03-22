@@ -4,6 +4,7 @@ import { AddOrderItemDto } from './dto/add-order-item.dto';
 export declare class OrderController {
     private readonly orderService;
     constructor(orderService: OrderService);
+
     createOrder(createOrderDto: CreateOrderDto): Promise<any>;
     addOrderItems(orderId: number, itemsDto: AddOrderItemDto[]): Promise<import("src/order/entities/order.entity").Order>;
 }
