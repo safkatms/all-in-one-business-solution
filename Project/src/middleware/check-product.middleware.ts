@@ -23,7 +23,7 @@ export class CheckProductGuard implements CanActivate {
         // Check if the order already has items
         const existingItemsCount = await this.orderItemRepository.count({ where: { order: { orderId: orderId } } });
         if (existingItemsCount > 0) {
-            throw new BadRequestException(`Order ${orderId} already has items. No additional items can be added.`);
+            throw new BadRequestException(`Order ${orderId} already has created.`);
         }
 
         const items = Array.isArray(req.body.items) ? req.body.items : [req.body];

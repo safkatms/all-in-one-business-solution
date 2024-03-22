@@ -10,6 +10,6 @@ export declare class OrderService {
     private readonly inventoryRepository;
     private readonly customerRepository;
     constructor(orderRepository: Repository<Order>, orderItemRepository: Repository<OrderItem>, inventoryRepository: Repository<InventoryManagement>, customerRepository: Repository<Customer>);
-    createOrder(createOrderDto: CreateOrderDto): Promise<any>;
+    createOrder(userName: string, createOrderDto: CreateOrderDto): Promise<any>;
     addOrderItems(orderId: number, body: any): Promise<Order>;
 }

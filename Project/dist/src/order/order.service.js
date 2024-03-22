@@ -27,7 +27,7 @@ let OrderService = class OrderService {
         this.inventoryRepository = inventoryRepository;
         this.customerRepository = customerRepository;
     }
-    async createOrder(createOrderDto) {
+    async createOrder(userName, createOrderDto) {
         const customer = await this.customerRepository.findOne({
             where: { contact: createOrderDto.customerContact },
         });
@@ -36,7 +36,8 @@ let OrderService = class OrderService {
         }
         const order = this.orderRepository.create({
             customer: customer,
-            customerContact: customer.contact
+            customerContact: customer.contact,
+            soldBy: userName
         });
         await this.orderRepository.save(order);
         return { message: "Order successfully created.", order: order };

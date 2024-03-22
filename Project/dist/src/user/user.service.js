@@ -56,7 +56,6 @@ let UserService = class UserService {
         await this.connection.query(`
     CREATE TABLE IF NOT EXISTS "${schemaName}"."employee" (
       "employeeid" SERIAL PRIMARY KEY,
-      "soldBy" VARCHAR(255) NOT NULL,
       "userid" INT REFERENCES public."user"("userId") ON DELETE CASCADE ON UPDATE CASCADE,
       "employeesalary" NUMERIC,
       "employeejoiningdate" DATE NOT NULL
@@ -107,6 +106,7 @@ let UserService = class UserService {
         await this.connection.query(`
     CREATE TABLE IF NOT EXISTS "${schemaName}"."order" (
       "orderId" SERIAL PRIMARY KEY,
+      "soldBy" VARCHAR(255) NOT NULL,
       "customerId" INT NOT NULL,
       "customerContact" VARCHAR(255) NULL,
       "totalPrice" NUMERIC NOT NULL DEFAULT 0,

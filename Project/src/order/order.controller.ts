@@ -16,7 +16,7 @@ export class OrderController {
 
   @Post()
   createOrder(@Body(ValidationPipe) createOrderDto: CreateOrderDto, @Request() req) {
-    const userName = req.user.userName;
+    const userName = req.user.username;
     return this.orderService.createOrder(userName,createOrderDto);
   }
 
