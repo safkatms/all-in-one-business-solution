@@ -9,38 +9,42 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Payroll = void 0;
+exports.OrderItem = void 0;
 const typeorm_1 = require("typeorm");
-const employee_entity_1 = require("../../employee/entities/employee.entity");
-let Payroll = class Payroll {
+const order_entity_1 = require("./order.entity");
+let OrderItem = class OrderItem {
 };
-exports.Payroll = Payroll;
+exports.OrderItem = OrderItem;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Payroll.prototype, "payrollId", void 0);
+], OrderItem.prototype, "orderItemId", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => employee_entity_1.Employee),
-    (0, typeorm_1.JoinColumn)({ name: "employeeId" }),
-    __metadata("design:type", employee_entity_1.Employee)
-], Payroll.prototype, "employee", void 0);
-__decorate([
-    (0, typeorm_1.Column)('numeric'),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
-], Payroll.prototype, "salary", void 0);
+], OrderItem.prototype, "orderId", void 0);
 __decorate([
-    (0, typeorm_1.Column)('numeric', { default: 0 }),
+    (0, typeorm_1.ManyToOne)(() => order_entity_1.Order, (order) => order.orderItems),
+    (0, typeorm_1.JoinColumn)({ name: "orderId" }),
+    __metadata("design:type", order_entity_1.Order)
+], OrderItem.prototype, "order", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
-], Payroll.prototype, "bonus", void 0);
+], OrderItem.prototype, "productId", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Payroll.prototype, "payrollMonth", void 0);
+], OrderItem.prototype, "productName", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Payroll.prototype, "status", void 0);
-exports.Payroll = Payroll = __decorate([
-    (0, typeorm_1.Entity)("payroll")
-], Payroll);
-//# sourceMappingURL=payroll.entity.js.map
+    __metadata("design:type", Number)
+], OrderItem.prototype, "quantity", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], OrderItem.prototype, "price", void 0);
+exports.OrderItem = OrderItem = __decorate([
+    (0, typeorm_1.Entity)("orderItem")
+], OrderItem);
+//# sourceMappingURL=order-item.entity.js.map

@@ -3,7 +3,7 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, OneToMany
 import { User } from 'src/user/entities/user.entity';
 import { Payroll } from 'src/payroll/entities/payroll.entity';
 
-@Entity()
+@Entity("employee")
 export class Employee {
   @PrimaryGeneratedColumn()
   employeeid: number;

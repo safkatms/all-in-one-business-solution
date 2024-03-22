@@ -37,6 +37,6 @@ __decorate([
     __metadata("design:type", Date)
 ], Employee.prototype, "employeejoiningdate", void 0);
 exports.Employee = Employee = __decorate([
-    (0, typeorm_1.Entity)()
+    (0, typeorm_1.Entity)("employee")
 ], Employee);
 //# sourceMappingURL=employee.entity.js.map

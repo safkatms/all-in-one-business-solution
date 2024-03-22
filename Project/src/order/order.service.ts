@@ -1,76 +1,87 @@
-// src/orders/orders.service.ts
+// src/orders/order.service.ts
 
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Order } from './entities/order.entity';
 import { OrderItem } from './entities/order-item.entity';
-import { InventoryManagement } from '../inventory-management/entities/inventory-management.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { AddOrderItemDto } from './dto/add-order-item.dto';
+import { InventoryManagement } from 'src/inventory-management/entities/inventory-management.entity';
+import { Customer } from 'src/customer/entities/customer.entity';
 
 @Injectable()
 export class OrderService {
   constructor(
     @InjectRepository(Order)
-    private readonly orderRepository: Repository<Order>,
+    private orderRepository: Repository<Order>,
     @InjectRepository(OrderItem)
-    private readonly orderItemRepository: Repository<OrderItem>,
+    private orderItemRepository: Repository<OrderItem>,
     @InjectRepository(InventoryManagement)
     private readonly inventoryRepository: Repository<InventoryManagement>,
+    @InjectRepository(Customer)
+    private readonly customerRepository: Repository<Customer>,
   ) {}
 
-  async createOrder(createOrderDto: CreateOrderDto): Promise<Order> {
-    const order = this.orderRepository.create(createOrderDto);
+  async createOrder(createOrderDto: CreateOrderDto): Promise<any> {
+    const customer = await this.customerRepository.findOne({
+      where: { contact: createOrderDto.customerContact },
+    });
+  
+    if (!customer) {
+      // If no customer is found with the provided contact, return a message indicating the issue.
+      return { message: "Order creation failed: Customer with provided contact does not exist." };
+    }
+  
+    const order = this.orderRepository.create({
+      customer: customer,
+      customerContact:customer.contact
+    });
     await this.orderRepository.save(order);
-    return order;
+    return { message: "Order successfully created." ,order:order};
   }
+  
 
-  async addOrderItem(orderId: number, addOrderItemDto: AddOrderItemDto): Promise<OrderItem> {
+  async addOrderItems(orderId: number, body: any): Promise<Order> {
+    // Extract items array from the body
+    const items = Array.isArray(body.items) ? body.items : [body];
+    let totalPrice = 0;
+
     const order = await this.orderRepository.findOneBy({ orderId });
     if (!order) {
-      throw new NotFoundException(`Order with ID ${orderId} not found.`);
+        throw new NotFoundException(`Order with ID ${orderId} not found.`);
     }
 
-    let product;
-    if (addOrderItemDto.productId) {
-      product = await this.inventoryRepository.findOneBy({ productId: addOrderItemDto.productId });
-    } else {
-      product = await this.inventoryRepository.findOneBy({ productName: addOrderItemDto.productName });
+    for (const itemDto of items) {
+        const product = await this.inventoryRepository.findOne({
+            where: [
+                { productId: itemDto.productId },
+                { productName: itemDto.productName },
+            ],
+        });
+
+        if (!product) {
+            continue; // Or handle accordingly, e.g., skip item or abort with an error
+        }
+
+        const price = product.productSellPrice * itemDto.quantity;
+        totalPrice += price;
+
+        const orderItem = this.orderItemRepository.create({
+            orderId: order.orderId,
+            productId: product.productId,
+            productName: product.productName,
+            quantity: itemDto.quantity,
+            price,
+        });
+
+        await this.orderItemRepository.save(orderItem);
     }
 
-    if (!product) {
-      throw new NotFoundException('Product not found.');
-    }
-
-    if (product.productQuantity < addOrderItemDto.quantity) {
-      throw new BadRequestException('Not enough product quantity available.');
-    }
-
-    // Update product quantity
-    product.productQuantity -= addOrderItemDto.quantity;
-    await this.inventoryRepository.save(product);
-
-    // Create and save the order item
-    const orderItem = this.orderItemRepository.create({
-      orderId,
-      productId: product.productId,
-      productName: product.productName,
-      quantity: addOrderItemDto.quantity,
-      price: product.productSellPrice * addOrderItemDto.quantity,
-    });
-    await this.orderItemRepository.save(orderItem);
-
-    return orderItem;
-  }
-
-  // Method to handle adding multiple items if needed
-  async addMultipleOrderItems(orderId: number, itemsDto: AddOrderItemDto[]): Promise<OrderItem[]> {
-    const orderItems = [];
-    for (const itemDto of itemsDto) {
-      const orderItem = await this.addOrderItem(orderId, itemDto);
-      orderItems.push(orderItem);
-    }
-    return orderItems;
-  }
+    order.totalPrice += totalPrice;
+    await this.orderRepository.save(order);
+    return order;
 }
+
+}
+

@@ -2,7 +2,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Employee } from 'src/employee/entities/employee.entity';
 
-@Entity()
+@Entity("payroll")
 export class Payroll {
   @PrimaryGeneratedColumn()
   payrollId: number;

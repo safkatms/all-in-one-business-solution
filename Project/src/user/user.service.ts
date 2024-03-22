@@ -1,4 +1,8 @@
-import { Injectable, ConflictException, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Connection, MoreThan } from 'typeorm';
 import { User } from './entities/user.entity';
@@ -13,7 +17,7 @@ export class UserService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
     private connection: Connection,
-  ) { }
+  ) {}
 
   async registerUser(createUserDto: CreateUserDto): Promise<any> {
     const { username, email, password, company } = createUserDto;
@@ -23,7 +27,9 @@ export class UserService {
     });
 
     if (existingUser) {
-      throw new ConflictException('User already registered with given username or email');
+      throw new ConflictException(
+        'User already registered with given username or email',
+      );
     }
 
     const existingCompany = await this.usersRepository.findOne({
@@ -31,7 +37,9 @@ export class UserService {
     });
 
     if (existingCompany) {
-      throw new ConflictException('User already registered with given company name');
+      throw new ConflictException(
+        'User already registered with given company name',
+      );
     }
 
     const saltOrRounds = 10;
@@ -47,7 +55,7 @@ export class UserService {
 
     await this.createSchemaForUser(savedUser.company);
 
-    return {massege:"Registation successful."};
+    return { massege: 'Registation successful.' };
   }
 
   private async createSchemaForUser(company: string): Promise<void> {
@@ -58,7 +66,7 @@ export class UserService {
 
     //create employee table for separate company
     await this.connection.query(`
-    CREATE TABLE IF NOT EXISTS "${schemaName}".Employee (
+    CREATE TABLE IF NOT EXISTS "${schemaName}"."employee" (
       "employeeid" SERIAL PRIMARY KEY,
       "userid" INT REFERENCES public."user"("userId") ON DELETE CASCADE ON UPDATE CASCADE,
       "employeesalary" NUMERIC,
@@ -97,7 +105,7 @@ export class UserService {
     await this.connection.query(`
     CREATE TABLE IF NOT EXISTS "${schemaName}"."payroll" (
       "payrollId" SERIAL PRIMARY KEY,
-      "employeeId" INT REFERENCES "${schemaName}".Employee("employeeid") ON DELETE CASCADE ON UPDATE CASCADE,
+      "employeeId" INT REFERENCES "${schemaName}"."employee"("employeeid") ON DELETE CASCADE ON UPDATE CASCADE,
       "salary" NUMERIC NOT NULL,
       "bonus" NUMERIC DEFAULT 0,
       "payrollMonth" VARCHAR NOT NULL,
@@ -105,8 +113,8 @@ export class UserService {
     )    
 `);
 
-await this.connection.query(`
-    CREATE TABLE IF NOT EXISTS "${schemaName}".Customer (
+    await this.connection.query(`
+    CREATE TABLE IF NOT EXISTS "${schemaName}"."customer" (
       "id" SERIAL PRIMARY KEY,
       "name" VARCHAR NOT NULL,
       "contact" VARCHAR NOT NULL,
@@ -114,14 +122,44 @@ await this.connection.query(`
     )    
 `);
 
+    await this.connection.query(`
+    CREATE TABLE IF NOT EXISTS "${schemaName}"."order" (
+      "orderId" SERIAL PRIMARY KEY,
+      "customerId" INT NOT NULL,
+      "customerContact" VARCHAR(255) NULL,
+      "totalPrice" NUMERIC NOT NULL DEFAULT 0,
+      "orderStatus" VARCHAR(255) NOT NULL DEFAULT 'pending',
+      CONSTRAINT fk_customer
+          FOREIGN KEY("customerId") 
+          REFERENCES "${schemaName}"."customer"("id")
+          ON DELETE CASCADE ON UPDATE CASCADE
+    )
+`);
+
+
+    await this.connection.query(`
+    CREATE TABLE IF NOT EXISTS "${schemaName}"."orderItem" (
+      "orderItemId" SERIAL PRIMARY KEY,
+      "orderId" INT NOT NULL,
+      "productId" INT NOT NULL,
+      "productName" VARCHAR(255) NOT NULL,
+      "quantity" INT NOT NULL,
+      "price" NUMERIC NOT NULL,
+      CONSTRAINT fk_order
+          FOREIGN KEY("orderId") 
+          REFERENCES "${schemaName}"."order"("orderId")
+          ON DELETE CASCADE ON UPDATE CASCADE
+    )
+`);
   }
 
-
-  async updateProfile(userId: number, updateProfileDto: UpdateProfileDto): Promise<User> {
+  async updateProfile(
+    userId: number,
+    updateProfileDto: UpdateProfileDto,
+  ): Promise<User> {
     await this.usersRepository.update(userId, updateProfileDto);
     return this.usersRepository.findOneBy({ userId });
   }
-
 
   async findByUsername(username: string): Promise<User | undefined> {
     return this.usersRepository.findOneBy({ username });
@@ -130,18 +168,34 @@ await this.connection.query(`
   async findProfileByUsername(username: string): Promise<User | undefined> {
     return this.usersRepository.findOne({
       where: { username },
-      select: ['userId', 'firstName', 'lastName', 'email', 'username', 'mobileNo', 'gender', 'profilePicture'],
+      select: [
+        'userId',
+        'firstName',
+        'lastName',
+        'email',
+        'username',
+        'mobileNo',
+        'gender',
+        'profilePicture',
+      ],
     });
   }
 
-  async changePassword(userId: number, currentPassword: string, newPassword: string): Promise<void> {
+  async changePassword(
+    userId: number,
+    currentPassword: string,
+    newPassword: string,
+  ): Promise<void> {
     const user = await this.usersRepository.findOneBy({ userId });
 
     if (!user) {
       throw new UnauthorizedException('User not found');
     }
 
-    const passwordMatches = await bcrypt.compare(currentPassword, user.password);
+    const passwordMatches = await bcrypt.compare(
+      currentPassword,
+      user.password,
+    );
     if (!passwordMatches) {
       throw new UnauthorizedException('Current password is incorrect');
     }
@@ -164,10 +218,7 @@ await this.connection.query(`
       passwordResetToken: token,
       passwordResetTokenExpires: expiration,
     });
-
   }
-
-
 
   async resetPassword(token: string, newPassword: string): Promise<void> {
     const user = await this.usersRepository.findOne({
@@ -190,5 +241,4 @@ await this.connection.query(`
       passwordResetTokenExpires: null,
     });
   }
-
 }
