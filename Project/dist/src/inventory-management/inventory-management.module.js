@@ -12,7 +12,13 @@ const inventory_management_service_1 = require("./inventory-management.service")
 const inventory_management_controller_1 = require("./inventory-management.controller");
 const inventory_management_entity_1 = require("./entities/inventory-management.entity");
 const typeorm_1 = require("@nestjs/typeorm");
+const middleware_middleware_1 = require("./middleware/middleware.middleware");
 let InventoryManagementModule = class InventoryManagementModule {
+    configure(consumer) {
+        consumer
+            .apply(middleware_middleware_1.InventoryValidationMiddleware)
+            .forRoutes('inventory-management');
+    }
 };
 exports.InventoryManagementModule = InventoryManagementModule;
 exports.InventoryManagementModule = InventoryManagementModule = __decorate([

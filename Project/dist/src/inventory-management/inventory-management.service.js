@@ -46,7 +46,13 @@ let InventoryManagementService = class InventoryManagementService {
         return await this.inventoryRepo.find();
     }
     async findOne(id) {
-        return await this.inventoryRepo.findOne({ where: { productId: id } });
+        const productCheck = await this.inventoryRepo.findOne({
+            where: { productId: id },
+        });
+        if (!productCheck) {
+            throw new common_1.NotFoundException(`Product with ID ${id} not found`);
+        }
+        return productCheck;
     }
     async update(id, updateInventoryDto) {
         const existingProduct = await this.inventoryRepo.findOne({
