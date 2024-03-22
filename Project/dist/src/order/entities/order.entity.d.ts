@@ -1,4 +1,4 @@
-
+import { OrderItem } from './order-item.entity';
 import { Customer } from 'src/customer/entities/customer.entity';
 export declare enum OrderStatus {
     Pending = "pending",

@@ -59,11 +59,6 @@ export class OrderService {
                 { productName: itemDto.productName },
             ],
         });
-
-        if (!product) {
-            continue; // Or handle accordingly, e.g., skip item or abort with an error
-        }
-
         const price = product.productSellPrice * itemDto.quantity;
         totalPrice += price;
 

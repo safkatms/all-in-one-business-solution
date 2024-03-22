@@ -7,6 +7,7 @@ import { AddOrderItemDto } from './dto/add-order-item.dto';
 import { JwtAuthGuard } from 'src/guards/jwt.guard';
 import { SetSchemaGuard } from 'src/guards/schema.guard';
 import { RoleGuard } from 'src/guards/role.guard';
+import { CheckProductGuard } from 'src/middleware/check-product.middleware';
 
 @Controller('order')
 @UseGuards(JwtAuthGuard,SetSchemaGuard, new RoleGuard(['owner','salesman']))
@@ -19,6 +20,7 @@ export class OrderController {
   }
 
   @Post(':orderId/items')
+  @UseGuards(CheckProductGuard)
   addOrderItems(@Param('orderId') orderId: number, @Body(ValidationPipe) itemsDto: AddOrderItemDto[]) {
     return this.orderService.addOrderItems(orderId, itemsDto);
   }
