@@ -19,6 +19,7 @@ const update_delivery_dto_1 = require("./dto/update-delivery.dto");
 const jwt_guard_1 = require("../../guards/jwt.guard");
 const role_guard_1 = require("../../guards/role.guard");
 const schema_guard_1 = require("../../guards/schema.guard");
+const deliveryManagement_guard_1 = require("./guard/deliveryManagement.guard");
 let DeliveryController = class DeliveryController {
     constructor(deliveryService) {
         this.deliveryService = deliveryService;
@@ -35,6 +36,7 @@ let DeliveryController = class DeliveryController {
 };
 exports.DeliveryController = DeliveryController;
 __decorate([
+    (0, common_1.UseGuards)(deliveryManagement_guard_1.DeliveryManagementValidIdGuard),
     (0, common_1.Patch)('make-delivery/:id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
@@ -43,6 +45,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], DeliveryController.prototype, "makeDelivery", null);
 __decorate([
+    (0, common_1.UseGuards)(deliveryManagement_guard_1.DeliveryManagementValidIdGuard),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -50,6 +53,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], DeliveryController.prototype, "findOne", null);
 __decorate([
+    (0, common_1.UseGuards)(deliveryManagement_guard_1.DeliveryManagementValidIdGuard),
     (0, common_1.Patch)('returned-delivery/:id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
