@@ -26,7 +26,7 @@ export class PurchaseManagementController {
   constructor(
     private readonly purchaseManagementService: PurchaseManagementService,
   ) {}
-  @Post()
+  @Post('add-purchase')
   create(
     @Body(ValidationPipe)
     createPurchaseManagementDto: CreatePurchaseManagementDto,
@@ -45,7 +45,7 @@ export class PurchaseManagementController {
     return this.purchaseManagementService.findPurchaseById(+id);
   }
 
-  @Patch(':id')
+  @Patch('modify-purchase/:id')
   update(
     @Param('id') id: string,
     @Body(ValidationPipe)
@@ -57,7 +57,7 @@ export class PurchaseManagementController {
     );
   }
 
-  @Delete(':id')
+  @Delete('remove-purchase/:id')
   remove(@Param('id') id: string) {
     return this.purchaseManagementService.remove(+id);
   }
