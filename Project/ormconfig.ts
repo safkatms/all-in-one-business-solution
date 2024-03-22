@@ -16,6 +16,7 @@ export const config: PostgresConnectionOptions = {
   port: 5432,
   username: 'postgres',
   password: 'admin',
+
   entities: [
     User,
     Package,
