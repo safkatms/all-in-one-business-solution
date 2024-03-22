@@ -26,9 +26,6 @@ let DeliveryController = class DeliveryController {
     makeDelivery(id, updateDeliveryDto) {
         return this.deliveryService.makeDelivery(+id, updateDeliveryDto);
     }
-    findAll() {
-        return this.deliveryService.findAll();
-    }
     findOne(id) {
         return this.deliveryService.findOne(+id);
     }
@@ -45,12 +42,6 @@ __decorate([
     __metadata("design:paramtypes", [String, update_delivery_dto_1.UpdateDeliveryDto]),
     __metadata("design:returntype", void 0)
 ], DeliveryController.prototype, "makeDelivery", null);
-__decorate([
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], DeliveryController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),

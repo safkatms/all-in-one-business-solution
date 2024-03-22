@@ -4,7 +4,6 @@ export declare class DeliveryController {
     private readonly deliveryService;
     constructor(deliveryService: DeliveryService);
     makeDelivery(id: string, updateDeliveryDto: UpdateDeliveryDto): Promise<string>;
-    findAll(): string;
-    findOne(id: string): Promise<void>;
+    findOne(id: string): Promise<import("src/order/entities/order.entity").Order>;
     returnDelivery(id: string, updateDeliveryDto: UpdateDeliveryDto): Promise<string>;
 }

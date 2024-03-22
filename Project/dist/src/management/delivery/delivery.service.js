@@ -27,15 +27,15 @@ let DeliveryService = class DeliveryService {
     }
     async makeDelivery(id, updateDeliveryDto) {
         const { status } = updateDeliveryDto;
-        const order = await this.orderRepository.findOne({
+        const orderChk = await this.orderRepository.findOne({
             where: { orderId: id },
         });
-        if (!order) {
+        if (!orderChk) {
             throw new common_1.NotFoundException(`Order with ID ${id} not found`);
         }
         if (status === order_entity_1.OrderStatus.Completed) {
-            order.orderStatus = status;
-            await this.orderRepository.save(order);
+            orderChk.orderStatus = status;
+            await this.orderRepository.save(orderChk);
             const orderItems = await this.orderItemRepository.find({
                 where: { orderId: id },
             });
@@ -54,28 +54,26 @@ let DeliveryService = class DeliveryService {
             throw new common_1.BadRequestException('Invalid status provided');
         }
     }
-    findAll() {
-        return `This action returns all delivery`;
-    }
     async findOne(id) {
-        const order = await this.orderRepository.findOne({
+        const orderchk = await this.orderRepository.findOne({
             where: { orderId: id },
         });
-        if (!order) {
+        if (!orderchk) {
             throw new common_1.NotFoundException(`Order with ID ${id} not found`);
         }
+        return orderchk;
     }
     async returnedDelivery(id, updateDeliveryDto) {
         const { status } = updateDeliveryDto;
-        const order = await this.orderRepository.findOne({
+        const orderChk = await this.orderRepository.findOne({
             where: { orderId: id },
         });
-        if (!order) {
+        if (!orderChk) {
             throw new common_1.NotFoundException(`Order with ID ${id} not found`);
         }
         if (status === order_entity_1.OrderStatus.Returned) {
-            order.orderStatus = status;
-            await this.orderRepository.save(order);
+            orderChk.orderStatus = status;
+            await this.orderRepository.save(orderChk);
             return `Order #${id} status updated to ${status}`;
         }
         else {

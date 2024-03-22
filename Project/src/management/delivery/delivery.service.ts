@@ -25,16 +25,16 @@ export class DeliveryService {
   async makeDelivery(id: number, updateDeliveryDto: UpdateDeliveryDto) {
     const { status } = updateDeliveryDto;
 
-    const order = await this.orderRepository.findOne({
+    const orderChk = await this.orderRepository.findOne({
       where: { orderId: id },
     });
-    if (!order) {
+    if (!orderChk) {
       throw new NotFoundException(`Order with ID ${id} not found`);
     }
 
     if (status === OrderStatus.Completed) {
-      order.orderStatus = status;
-      await this.orderRepository.save(order);
+      orderChk.orderStatus = status;
+      await this.orderRepository.save(orderChk);
 
       //deduce the quantity in the inventoy managemnt
 
@@ -57,33 +57,30 @@ export class DeliveryService {
     }
   }
 
-  findAll() {
-    return `This action returns all delivery`;
-  }
-
   async findOne(id: number) {
-    const order = await this.orderRepository.findOne({
+    const orderchk = await this.orderRepository.findOne({
       where: { orderId: id },
     });
-    if (!order) {
+    if (!orderchk) {
       throw new NotFoundException(`Order with ID ${id} not found`);
     }
+    return orderchk;
   }
 
   //returned delivery
   async returnedDelivery(id: number, updateDeliveryDto: UpdateDeliveryDto) {
     const { status } = updateDeliveryDto;
 
-    const order = await this.orderRepository.findOne({
+    const orderChk = await this.orderRepository.findOne({
       where: { orderId: id },
     });
-    if (!order) {
+    if (!orderChk) {
       throw new NotFoundException(`Order with ID ${id} not found`);
     }
 
     if (status === OrderStatus.Returned) {
-      order.orderStatus = status;
-      await this.orderRepository.save(order);
+      orderChk.orderStatus = status;
+      await this.orderRepository.save(orderChk);
       return `Order #${id} status updated to ${status}`;
     } else {
       throw new BadRequestException('Invalid status provided');
