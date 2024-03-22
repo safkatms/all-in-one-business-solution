@@ -81,6 +81,20 @@ export class DeliveryService {
     if (status === OrderStatus.Returned) {
       orderChk.orderStatus = status;
       await this.orderRepository.save(orderChk);
+
+      //add the returned qnty in db
+      const orderItems = await this.orderItemRepository.find({
+        where: { orderId: id },
+      });
+      for (const item of orderItems) {
+        const inventoryItem = await this.inventoryRepository.findOne({
+          where: { productId: item.productId },
+        });
+        if (inventoryItem) {
+          inventoryItem.productQuantity += item.quantity;
+          await this.inventoryRepository.save(inventoryItem);
+        }
+      }
       return `Order #${id} status updated to ${status}`;
     } else {
       throw new BadRequestException('Invalid status provided');
