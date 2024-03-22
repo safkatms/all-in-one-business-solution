@@ -1,6 +1,7 @@
 import { Customer } from 'src/customer/entities/customer.entity';
 import { Employee } from 'src/employee/entities/employee.entity';
 import { InventoryManagement } from 'src/inventory-management/entities/inventory-management.entity';
+import { Leave } from 'src/leave-application/entities/leave-application.entity';
 import { OrderItem } from 'src/order/entities/order-item.entity';
 import { Order } from 'src/order/entities/order.entity';
 import { Package } from 'src/package/entities/package.entity';
@@ -15,7 +16,7 @@ export const config: PostgresConnectionOptions = {
   host: 'localhost',
   port: 5432,
   username: 'postgres',
-  password: 'admin',
+  password: '123',
 
   entities: [
     User,
@@ -27,6 +28,7 @@ export const config: PostgresConnectionOptions = {
     Customer,
     Order,
     OrderItem,
+    Leave
   ],
   synchronize: true,
 };

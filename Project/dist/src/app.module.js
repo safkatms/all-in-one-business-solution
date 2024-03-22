@@ -23,6 +23,7 @@ const payroll_module_1 = require("./payroll/payroll.module");
 const customer_module_1 = require("./customer/customer.module");
 const order_module_1 = require("./order/order.module");
 const delivery_module_1 = require("./management/delivery/delivery.module");
+const leave_application_module_1 = require("./leave-application/leave-application.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -41,6 +42,7 @@ exports.AppModule = AppModule = __decorate([
             customer_module_1.CustomerModule,
             order_module_1.OrderModule,
             delivery_module_1.DeliveryModule,
+            leave_application_module_1.LeaveApplicationModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

@@ -12,7 +12,7 @@ export class SetSchemaGuard implements CanActivate {
 
     if (user && user.company) {
       const schemaName = `${user.company}`;
-      console.log('Setting search path to:', schemaName); // Debugging: Log schema name
+      console.log('Setting search path to:', schemaName);
       await this.connection.query(`SET search_path TO "${schemaName}"`);
     }
 
