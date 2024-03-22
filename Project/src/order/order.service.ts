@@ -23,7 +23,7 @@ export class OrderService {
     private readonly customerRepository: Repository<Customer>,
   ) {}
 
-  async createOrder(createOrderDto: CreateOrderDto): Promise<any> {
+  async createOrder(userName:string, createOrderDto: CreateOrderDto): Promise<any> {
     const customer = await this.customerRepository.findOne({
       where: { contact: createOrderDto.customerContact },
     });
@@ -35,7 +35,8 @@ export class OrderService {
   
     const order = this.orderRepository.create({
       customer: customer,
-      customerContact:customer.contact
+      customerContact:customer.contact,
+      soldBy:userName
     });
     await this.orderRepository.save(order);
     return { message: "Order successfully created." ,order:order};

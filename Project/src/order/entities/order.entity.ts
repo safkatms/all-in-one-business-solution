@@ -12,6 +12,9 @@ export class Order {
   @PrimaryGeneratedColumn()
   orderId: number;
 
+  @Column()
+  soldBy:string;
+
   // Maintains the primary FK relationship for data integrity.
   @ManyToOne(() => Customer, (customer) => customer.orders)
   @JoinColumn({ name: "customerId" })
