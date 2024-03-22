@@ -16,11 +16,7 @@ exports.config = {
     host: 'localhost',
     port: 5432,
     username: 'postgres',
-<<<<<<< HEAD
-    password: '123',
-=======
     password: 'admin',
->>>>>>> 14c8ec488c6278a1b29da0fc5ef0502e924d3bb1
     entities: [
         user_entity_1.User,
         package_entity_1.Package,

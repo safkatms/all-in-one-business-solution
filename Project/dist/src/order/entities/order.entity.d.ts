@@ -7,6 +7,7 @@ export declare enum OrderStatus {
 }
 export declare class Order {
     orderId: number;
+    soldBy: string;
     customer: Customer;
     customerContact: string;
     orderItems: OrderItem[];

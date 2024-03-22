@@ -24,8 +24,9 @@ let OrderController = class OrderController {
     constructor(orderService) {
         this.orderService = orderService;
     }
-    createOrder(createOrderDto) {
-        return this.orderService.createOrder(createOrderDto);
+    createOrder(createOrderDto, req) {
+        const userName = req.user.username;
+        return this.orderService.createOrder(userName, createOrderDto);
     }
     addOrderItems(orderId, itemsDto) {
         return this.orderService.addOrderItems(orderId, itemsDto);
@@ -35,8 +36,9 @@ exports.OrderController = OrderController;
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)(common_1.ValidationPipe)),
+    __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_order_dto_1.CreateOrderDto]),
+    __metadata("design:paramtypes", [create_order_dto_1.CreateOrderDto, Object]),
     __metadata("design:returntype", void 0)
 ], OrderController.prototype, "createOrder", null);
 __decorate([

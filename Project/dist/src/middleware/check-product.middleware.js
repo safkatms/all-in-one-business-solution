@@ -28,7 +28,7 @@ let CheckProductGuard = class CheckProductGuard {
         const orderId = +req.params.orderId;
         const existingItemsCount = await this.orderItemRepository.count({ where: { order: { orderId: orderId } } });
         if (existingItemsCount > 0) {
-            throw new common_1.BadRequestException(`Order ${orderId} already has items. No additional items can be added.`);
+            throw new common_1.BadRequestException(`Order ${orderId} already has created.`);
         }
         const items = Array.isArray(req.body.items) ? req.body.items : [req.body];
         for (const item of items) {

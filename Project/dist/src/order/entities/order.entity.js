@@ -27,6 +27,10 @@ __decorate([
     __metadata("design:type", Number)
 ], Order.prototype, "orderId", void 0);
 __decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Order.prototype, "soldBy", void 0);
+__decorate([
     (0, typeorm_1.ManyToOne)(() => customer_entity_1.Customer, (customer) => customer.orders),
     (0, typeorm_1.JoinColumn)({ name: "customerId" }),
     __metadata("design:type", customer_entity_1.Customer)
