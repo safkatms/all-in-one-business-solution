@@ -32,15 +32,17 @@ let OrderService = class OrderService {
             where: { contact: createOrderDto.customerContact },
         });
         if (!customer) {
-            return { message: "Order creation failed: Customer with provided contact does not exist." };
+            return {
+                message: 'Order creation failed: Customer with provided contact does not exist.',
+            };
         }
         const order = this.orderRepository.create({
             customer: customer,
             customerContact: customer.contact,
-            soldBy: userName
+            soldBy: userName,
         });
         await this.orderRepository.save(order);
-        return { message: "Order successfully created.", order: order };
+        return { message: 'Order successfully created.', order: order };
     }
     async addOrderItems(orderId, body) {
         const items = Array.isArray(body.items) ? body.items : [body];
