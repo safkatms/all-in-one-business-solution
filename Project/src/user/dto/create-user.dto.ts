@@ -30,6 +30,16 @@ export class CreateUserDto {
   @Matches(/^01[3-9]\d{8}$/, { message: 'Mobile number must be a valid Bangladesh number.' })
   mobileNo: string;
 
+  @IsNotEmpty()
+  @IsString()
+  @Matches(/^[A-Z]+$/, { message: 'Company must be all uppercase, with no numbers, spaces, or special characters.' })
+  company: string;
+
+  @IsNotEmpty()
+  @IsEnum(Gender)
+  gender: Gender;
+
+  @IsNotEmpty()
   @IsString()
   @MinLength(6)
   @Matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;'<>,.?\/\\~`\-]).*$/, { message: 'Password must be at least 6 characters long, include at least one uppercase letter, one number, and one special character.' })
@@ -37,11 +47,7 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsString()
-  @Matches(/^[A-Z]+$/, { message: 'Company must be all uppercase, with no numbers, spaces, or special characters.' })
-  company: string;
-
-  @IsEnum(Gender)
-  gender: Gender;
+  conPassword: string;
 
 
 }

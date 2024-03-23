@@ -25,6 +25,8 @@ const order_module_1 = require("./order/order.module");
 const delivery_module_1 = require("./management/delivery/delivery.module");
 const invoice_module_1 = require("./invoice/invoice.module");
 const leave_application_module_1 = require("./leave-application/leave-application.module");
+const payment_module_1 = require("./payment/payment.module");
+const ban_user_module_1 = require("./ban-user/ban-user.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -45,6 +47,8 @@ exports.AppModule = AppModule = __decorate([
             delivery_module_1.DeliveryModule,
             invoice_module_1.InvoiceModule,
             leave_application_module_1.LeaveApplicationModule,
+            payment_module_1.PaymentModule,
+            ban_user_module_1.BanUserModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

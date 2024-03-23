@@ -48,4 +48,7 @@ export class User {
   @ManyToOne(() => Package)
   @JoinColumn({ name: "packageId" })
   package: Package;
+
+  @Column({default:false})
+  status:boolean;
 }

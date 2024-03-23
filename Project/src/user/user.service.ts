@@ -2,6 +2,7 @@ import {
   Injectable,
   ConflictException,
   UnauthorizedException,
+  BadRequestException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Connection, MoreThan } from 'typeorm';
@@ -20,7 +21,7 @@ export class UserService {
   ) {}
 
   async registerUser(createUserDto: CreateUserDto): Promise<any> {
-    const { username, email, password, company } = createUserDto;
+    const { username, email, password, conPassword, company } = createUserDto;
 
     const existingUser = await this.usersRepository.findOne({
       where: [{ username }, { email }],
@@ -39,6 +40,12 @@ export class UserService {
     if (existingCompany) {
       throw new ConflictException(
         'User already registered with given company name',
+      );
+    }
+
+    if (password !== conPassword) {
+      throw new BadRequestException(
+        'Password and confirm password should be the same',
       );
     }
 
@@ -191,7 +198,6 @@ export class UserService {
         'username',
         'mobileNo',
         'gender',
-        'profilePicture',
       ],
     });
   }
@@ -244,7 +250,9 @@ export class UserService {
     });
 
     if (!user) {
-      throw new Error('Invalid or expired password reset token');
+      throw new UnauthorizedException(
+        'Invalid or expired password reset token',
+      );
     }
 
     const saltOrRounds = 10;

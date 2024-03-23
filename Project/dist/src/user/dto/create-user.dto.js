@@ -49,6 +49,18 @@ __decorate([
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "mobileNo", void 0);
 __decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.Matches)(/^[A-Z]+$/, { message: 'Company must be all uppercase, with no numbers, spaces, or special characters.' }),
+    __metadata("design:type", String)
+], CreateUserDto.prototype, "company", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsEnum)(Gender),
+    __metadata("design:type", String)
+], CreateUserDto.prototype, "gender", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MinLength)(6),
     (0, class_validator_1.Matches)(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;'<>,.?\/\\~`\-]).*$/, { message: 'Password must be at least 6 characters long, include at least one uppercase letter, one number, and one special character.' }),
@@ -57,11 +69,6 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.Matches)(/^[A-Z]+$/, { message: 'Company must be all uppercase, with no numbers, spaces, or special characters.' }),
     __metadata("design:type", String)
-], CreateUserDto.prototype, "company", void 0);
-__decorate([
-    (0, class_validator_1.IsEnum)(Gender),
-    __metadata("design:type", String)
-], CreateUserDto.prototype, "gender", void 0);
+], CreateUserDto.prototype, "conPassword", void 0);
 //# sourceMappingURL=create-user.dto.js.map
