@@ -10,35 +10,46 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InventoryManagement = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const typeorm_1 = require("typeorm");
 let InventoryManagement = class InventoryManagement {
 };
 exports.InventoryManagement = InventoryManagement;
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'ID of the product', example: 1 }),
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], InventoryManagement.prototype, "productId", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Name of the product', example: 'Product Name' }),
     (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)
 ], InventoryManagement.prototype, "productName", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Details of the product',
+        example: 'Product Details',
+    }),
     (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)
 ], InventoryManagement.prototype, "productDetails", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Purchase price of the product', example: 10.5 }),
     (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", Number)
 ], InventoryManagement.prototype, "productPurchasePrice", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Sell price of the product', example: 15.0 }),
     (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", Number)
 ], InventoryManagement.prototype, "productSellPrice", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Brand of the product', example: 'Brand Name' }),
     (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)
 ], InventoryManagement.prototype, "porductBrand", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Quantity of the product', example: 100 }),
     (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", Number)
 ], InventoryManagement.prototype, "productQuantity", void 0);
