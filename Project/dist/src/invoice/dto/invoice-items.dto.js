@@ -9,30 +9,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateInvoiceDto = void 0;
+exports.InvoiceItemDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
-const invoice_items_dto_1 = require("./invoice-items.dto");
-class CreateInvoiceDto {
+class InvoiceItemDto {
 }
-exports.CreateInvoiceDto = CreateInvoiceDto;
+exports.InvoiceItemDto = InvoiceItemDto;
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'The ID of the order' }),
+    (0, swagger_1.ApiProperty)({ description: 'ID of the product' }),
     __metadata("design:type", Number)
-], CreateInvoiceDto.prototype, "orderId", void 0);
+], InvoiceItemDto.prototype, "productId", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Name of the customer' }),
+    (0, swagger_1.ApiProperty)({ description: 'Name of the product' }),
     __metadata("design:type", String)
-], CreateInvoiceDto.prototype, "customerName", void 0);
+], InvoiceItemDto.prototype, "productName", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Contact information of the customer' }),
-    __metadata("design:type", String)
-], CreateInvoiceDto.prototype, "customerContact", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ type: [invoice_items_dto_1.InvoiceItemDto], description: 'Items included in the invoice' }),
-    __metadata("design:type", Array)
-], CreateInvoiceDto.prototype, "items", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Total amount of the invoice' }),
+    (0, swagger_1.ApiProperty)({ description: 'Quantity of the product' }),
     __metadata("design:type", Number)
-], CreateInvoiceDto.prototype, "total", void 0);
-//# sourceMappingURL=create-invoice.dto.js.map
+], InvoiceItemDto.prototype, "quantity", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Price of one unit of the product' }),
+    __metadata("design:type", Number)
+], InvoiceItemDto.prototype, "price", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Total amount for this item' }),
+    __metadata("design:type", Number)
+], InvoiceItemDto.prototype, "total", void 0);
+//# sourceMappingURL=invoice-items.dto.js.map

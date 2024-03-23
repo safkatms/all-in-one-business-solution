@@ -10,25 +10,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreatePaymentDto = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class CreatePaymentDto {
 }
 exports.CreatePaymentDto = CreatePaymentDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Card number (16 to 19 digits)', minLength: 16, maxLength: 19 }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.Length)(16, 19),
+    (0, class_validator_1.Length)(16, 19, { message: 'Card number must be between 16 and 19 characters' }),
     __metadata("design:type", String)
 ], CreatePaymentDto.prototype, "cardNumber", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Card expiry date (MM/YYYY)' }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreatePaymentDto.prototype, "cardExpiry", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Card CVC (3 digits)' }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.Length)(3),
+    (0, class_validator_1.Length)(3, 3, { message: 'Card CVC must be 3 characters' }),
     __metadata("design:type", String)
 ], CreatePaymentDto.prototype, "cardCVC", void 0);
 //# sourceMappingURL=create-payment.dto.js.map

@@ -18,6 +18,7 @@ const payment_service_1 = require("./payment.service");
 const create_payment_dto_1 = require("./dto/create-payment.dto");
 const jwt_guard_1 = require("../guards/jwt.guard");
 const role_guard_1 = require("../guards/role.guard");
+const swagger_1 = require("@nestjs/swagger");
 let PaymentController = class PaymentController {
     constructor(paymentService) {
         this.paymentService = paymentService;
@@ -30,6 +31,11 @@ let PaymentController = class PaymentController {
 exports.PaymentController = PaymentController;
 __decorate([
     (0, common_1.Post)(),
+    (0, swagger_1.ApiBody)({ type: create_payment_dto_1.CreatePaymentDto }),
+    (0, swagger_1.ApiCreatedResponse)({ description: 'Payment successfully processed' }),
+    (0, swagger_1.ApiBadRequestResponse)({ description: 'Invalid request payload' }),
+    (0, swagger_1.ApiUnauthorizedResponse)({ description: 'Unauthorized' }),
+    (0, swagger_1.ApiInternalServerErrorResponse)({ description: 'Internal server error' }),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Body)(common_1.ValidationPipe)),
     __metadata("design:type", Function),
@@ -37,6 +43,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PaymentController.prototype, "makePayment", null);
 exports.PaymentController = PaymentController = __decorate([
+    (0, swagger_1.ApiBearerAuth)('access-token'),
+    (0, swagger_1.ApiTags)('Payments'),
     (0, common_1.Controller)('payments'),
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, new role_guard_1.RoleGuard(['owner'])),
     __metadata("design:paramtypes", [payment_service_1.PaymentService])
