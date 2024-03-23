@@ -23,7 +23,11 @@ const payroll_module_1 = require("./payroll/payroll.module");
 const customer_module_1 = require("./customer/customer.module");
 const order_module_1 = require("./order/order.module");
 const delivery_module_1 = require("./management/delivery/delivery.module");
+<<<<<<< HEAD
 const invoice_module_1 = require("./invoice/invoice.module");
+=======
+const leave_application_module_1 = require("./leave-application/leave-application.module");
+>>>>>>> 07937661728f501b160b17ce4d3ae226695fa5cd
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -42,7 +46,11 @@ exports.AppModule = AppModule = __decorate([
             customer_module_1.CustomerModule,
             order_module_1.OrderModule,
             delivery_module_1.DeliveryModule,
+<<<<<<< HEAD
             invoice_module_1.InvoiceModule,
+=======
+            leave_application_module_1.LeaveApplicationModule,
+>>>>>>> 07937661728f501b160b17ce4d3ae226695fa5cd
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

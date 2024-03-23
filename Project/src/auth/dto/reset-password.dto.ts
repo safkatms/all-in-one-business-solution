@@ -7,8 +7,8 @@ export class ResetPasswordDto {
 
   @IsString({ message: 'Password must be a string' })
   @MinLength(6, { message: 'Password must be at least 6 characters long' })
-  @Matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;'<>,.?\/\\~`\-]).*$/, { 
-    message: 'Password must include at least one uppercase letter, one number, and one special character.' 
+  @Matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;'<>,.?\/\\~`\-]).*$/, {
+    message: 'Password must include at least one uppercase letter, one number, and one special character.'
   })
   password: string;
 }

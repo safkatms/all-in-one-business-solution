@@ -29,7 +29,7 @@ export class InventoryManagementController {
   ) {}
 
   @UsePipes(ValidationPipe)
-  @Post()
+  @Post('add-item')
   create(@Body() createInventoryManagementDto: CreateInventoryManagementDto) {
     return this.inventoryManagementService.create(createInventoryManagementDto);
   }
@@ -48,7 +48,7 @@ export class InventoryManagementController {
     return this.inventoryManagementService.findOne(+id);
   }
   @UsePipes(ValidationPipe)
-  @Patch(':id')
+  @Patch('modify-item/:id')
   update(
     @Param('id') id: number,
     @Body() updateInventoryManagementDto: UpdateInventoryManagementDto,
@@ -58,7 +58,7 @@ export class InventoryManagementController {
       updateInventoryManagementDto,
     );
   }
-  @Delete(':id')
+  @Delete('remove-item/:id')
   remove(@Param('id') id: string) {
     return this.inventoryManagementService.remove(+id);
   }

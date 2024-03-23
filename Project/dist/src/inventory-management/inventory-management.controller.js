@@ -46,7 +46,7 @@ let InventoryManagementController = class InventoryManagementController {
 exports.InventoryManagementController = InventoryManagementController;
 __decorate([
     (0, common_1.UsePipes)(common_1.ValidationPipe),
-    (0, common_1.Post)(),
+    (0, common_1.Post)('add-item'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_inventory_management_dto_1.CreateInventoryManagementDto]),
@@ -74,7 +74,7 @@ __decorate([
 ], InventoryManagementController.prototype, "findOne", null);
 __decorate([
     (0, common_1.UsePipes)(common_1.ValidationPipe),
-    (0, common_1.Patch)(':id'),
+    (0, common_1.Patch)('modify-item/:id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -82,7 +82,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], InventoryManagementController.prototype, "update", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
+    (0, common_1.Delete)('remove-item/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

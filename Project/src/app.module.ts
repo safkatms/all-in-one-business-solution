@@ -14,7 +14,11 @@ import { PayrollModule } from './payroll/payroll.module';
 import { CustomerModule } from './customer/customer.module';
 import { OrderModule } from './order/order.module';
 import { DeliveryModule } from './management/delivery/delivery.module';
+<<<<<<< HEAD
 import { InvoiceModule } from './invoice/invoice.module';
+=======
+import { LeaveApplicationModule } from './leave-application/leave-application.module';
+>>>>>>> 07937661728f501b160b17ce4d3ae226695fa5cd
 
 @Module({
   imports: [
@@ -30,7 +34,11 @@ import { InvoiceModule } from './invoice/invoice.module';
     CustomerModule,
     OrderModule,
     DeliveryModule,
+<<<<<<< HEAD
     InvoiceModule,
+=======
+    LeaveApplicationModule,
+>>>>>>> 07937661728f501b160b17ce4d3ae226695fa5cd
   ],
   controllers: [AppController],
   providers: [AppService],
