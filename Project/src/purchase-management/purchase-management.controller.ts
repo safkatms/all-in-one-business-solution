@@ -42,7 +42,7 @@ export class PurchaseManagementController {
   @ApiCreatedResponse({ description: 'Purchase successfully created.' })
   @ApiBadRequestResponse({ description: 'Bad request. Invalid input.' })
   @ApiConflictResponse({ description: 'Conflict. Purchase already exists.' })
-  @ApiBearerAuth()
+  @ApiBearerAuth('access-token')
   @ApiBody({ type: CreatePurchaseManagementDto })
   create(
     @Body(ValidationPipe)
@@ -54,14 +54,14 @@ export class PurchaseManagementController {
   }
   @Get()
   @ApiOkResponse({ description: 'List of all purchases.' })
-  @ApiBearerAuth()
+  @ApiBearerAuth('access-token')
   findAll() {
     return this.purchaseManagementService.findAllPurchaseDetails();
   }
 
   @ApiOkResponse({ description: 'Found purchase by ID.' })
   @ApiNotFoundResponse({ description: 'Purchase not found.' })
-  @ApiBearerAuth()
+  @ApiBearerAuth('access-token')
   @ApiParam({ name: 'id', description: 'ID of the purchase' })
   @Get(':id')
   findOne(@Param('id') id: string) {
@@ -71,7 +71,7 @@ export class PurchaseManagementController {
   @ApiOkResponse({ description: 'Purchase successfully updated.' })
   @ApiBadRequestResponse({ description: 'Bad request. Invalid input.' })
   @ApiNotFoundResponse({ description: 'Purchase not found.' })
-  @ApiBearerAuth()
+  @ApiBearerAuth('access-token')
   @ApiParam({ name: 'id', description: 'ID of the purchase' })
   @ApiBody({ type: CreatePurchaseManagementDto })
   @Patch('modify-purchase/:id')
@@ -88,7 +88,7 @@ export class PurchaseManagementController {
 
   @ApiOkResponse({ description: 'Purchase successfully deleted.' })
   @ApiNotFoundResponse({ description: 'Purchase not found.' })
-  @ApiBearerAuth()
+  @ApiBearerAuth('access-token')
   @ApiParam({ name: 'id', description: 'ID of the purchase' })
   @Delete('remove-purchase/:id')
   remove(@Param('id') id: string) {

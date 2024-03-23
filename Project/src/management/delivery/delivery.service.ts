@@ -51,7 +51,11 @@ export class DeliveryService {
         }
       }
 
-      return `Order #${id} status updated to ${status}`;
+      return {
+        message: `Order #${id} status updated to ${status}`,
+        inventoryUpdate: 'Inventory quantity deducted successfully',
+        order: orderChk,
+      };
     } else {
       throw new BadRequestException('Invalid status provided');
     }
@@ -95,9 +99,18 @@ export class DeliveryService {
           await this.inventoryRepository.save(inventoryItem);
         }
       }
-      return `Order #${id} status updated to ${status}`;
+      return {
+        message: `Order #${id} status updated to ${status}`,
+        inventoryUpdate:
+          'Returned items quantity added back to inventory successfully',
+        order: orderChk, // Return the updated order object
+      };
     } else {
       throw new BadRequestException('Invalid status provided');
     }
+  }
+  //find all
+  async findAll() {
+    return await this.orderRepository.find();
   }
 }
