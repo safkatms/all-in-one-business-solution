@@ -51,7 +51,7 @@ __decorate([
     (0, swagger_1.ApiCreatedResponse)({ description: 'Item successfully created.' }),
     (0, swagger_1.ApiBadRequestResponse)({ description: 'Bad request. Invalid input.' }),
     (0, swagger_1.ApiConflictResponse)({ description: 'Conflict. Item already exists.' }),
-    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
     (0, swagger_1.ApiBody)({ type: create_inventory_management_dto_1.CreateInventoryManagementDto }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -60,7 +60,7 @@ __decorate([
 ], InventoryManagementController.prototype, "create", null);
 __decorate([
     (0, swagger_1.ApiOkResponse)({ description: 'List of all items.' }),
-    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
@@ -69,7 +69,7 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiOkResponse)({ description: 'Found item by name.' }),
     (0, swagger_1.ApiNotFoundResponse)({ description: 'Item not found.' }),
-    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
     (0, swagger_1.ApiParam)({ name: 'itemName', description: 'Name of the item' }),
     (0, common_1.Get)('by-name/:itemName'),
     __param(0, (0, common_1.Param)('itemName')),
@@ -80,7 +80,7 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiOkResponse)({ description: 'Found item by ID.' }),
     (0, swagger_1.ApiNotFoundResponse)({ description: 'Item not found.' }),
-    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'ID of the item' }),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
@@ -94,7 +94,7 @@ __decorate([
     (0, swagger_1.ApiOkResponse)({ description: 'Item successfully updated.' }),
     (0, swagger_1.ApiBadRequestResponse)({ description: 'Bad request. Invalid input.' }),
     (0, swagger_1.ApiNotFoundResponse)({ description: 'Item not found.' }),
-    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'ID of the item' }),
     (0, swagger_1.ApiBody)({ type: create_inventory_management_dto_1.CreateInventoryManagementDto }),
     __param(0, (0, common_1.Param)('id')),
@@ -107,7 +107,7 @@ __decorate([
     (0, common_1.Delete)('remove-item/:id'),
     (0, swagger_1.ApiOkResponse)({ description: 'Item successfully deleted.' }),
     (0, swagger_1.ApiNotFoundResponse)({ description: 'Item not found.' }),
-    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'ID of the item' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),

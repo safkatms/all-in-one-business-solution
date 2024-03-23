@@ -32,7 +32,7 @@ export class OrderService {
     });
 
     if (!customer) {
-      // If no customer is found with the provided contact, return a message indicating the issue.
+     
       return {
         message:
           'Order creation failed: Customer with provided contact does not exist.',
@@ -49,7 +49,7 @@ export class OrderService {
   }
 
   async addOrderItems(orderId: number, body: any): Promise<Order> {
-    // Extract items array from the body
+   
     const items = Array.isArray(body.items) ? body.items : [body];
     let totalPrice = 0;
 

@@ -1,5 +1,3 @@
-// src/invoices/invoice.controller.ts
-
 import { Controller, Get, Param, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { InvoiceService } from './invoice.service';
 import { JwtAuthGuard } from 'src/guards/jwt.guard';
@@ -16,5 +14,4 @@ export class InvoiceController {
     return this.invoiceService.generateInvoiceForOrder(orderId);
   }
 
-  // Additional endpoints as needed...
 }

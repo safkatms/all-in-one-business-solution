@@ -30,7 +30,7 @@ export class SearchController {
 
   //find any data based on user search
   @Get()
-  @ApiBearerAuth()
+  @ApiBearerAuth('access-token')
   @ApiQuery({
     name: 'productName',
     required: false,

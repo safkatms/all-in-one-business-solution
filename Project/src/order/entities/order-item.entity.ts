@@ -10,7 +10,7 @@ export class OrderItem {
   orderId: number;
 
   @ManyToOne(() => Order, (order) => order.orderItems)
-  @JoinColumn({ name: "orderId" }) // Ensuring this matches DB schema
+  @JoinColumn({ name: "orderId" }) 
   order: Order;
 
   @Column()

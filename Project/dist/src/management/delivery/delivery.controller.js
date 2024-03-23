@@ -34,13 +34,16 @@ let DeliveryController = class DeliveryController {
     returnDelivery(id, updateDeliveryDto) {
         return this.deliveryService.returnedDelivery(+id, updateDeliveryDto);
     }
+    findAll() {
+        return this.deliveryService.findAll();
+    }
 };
 exports.DeliveryController = DeliveryController;
 __decorate([
     (0, common_1.UseGuards)(deliveryManagement_guard_1.DeliveryManagementValidIdGuard),
     (0, common_1.Patch)('make-delivery/:id'),
     (0, swagger_1.ApiOperation)({ summary: 'Make delivery' }),
-    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'ID of the delivery' }),
     (0, swagger_1.ApiBody)({ type: update_delivery_dto_1.UpdateDeliveryDto }),
     (0, swagger_1.ApiOkResponse)({ description: 'Delivery successfully made.' }),
@@ -55,7 +58,7 @@ __decorate([
     (0, common_1.UseGuards)(deliveryManagement_guard_1.DeliveryManagementValidIdGuard),
     (0, common_1.Get)(':id'),
     (0, swagger_1.ApiOperation)({ summary: 'Find delivery by ID' }),
-    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'ID of the delivery' }),
     (0, swagger_1.ApiOkResponse)({ description: 'Delivery found.' }),
     (0, swagger_1.ApiNotFoundResponse)({ description: 'Delivery not found.' }),
@@ -68,7 +71,7 @@ __decorate([
     (0, common_1.UseGuards)(deliveryManagement_guard_1.DeliveryManagementValidIdGuard),
     (0, common_1.Patch)('returned-delivery/:id'),
     (0, swagger_1.ApiOperation)({ summary: 'Return delivery' }),
-    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'ID of the delivery' }),
     (0, swagger_1.ApiBody)({ type: update_delivery_dto_1.UpdateDeliveryDto }),
     (0, swagger_1.ApiOkResponse)({ description: 'Delivery successfully returned.' }),
@@ -79,6 +82,14 @@ __decorate([
     __metadata("design:paramtypes", [String, update_delivery_dto_1.UpdateDeliveryDto]),
     __metadata("design:returntype", void 0)
 ], DeliveryController.prototype, "returnDelivery", null);
+__decorate([
+    (0, common_1.Get)(),
+    (0, swagger_1.ApiOkResponse)({ description: 'List of all order.' }),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], DeliveryController.prototype, "findAll", null);
 exports.DeliveryController = DeliveryController = __decorate([
     (0, swagger_1.ApiTags)('Delivery Management'),
     (0, common_1.Controller)('delivery'),
