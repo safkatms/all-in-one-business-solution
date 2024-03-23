@@ -15,6 +15,7 @@ let PurchaseValidationMiddleware = class PurchaseValidationMiddleware {
     async use(req, res, next) {
         const createPurchaseManagementDto = (0, class_transformer_1.plainToClass)(create_purchase_management_dto_1.CreatePurchaseManagementDto, req.body);
         const errors = await (0, class_validator_1.validate)(createPurchaseManagementDto);
+        console.log('middleware for purchase');
         if (errors.length > 0) {
             return res.status(400).json({
                 message: 'Validation failed. please follow the validation criteria',

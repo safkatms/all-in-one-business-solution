@@ -17,7 +17,11 @@ let InventoryManagementModule = class InventoryManagementModule {
     configure(consumer) {
         consumer
             .apply(middleware_middleware_1.InventoryValidationMiddleware)
-            .forRoutes('inventory-management');
+            .exclude({ path: 'inventory-management', method: common_1.RequestMethod.GET })
+            .forRoutes({ path: 'inventory-management/add-item', method: common_1.RequestMethod.POST }, {
+            path: 'inventory-management/modify-item/:id',
+            method: common_1.RequestMethod.PATCH,
+        });
     }
 };
 exports.InventoryManagementModule = InventoryManagementModule;

@@ -15,9 +15,13 @@ const typeorm_1 = require("@nestjs/typeorm");
 const middleware_middleware_1 = require("./middleware/middleware.middleware");
 let PurchaseManagementModule = class PurchaseManagementModule {
     configure(consumer) {
-        consumer
-            .apply(middleware_middleware_1.PurchaseValidationMiddleware)
-            .forRoutes('purchase-management');
+        consumer.apply(middleware_middleware_1.PurchaseValidationMiddleware).forRoutes({
+            path: 'purchase-management/add-purchase',
+            method: common_1.RequestMethod.POST,
+        }, {
+            path: 'purchase-management/modify-purchase/:id',
+            method: common_1.RequestMethod.PATCH,
+        });
     }
 };
 exports.PurchaseManagementModule = PurchaseManagementModule;

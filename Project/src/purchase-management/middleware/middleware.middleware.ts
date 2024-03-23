@@ -12,7 +12,7 @@ export class PurchaseValidationMiddleware implements NestMiddleware {
       req.body,
     );
     const errors = await validate(createPurchaseManagementDto);
-    //console.log('middleware for purchase');
+    console.log('middleware for purchase');
     if (errors.length > 0) {
       return res.status(400).json({
         message: 'Validation failed. please follow the validation criteria',
