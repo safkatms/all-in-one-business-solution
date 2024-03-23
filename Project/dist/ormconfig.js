@@ -18,7 +18,7 @@ exports.config = {
     host: 'localhost',
     port: 5432,
     username: 'postgres',
-    password: 'admin',
+    password: '123',
     entities: [
         user_entity_1.User,
         package_entity_1.Package,
@@ -30,9 +30,7 @@ exports.config = {
         order_entity_1.Order,
         order_item_entity_1.OrderItem,
         invoice_entity_1.Invoice,
-
-        leave_application_entity_1.Leave,
-
+        leave_application_entity_1.Leave
     ],
     synchronize: true,
 };

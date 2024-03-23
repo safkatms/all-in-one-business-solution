@@ -3,4 +3,5 @@ export declare class Package {
     name: string;
     validFrom: Date;
     validTill: Date;
+    status: string;
 }

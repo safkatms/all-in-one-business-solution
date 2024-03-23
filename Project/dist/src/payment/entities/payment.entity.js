@@ -9,32 +9,42 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Package = void 0;
+exports.Payment = void 0;
 const typeorm_1 = require("typeorm");
-let Package = class Package {
+const package_entity_1 = require("../../package/entities/package.entity");
+let Payment = class Payment {
 };
-exports.Package = Package;
+exports.Payment = Payment;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Package.prototype, "id", void 0);
+], Payment.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Package.prototype, "name", void 0);
+], Payment.prototype, "cardNumber", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
-    __metadata("design:type", Date)
-], Package.prototype, "validFrom", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Date)
-], Package.prototype, "validTill", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ default: 'unpaid' }),
     __metadata("design:type", String)
-], Package.prototype, "status", void 0);
-exports.Package = Package = __decorate([
+], Payment.prototype, "cardExpiry", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Payment.prototype, "cardCVC", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Payment.prototype, "amount", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => package_entity_1.Package, pkg => pkg.id, { eager: false }),
+    (0, typeorm_1.JoinColumn)({ name: 'packageId' }),
+    __metadata("design:type", package_entity_1.Package)
+], Payment.prototype, "package", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Payment.prototype, "packageId", void 0);
+exports.Payment = Payment = __decorate([
     (0, typeorm_1.Entity)()
-], Package);
-//# sourceMappingURL=package.entity.js.map
+], Payment);
+//# sourceMappingURL=payment.entity.js.map
