@@ -30,7 +30,7 @@ let SearchController = class SearchController {
 exports.SearchController = SearchController;
 __decorate([
     (0, common_1.Get)(),
-    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
     (0, swagger_1.ApiQuery)({
         name: 'productName',
         required: false,

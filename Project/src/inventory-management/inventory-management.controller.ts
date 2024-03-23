@@ -46,7 +46,7 @@ export class InventoryManagementController {
   @ApiCreatedResponse({ description: 'Item successfully created.' })
   @ApiBadRequestResponse({ description: 'Bad request. Invalid input.' })
   @ApiConflictResponse({ description: 'Conflict. Item already exists.' })
-  @ApiBearerAuth()
+  @ApiBearerAuth('access-token')
   @ApiBody({ type: CreateInventoryManagementDto })
   //add
   create(@Body() createInventoryManagementDto: CreateInventoryManagementDto) {
@@ -54,7 +54,7 @@ export class InventoryManagementController {
   }
   //all data
   @ApiOkResponse({ description: 'List of all items.' })
-  @ApiBearerAuth()
+  @ApiBearerAuth('access-token')
   @Get()
   findAll() {
     return this.inventoryManagementService.findAll();
@@ -62,7 +62,7 @@ export class InventoryManagementController {
   //find by name
   @ApiOkResponse({ description: 'Found item by name.' })
   @ApiNotFoundResponse({ description: 'Item not found.' })
-  @ApiBearerAuth()
+  @ApiBearerAuth('access-token')
   @ApiParam({ name: 'itemName', description: 'Name of the item' })
   @Get('by-name/:itemName')
   findByUsername(@Param('itemName') itemName: string) {
@@ -71,7 +71,7 @@ export class InventoryManagementController {
   //find by id
   @ApiOkResponse({ description: 'Found item by ID.' })
   @ApiNotFoundResponse({ description: 'Item not found.' })
-  @ApiBearerAuth()
+  @ApiBearerAuth('access-token')
   @ApiParam({ name: 'id', description: 'ID of the item' })
   @Get(':id')
   findOne(@Param('id') id: string) {
@@ -84,7 +84,7 @@ export class InventoryManagementController {
   @ApiOkResponse({ description: 'Item successfully updated.' })
   @ApiBadRequestResponse({ description: 'Bad request. Invalid input.' })
   @ApiNotFoundResponse({ description: 'Item not found.' })
-  @ApiBearerAuth()
+  @ApiBearerAuth('access-token')
   @ApiParam({ name: 'id', description: 'ID of the item' })
   @ApiBody({ type: CreateInventoryManagementDto })
   update(
@@ -100,7 +100,7 @@ export class InventoryManagementController {
   @Delete('remove-item/:id')
   @ApiOkResponse({ description: 'Item successfully deleted.' })
   @ApiNotFoundResponse({ description: 'Item not found.' })
-  @ApiBearerAuth()
+  @ApiBearerAuth('access-token')
   @ApiParam({ name: 'id', description: 'ID of the item' })
   remove(@Param('id') id: string) {
     return this.inventoryManagementService.remove(+id);

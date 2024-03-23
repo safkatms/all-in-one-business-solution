@@ -30,7 +30,7 @@ export class DeliveryController {
 
   //swagger tag
   @ApiOperation({ summary: 'Make delivery' })
-  @ApiBearerAuth()
+  @ApiBearerAuth('access-token')
   @ApiParam({ name: 'id', description: 'ID of the delivery' })
   @ApiBody({ type: UpdateDeliveryDto })
   @ApiOkResponse({ description: 'Delivery successfully made.' })
@@ -48,7 +48,7 @@ export class DeliveryController {
   @Get(':id')
   //swagger tag
   @ApiOperation({ summary: 'Find delivery by ID' })
-  @ApiBearerAuth()
+  @ApiBearerAuth('access-token')
   @ApiParam({ name: 'id', description: 'ID of the delivery' })
   @ApiOkResponse({ description: 'Delivery found.' })
   @ApiNotFoundResponse({ description: 'Delivery not found.' })
@@ -63,7 +63,7 @@ export class DeliveryController {
   @Patch('returned-delivery/:id')
   //swagger
   @ApiOperation({ summary: 'Return delivery' })
-  @ApiBearerAuth()
+  @ApiBearerAuth('access-token')
   @ApiParam({ name: 'id', description: 'ID of the delivery' })
   @ApiBody({ type: UpdateDeliveryDto })
   @ApiOkResponse({ description: 'Delivery successfully returned.' })
@@ -79,7 +79,7 @@ export class DeliveryController {
   //find all data
   @Get()
   @ApiOkResponse({ description: 'List of all order.' })
-  @ApiBearerAuth()
+  @ApiBearerAuth('access-token')
   findAll() {
     return this.deliveryService.findAll();
   }
