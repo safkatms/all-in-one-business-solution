@@ -6,6 +6,7 @@ import { Leave } from 'src/leave-application/entities/leave-application.entity';
 import { OrderItem } from 'src/order/entities/order-item.entity';
 import { Order } from 'src/order/entities/order.entity';
 import { Package } from 'src/package/entities/package.entity';
+import { Payment } from 'src/payment/entities/payment.entity';
 import { Payroll } from 'src/payroll/entities/payroll.entity';
 import { PurchaseManagement } from 'src/purchase-management/entities/purchase-management.entity';
 import { User } from 'src/user/entities/user.entity';
@@ -17,7 +18,7 @@ export const config: PostgresConnectionOptions = {
   host: 'localhost',
   port: 5432,
   username: 'postgres',
-  password: '123',
+  password: 'admin',
 
   entities: [
     User,
@@ -30,7 +31,8 @@ export const config: PostgresConnectionOptions = {
     Order,
     OrderItem,
     Invoice,
-    Leave
+    Leave,
+    Payment,
   ],
   synchronize: true,
 };

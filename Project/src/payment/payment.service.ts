@@ -19,7 +19,7 @@ export class PaymentService {
   async makePayment(userId: number, createPaymentDto: CreatePaymentDto): Promise<string> {
     const user = await this.userRepository.findOne({ where: { userId }, relations: ['package'] });
     if (!user || !user.package || user.package.status !== 'unpaid') {
-      throw new NotFoundException(`No unpaid package found for user ID ${userId}.`);
+      throw new NotFoundException(`You already have an active package`);
     }
 
     // Assume payment is processed successfully

@@ -9,6 +9,7 @@ const leave_application_entity_1 = require("./src/leave-application/entities/lea
 const order_item_entity_1 = require("./src/order/entities/order-item.entity");
 const order_entity_1 = require("./src/order/entities/order.entity");
 const package_entity_1 = require("./src/package/entities/package.entity");
+const payment_entity_1 = require("./src/payment/entities/payment.entity");
 const payroll_entity_1 = require("./src/payroll/entities/payroll.entity");
 const purchase_management_entity_1 = require("./src/purchase-management/entities/purchase-management.entity");
 const user_entity_1 = require("./src/user/entities/user.entity");
@@ -18,7 +19,7 @@ exports.config = {
     host: 'localhost',
     port: 5432,
     username: 'postgres',
-    password: '123',
+    password: 'admin',
     entities: [
         user_entity_1.User,
         package_entity_1.Package,
@@ -30,7 +31,8 @@ exports.config = {
         order_entity_1.Order,
         order_item_entity_1.OrderItem,
         invoice_entity_1.Invoice,
-        leave_application_entity_1.Leave
+        leave_application_entity_1.Leave,
+        payment_entity_1.Payment,
     ],
     synchronize: true,
 };
