@@ -10,11 +10,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreatePurchaseManagementDto = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class CreatePurchaseManagementDto {
 }
 exports.CreatePurchaseManagementDto = CreatePurchaseManagementDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Name of the vendor',
+        minLength: 4,
+        example: 'Hogwartshop',
+    }),
     (0, class_validator_1.IsNotEmpty)({ message: 'empty value. Vendor Name cannot be empty' }),
     (0, class_validator_1.Length)(4),
     (0, class_validator_1.IsString)(),
@@ -24,6 +30,11 @@ __decorate([
     __metadata("design:type", String)
 ], CreatePurchaseManagementDto.prototype, "vendorName", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Contact number of the vendor',
+        minLength: 11,
+        example: '01234567890',
+    }),
     (0, class_validator_1.Length)(11),
     (0, class_validator_1.IsNotEmpty)({ message: 'empty value. Vendor contact cannot be empty' }),
     (0, class_validator_1.Matches)(/^01[3-9]\d{8}$/, {
@@ -32,23 +43,40 @@ __decorate([
     __metadata("design:type", String)
 ], CreatePurchaseManagementDto.prototype, "vendorContact", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Email of the vendor',
+        example: 'hogwarts@gmail.com',
+    }),
     (0, class_validator_1.IsNotEmpty)({ message: 'empty value. Email be empty' }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
 ], CreatePurchaseManagementDto.prototype, "vendorEmail", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Name of the product',
+        minLength: 4,
+        example: 'Nimbus2000',
+    }),
     (0, class_validator_1.IsNotEmpty)({ message: 'empty value. Product Name cannot be empty' }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.Length)(4),
     __metadata("design:type", String)
 ], CreatePurchaseManagementDto.prototype, "productName", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Quantity of the product purchased',
+        example: 10,
+    }),
     (0, class_validator_1.IsNotEmpty)({ message: 'empty value. Product Quantity cannot be empty' }),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], CreatePurchaseManagementDto.prototype, "productQuantity", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Purchase price of the product',
+        example: 1000,
+    }),
     (0, class_validator_1.IsNotEmpty)({
         message: 'empty value. Product Purchase price cannot be empty',
     }),
@@ -57,6 +85,10 @@ __decorate([
     __metadata("design:type", Number)
 ], CreatePurchaseManagementDto.prototype, "productPurchasePrice", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Total purchase price of the products',
+        example: 1500,
+    }),
     (0, class_validator_1.IsNotEmpty)({ message: 'empty value. Purchase total Price cannot be empty' }),
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsPositive)({
@@ -65,6 +97,10 @@ __decorate([
     __metadata("design:type", Number)
 ], CreatePurchaseManagementDto.prototype, "purchaseTotalPrice", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Date of the purchase',
+        example: '2024-03-23',
+    }),
     (0, class_validator_1.IsNotEmpty)({ message: 'empty value. Date cannot be empty' }),
     (0, class_validator_1.IsDateString)(),
     __metadata("design:type", String)

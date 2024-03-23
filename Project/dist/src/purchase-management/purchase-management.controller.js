@@ -20,6 +20,7 @@ const update_purchase_management_dto_1 = require("./dto/update-purchase-manageme
 const jwt_guard_1 = require("../guards/jwt.guard");
 const schema_guard_1 = require("../guards/schema.guard");
 const role_guard_1 = require("../guards/role.guard");
+const swagger_1 = require("@nestjs/swagger");
 let PurchaseManagementController = class PurchaseManagementController {
     constructor(purchaseManagementService) {
         this.purchaseManagementService = purchaseManagementService;
@@ -43,6 +44,11 @@ let PurchaseManagementController = class PurchaseManagementController {
 exports.PurchaseManagementController = PurchaseManagementController;
 __decorate([
     (0, common_1.Post)('add-purchase'),
+    (0, swagger_1.ApiCreatedResponse)({ description: 'Purchase successfully created.' }),
+    (0, swagger_1.ApiBadRequestResponse)({ description: 'Bad request. Invalid input.' }),
+    (0, swagger_1.ApiConflictResponse)({ description: 'Conflict. Purchase already exists.' }),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiBody)({ type: create_purchase_management_dto_1.CreatePurchaseManagementDto }),
     __param(0, (0, common_1.Body)(common_1.ValidationPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_purchase_management_dto_1.CreatePurchaseManagementDto]),
@@ -50,11 +56,17 @@ __decorate([
 ], PurchaseManagementController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, swagger_1.ApiOkResponse)({ description: 'List of all purchases.' }),
+    (0, swagger_1.ApiBearerAuth)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], PurchaseManagementController.prototype, "findAll", null);
 __decorate([
+    (0, swagger_1.ApiOkResponse)({ description: 'Found purchase by ID.' }),
+    (0, swagger_1.ApiNotFoundResponse)({ description: 'Purchase not found.' }),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'ID of the purchase' }),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -62,6 +74,12 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PurchaseManagementController.prototype, "findOne", null);
 __decorate([
+    (0, swagger_1.ApiOkResponse)({ description: 'Purchase successfully updated.' }),
+    (0, swagger_1.ApiBadRequestResponse)({ description: 'Bad request. Invalid input.' }),
+    (0, swagger_1.ApiNotFoundResponse)({ description: 'Purchase not found.' }),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'ID of the purchase' }),
+    (0, swagger_1.ApiBody)({ type: create_purchase_management_dto_1.CreatePurchaseManagementDto }),
     (0, common_1.Patch)('modify-purchase/:id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)(common_1.ValidationPipe)),
@@ -70,6 +88,10 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PurchaseManagementController.prototype, "update", null);
 __decorate([
+    (0, swagger_1.ApiOkResponse)({ description: 'Purchase successfully deleted.' }),
+    (0, swagger_1.ApiNotFoundResponse)({ description: 'Purchase not found.' }),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'ID of the purchase' }),
     (0, common_1.Delete)('remove-purchase/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -77,6 +99,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PurchaseManagementController.prototype, "remove", null);
 exports.PurchaseManagementController = PurchaseManagementController = __decorate([
+    (0, swagger_1.ApiTags)('Purchase Management'),
     (0, common_1.Controller)('purchase-management'),
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, schema_guard_1.SetSchemaGuard, new role_guard_1.RoleGuard(['inventory_manager', 'owner'])),
     __metadata("design:paramtypes", [purchase_management_service_1.PurchaseManagementService])

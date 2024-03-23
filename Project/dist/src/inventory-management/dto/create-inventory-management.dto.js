@@ -10,11 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateInventoryManagementDto = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class CreateInventoryManagementDto {
 }
 exports.CreateInventoryManagementDto = CreateInventoryManagementDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Name of the product', example: 'Nimbus2000' }),
     (0, class_validator_1.IsNotEmpty)({ message: 'Product name cannot be empty' }),
     (0, class_validator_1.IsString)({ message: 'Product name must be a string' }),
     (0, class_validator_1.Length)(2, 50, {
@@ -26,6 +28,10 @@ __decorate([
     __metadata("design:type", String)
 ], CreateInventoryManagementDto.prototype, "productName", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Details of the product',
+        example: 'Nimbus 2000 is Faster than Nimbus 1000 Details',
+    }),
     (0, class_validator_1.IsNotEmpty)({ message: 'Product details cannot be empty' }),
     (0, class_validator_1.IsString)({ message: 'Product details must be a string' }),
     (0, class_validator_1.Length)(2, 255, {
@@ -34,24 +40,28 @@ __decorate([
     __metadata("design:type", String)
 ], CreateInventoryManagementDto.prototype, "productDetails", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Purchase price of the product', example: 100 }),
     (0, class_validator_1.IsNotEmpty)({ message: 'Product purchase price cannot be empty' }),
     (0, class_validator_1.IsNumber)({}, { message: 'Product purchase price must be a number' }),
     (0, class_validator_1.IsPositive)({ message: 'Product purchase price must be a positive number' }),
     __metadata("design:type", Number)
 ], CreateInventoryManagementDto.prototype, "productPurchasePrice", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Sell price of the product', example: 150 }),
     (0, class_validator_1.IsNotEmpty)({ message: 'Product sell price cannot be empty' }),
     (0, class_validator_1.IsNumber)({}, { message: 'Product sell price must be a number' }),
     (0, class_validator_1.IsPositive)({ message: 'Product sell price must be a positive number' }),
     __metadata("design:type", Number)
 ], CreateInventoryManagementDto.prototype, "productSellPrice", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Brand of the product', example: 'NimbusFly' }),
     (0, class_validator_1.IsNotEmpty)({ message: 'Brand cannot be empty' }),
     (0, class_validator_1.IsString)({ message: 'Brand must be a string' }),
     (0, class_validator_1.Length)(2, 20, { message: 'Brand must be between 2 and 20 characters' }),
     __metadata("design:type", String)
 ], CreateInventoryManagementDto.prototype, "porductBrand", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Quantity of the product', example: 100 }),
     (0, class_validator_1.IsNotEmpty)({ message: 'Product quantity cannot be empty' }),
     (0, class_validator_1.IsNumber)({}, { message: 'Product quantity must be a number' }),
     (0, class_validator_1.Min)(0, { message: 'Product quantity cannot be negative' }),

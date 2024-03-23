@@ -20,6 +20,7 @@ const update_inventory_management_dto_1 = require("./dto/update-inventory-manage
 const jwt_guard_1 = require("../guards/jwt.guard");
 const schema_guard_1 = require("../guards/schema.guard");
 const role_guard_1 = require("../guards/role.guard");
+const swagger_1 = require("@nestjs/swagger");
 let InventoryManagementController = class InventoryManagementController {
     constructor(inventoryManagementService) {
         this.inventoryManagementService = inventoryManagementService;
@@ -47,18 +48,29 @@ exports.InventoryManagementController = InventoryManagementController;
 __decorate([
     (0, common_1.UsePipes)(common_1.ValidationPipe),
     (0, common_1.Post)('add-item'),
+    (0, swagger_1.ApiCreatedResponse)({ description: 'Item successfully created.' }),
+    (0, swagger_1.ApiBadRequestResponse)({ description: 'Bad request. Invalid input.' }),
+    (0, swagger_1.ApiConflictResponse)({ description: 'Conflict. Item already exists.' }),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiBody)({ type: create_inventory_management_dto_1.CreateInventoryManagementDto }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_inventory_management_dto_1.CreateInventoryManagementDto]),
     __metadata("design:returntype", void 0)
 ], InventoryManagementController.prototype, "create", null);
 __decorate([
+    (0, swagger_1.ApiOkResponse)({ description: 'List of all items.' }),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], InventoryManagementController.prototype, "findAll", null);
 __decorate([
+    (0, swagger_1.ApiOkResponse)({ description: 'Found item by name.' }),
+    (0, swagger_1.ApiNotFoundResponse)({ description: 'Item not found.' }),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiParam)({ name: 'itemName', description: 'Name of the item' }),
     (0, common_1.Get)('by-name/:itemName'),
     __param(0, (0, common_1.Param)('itemName')),
     __metadata("design:type", Function),
@@ -66,6 +78,10 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], InventoryManagementController.prototype, "findByUsername", null);
 __decorate([
+    (0, swagger_1.ApiOkResponse)({ description: 'Found item by ID.' }),
+    (0, swagger_1.ApiNotFoundResponse)({ description: 'Item not found.' }),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'ID of the item' }),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -75,6 +91,12 @@ __decorate([
 __decorate([
     (0, common_1.UsePipes)(common_1.ValidationPipe),
     (0, common_1.Patch)('modify-item/:id'),
+    (0, swagger_1.ApiOkResponse)({ description: 'Item successfully updated.' }),
+    (0, swagger_1.ApiBadRequestResponse)({ description: 'Bad request. Invalid input.' }),
+    (0, swagger_1.ApiNotFoundResponse)({ description: 'Item not found.' }),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'ID of the item' }),
+    (0, swagger_1.ApiBody)({ type: create_inventory_management_dto_1.CreateInventoryManagementDto }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -83,12 +105,17 @@ __decorate([
 ], InventoryManagementController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)('remove-item/:id'),
+    (0, swagger_1.ApiOkResponse)({ description: 'Item successfully deleted.' }),
+    (0, swagger_1.ApiNotFoundResponse)({ description: 'Item not found.' }),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'ID of the item' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], InventoryManagementController.prototype, "remove", null);
 exports.InventoryManagementController = InventoryManagementController = __decorate([
+    (0, swagger_1.ApiTags)('Inventory Management'),
     (0, common_1.Controller)('inventory-management'),
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, schema_guard_1.SetSchemaGuard, new role_guard_1.RoleGuard(['inventory_manager', 'owner'])),
     __metadata("design:paramtypes", [inventory_management_service_1.InventoryManagementService])
