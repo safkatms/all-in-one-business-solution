@@ -16,9 +16,9 @@ export class CheckProductGuard implements CanActivate {
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const req = context.switchToHttp().getRequest();
-        const orderId = +req.params.orderId; // Extract orderId from route parameters
+        const orderId = +req.params.orderId; 
 
-        // Check if the order already has items
+       
         const existingItemsCount = await this.orderItemRepository.count({ where: { order: { orderId: orderId } } });
         if (existingItemsCount > 0) {
             throw new BadRequestException(`Order ${orderId} already has created.`);
@@ -50,7 +50,7 @@ export class CheckProductGuard implements CanActivate {
             }
         }
 
-        // If all checks pass, allow the request to proceed
+       
         return true;
     }
 }

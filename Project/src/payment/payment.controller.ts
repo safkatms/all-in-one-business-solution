@@ -13,7 +13,7 @@ export class PaymentController {
 
   @Post()
   makePayment(@Req() req, @Body(ValidationPipe) createPaymentDto: CreatePaymentDto) {
-    const userId = req.user.userId; // Ensure this matches how you attach the user info in your auth strategy
+    const userId = req.user.userId; 
     return this.paymentService.makePayment(userId, createPaymentDto);
   }
 }

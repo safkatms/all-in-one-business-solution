@@ -12,7 +12,13 @@ const typeorm_1 = require("@nestjs/typeorm");
 const customer_entity_1 = require("./entities/customer.entity");
 const customer_service_1 = require("./customer.service");
 const customer_controller_1 = require("./customer.controller");
+const check_customer_middleware_1 = require("../middleware/check-customer.middleware");
 let CustomerModule = class CustomerModule {
+    configure(consumer) {
+        consumer
+            .apply(check_customer_middleware_1.CheckCustomerMiddleware)
+            .forRoutes({ path: 'customer/create', method: common_1.RequestMethod.POST });
+    }
 };
 exports.CustomerModule = CustomerModule;
 exports.CustomerModule = CustomerModule = __decorate([

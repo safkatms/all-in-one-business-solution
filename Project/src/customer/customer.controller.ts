@@ -31,7 +31,7 @@ export class CustomerController {
   //   return this.customerService.update(+id, updateCustomerDto);
   // }
 
-  // Within CustomersController
+  
 
 @Patch('/update/:contact')
 async updateCustomer(@Param('contact') contact: string, @Body() updateCustomerDto: UpdateCustomerDto) {

@@ -1,5 +1,3 @@
-// src/payment/payment.service.ts
-
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -22,7 +20,6 @@ export class PaymentService {
       throw new NotFoundException(`You already have an active package`);
     }
 
-    // Assume payment is processed successfully
 
     user.package.status = 'paid';
     await this.packageRepository.save(user.package);
