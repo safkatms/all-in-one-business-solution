@@ -4,9 +4,10 @@ import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { JwtAuthGuard } from 'src/guards/jwt.guard';
 import { SetSchemaGuard } from 'src/guards/schema.guard';
+import { RoleGuard } from 'src/guards/role.guard';
 
 @Controller('employee')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard,new RoleGuard(['owner','hr']))
 export class EmployeeController {
   constructor(private readonly employeeService: EmployeeService) {}
 

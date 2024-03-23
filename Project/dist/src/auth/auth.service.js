@@ -27,7 +27,10 @@ let AuthService = class AuthService {
         if (!user.password || !(await bcrypt.compare(pass, user.password))) {
             throw new common_1.UnauthorizedException('Invalid credentials');
         }
-        const { password, ...result } = user;
+        if (user.status) {
+            throw new common_1.UnauthorizedException('Account is banned');
+        }
+        const { password, status, ...result } = user;
         return result;
     }
     async login(loginDto) {

@@ -25,7 +25,7 @@ let UserService = class UserService {
         this.connection = connection;
     }
     async registerUser(createUserDto) {
-        const { username, email, password, company } = createUserDto;
+        const { username, email, password, conPassword, company } = createUserDto;
         const existingUser = await this.usersRepository.findOne({
             where: [{ username }, { email }],
         });
@@ -37,6 +37,9 @@ let UserService = class UserService {
         });
         if (existingCompany) {
             throw new common_1.ConflictException('User already registered with given company name');
+        }
+        if (password !== conPassword) {
+            throw new common_1.BadRequestException('Password and confirm password should be the same');
         }
         const saltOrRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltOrRounds);
@@ -164,7 +167,6 @@ let UserService = class UserService {
                 'username',
                 'mobileNo',
                 'gender',
-                'profilePicture',
             ],
         });
     }
@@ -201,7 +203,7 @@ let UserService = class UserService {
             },
         });
         if (!user) {
-            throw new Error('Invalid or expired password reset token');
+            throw new common_1.UnauthorizedException('Invalid or expired password reset token');
         }
         const saltOrRounds = 10;
         const hashedPassword = await bcrypt.hash(newPassword, saltOrRounds);

@@ -17,6 +17,7 @@ import { DeliveryModule } from './management/delivery/delivery.module';
 import { InvoiceModule } from './invoice/invoice.module';
 import { LeaveApplicationModule } from './leave-application/leave-application.module';
 import { PaymentModule } from './payment/payment.module';
+import { BanUserModule } from './ban-user/ban-user.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { PaymentModule } from './payment/payment.module';
     InvoiceModule,
     LeaveApplicationModule,
     PaymentModule,
+    BanUserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

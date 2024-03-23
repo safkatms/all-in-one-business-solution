@@ -15,11 +15,6 @@ export class UserController {
     return this.userService.registerUser(createUserDto);
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.userService.findAll();
-  // }
-
   @Get('profile')
   @UseGuards(JwtAuthGuard)
   async viewProfile(@Request() req) {
@@ -45,8 +40,4 @@ export class UserController {
     return { message: 'Password successfully changed' };
   }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.userService.remove(+id);
-  // }
 }
