@@ -4,7 +4,11 @@ exports.config = void 0;
 const customer_entity_1 = require("./src/customer/entities/customer.entity");
 const employee_entity_1 = require("./src/employee/entities/employee.entity");
 const inventory_management_entity_1 = require("./src/inventory-management/entities/inventory-management.entity");
+<<<<<<< HEAD
+const invoice_entity_1 = require("./src/invoice/entities/invoice.entity");
+=======
 const leave_application_entity_1 = require("./src/leave-application/entities/leave-application.entity");
+>>>>>>> 07937661728f501b160b17ce4d3ae226695fa5cd
 const order_item_entity_1 = require("./src/order/entities/order-item.entity");
 const order_entity_1 = require("./src/order/entities/order.entity");
 const package_entity_1 = require("./src/package/entities/package.entity");
@@ -28,7 +32,11 @@ exports.config = {
         customer_entity_1.Customer,
         order_entity_1.Order,
         order_item_entity_1.OrderItem,
+<<<<<<< HEAD
+        invoice_entity_1.Invoice,
+=======
         leave_application_entity_1.Leave
+>>>>>>> 07937661728f501b160b17ce4d3ae226695fa5cd
     ],
     synchronize: true,
 };
