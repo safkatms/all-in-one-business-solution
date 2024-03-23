@@ -16,7 +16,19 @@ import { UpdateInventoryManagementDto } from './dto/update-inventory-management.
 import { JwtAuthGuard } from 'src/guards/jwt.guard';
 import { SetSchemaGuard } from 'src/guards/schema.guard';
 import { RoleGuard } from 'src/guards/role.guard';
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiConflictResponse,
+  ApiNotFoundResponse,
+  ApiTags,
+  ApiParam,
+  ApiBody,
+  ApiCreatedResponse,
+  ApiOkResponse,
+} from '@nestjs/swagger';
 
+@ApiTags('Inventory Management')
 @Controller('inventory-management')
 @UseGuards(
   JwtAuthGuard,
@@ -30,25 +42,51 @@ export class InventoryManagementController {
 
   @UsePipes(ValidationPipe)
   @Post('add-item')
+  //swagger
+  @ApiCreatedResponse({ description: 'Item successfully created.' })
+  @ApiBadRequestResponse({ description: 'Bad request. Invalid input.' })
+  @ApiConflictResponse({ description: 'Conflict. Item already exists.' })
+  @ApiBearerAuth()
+  @ApiBody({ type: CreateInventoryManagementDto })
+  //add
   create(@Body() createInventoryManagementDto: CreateInventoryManagementDto) {
     return this.inventoryManagementService.create(createInventoryManagementDto);
   }
-
+  //all data
+  @ApiOkResponse({ description: 'List of all items.' })
+  @ApiBearerAuth()
   @Get()
   findAll() {
     return this.inventoryManagementService.findAll();
   }
+  //find by name
+  @ApiOkResponse({ description: 'Found item by name.' })
+  @ApiNotFoundResponse({ description: 'Item not found.' })
+  @ApiBearerAuth()
+  @ApiParam({ name: 'itemName', description: 'Name of the item' })
   @Get('by-name/:itemName')
   findByUsername(@Param('itemName') itemName: string) {
     return this.inventoryManagementService.findByItemName(itemName);
   }
-
+  //find by id
+  @ApiOkResponse({ description: 'Found item by ID.' })
+  @ApiNotFoundResponse({ description: 'Item not found.' })
+  @ApiBearerAuth()
+  @ApiParam({ name: 'id', description: 'ID of the item' })
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.inventoryManagementService.findOne(+id);
   }
+
+  //modify
   @UsePipes(ValidationPipe)
   @Patch('modify-item/:id')
+  @ApiOkResponse({ description: 'Item successfully updated.' })
+  @ApiBadRequestResponse({ description: 'Bad request. Invalid input.' })
+  @ApiNotFoundResponse({ description: 'Item not found.' })
+  @ApiBearerAuth()
+  @ApiParam({ name: 'id', description: 'ID of the item' })
+  @ApiBody({ type: CreateInventoryManagementDto })
   update(
     @Param('id') id: number,
     @Body() updateInventoryManagementDto: UpdateInventoryManagementDto,
@@ -58,7 +96,12 @@ export class InventoryManagementController {
       updateInventoryManagementDto,
     );
   }
+  //delete
   @Delete('remove-item/:id')
+  @ApiOkResponse({ description: 'Item successfully deleted.' })
+  @ApiNotFoundResponse({ description: 'Item not found.' })
+  @ApiBearerAuth()
+  @ApiParam({ name: 'id', description: 'ID of the item' })
   remove(@Param('id') id: string) {
     return this.inventoryManagementService.remove(+id);
   }
