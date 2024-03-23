@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateProfileDto = void 0;
 const class_validator_1 = require("class-validator");
+const swagger_1 = require("@nestjs/swagger");
 var Gender;
 (function (Gender) {
     Gender["MALE"] = "male";
@@ -21,6 +22,7 @@ class UpdateProfileDto {
 }
 exports.UpdateProfileDto = UpdateProfileDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'First name (optional)' }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
@@ -28,6 +30,7 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateProfileDto.prototype, "firstName", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Last name (optional)' }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
@@ -35,6 +38,7 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateProfileDto.prototype, "lastName", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Mobile number (optional)' }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
@@ -42,6 +46,7 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateProfileDto.prototype, "mobileNo", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Gender (optional)', enum: Gender }),
     (0, class_validator_1.IsEnum)(Gender),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)

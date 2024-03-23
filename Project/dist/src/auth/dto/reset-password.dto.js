@@ -11,15 +11,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ResetPasswordDto = void 0;
 const class_validator_1 = require("class-validator");
+const swagger_1 = require("@nestjs/swagger");
 class ResetPasswordDto {
 }
 exports.ResetPasswordDto = ResetPasswordDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'The token received via email for password reset verification',
+        example: '123456abcdef',
+    }),
     (0, class_validator_1.IsString)({ message: 'Token must be a valid string' }),
     (0, class_validator_1.IsNotEmpty)({ message: 'Token is required' }),
     __metadata("design:type", String)
 ], ResetPasswordDto.prototype, "token", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'The new password for the user account',
+        example: 'Password123!',
+        minLength: 6,
+        pattern: '/^(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+{}\\[\\]:;\'<>,.?\\/\\\\~`\\-]).*$/',
+    }),
     (0, class_validator_1.IsString)({ message: 'Password must be a string' }),
     (0, class_validator_1.MinLength)(6, { message: 'Password must be at least 6 characters long' }),
     (0, class_validator_1.Matches)(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;'<>,.?\/\\~`\-]).*$/, {

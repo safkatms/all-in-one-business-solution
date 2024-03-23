@@ -11,20 +11,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateLeaveApplicationDto = void 0;
 const class_validator_1 = require("class-validator");
+const swagger_1 = require("@nestjs/swagger");
 class CreateLeaveApplicationDto {
 }
 exports.CreateLeaveApplicationDto = CreateLeaveApplicationDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'The start date of the leave application in ISO string format.' }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsDateString)(),
     __metadata("design:type", String)
 ], CreateLeaveApplicationDto.prototype, "startDate", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'The end date of the leave application in ISO string format.' }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsDateString)(),
     __metadata("design:type", String)
 ], CreateLeaveApplicationDto.prototype, "endDate", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Description of the leave application.' }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)

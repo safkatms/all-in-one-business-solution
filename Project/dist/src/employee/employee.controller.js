@@ -19,6 +19,7 @@ const create_employee_dto_1 = require("./dto/create-employee.dto");
 const jwt_guard_1 = require("../guards/jwt.guard");
 const schema_guard_1 = require("../guards/schema.guard");
 const role_guard_1 = require("../guards/role.guard");
+const swagger_1 = require("@nestjs/swagger");
 let EmployeeController = class EmployeeController {
     constructor(employeeService) {
         this.employeeService = employeeService;
@@ -38,6 +39,9 @@ let EmployeeController = class EmployeeController {
 exports.EmployeeController = EmployeeController;
 __decorate([
     (0, common_1.Post)('/registration'),
+    (0, swagger_1.ApiOperation)({ summary: 'Register a new employee' }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Employee registered successfully.' }),
+    (0, swagger_1.ApiResponse)({ status: 400, description: 'Bad Request.' }),
     __param(0, (0, common_1.Body)(common_1.ValidationPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -46,6 +50,8 @@ __decorate([
 ], EmployeeController.prototype, "register", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Find all employees' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Return all employees.' }),
     (0, common_1.UseGuards)(schema_guard_1.SetSchemaGuard),
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
@@ -54,6 +60,9 @@ __decorate([
 ], EmployeeController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Delete)('/remove/:id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Remove an employee' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Employee removed successfully.' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Employee not found.' }),
     (0, common_1.UseGuards)(schema_guard_1.SetSchemaGuard),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Request)()),
@@ -62,6 +71,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], EmployeeController.prototype, "remove", null);
 exports.EmployeeController = EmployeeController = __decorate([
+    (0, swagger_1.ApiTags)('employee'),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
     (0, common_1.Controller)('employee'),
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, new role_guard_1.RoleGuard(['owner', 'hr'])),
     __metadata("design:paramtypes", [employee_service_1.EmployeeService])

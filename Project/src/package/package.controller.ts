@@ -14,13 +14,17 @@ import { Request } from '@nestjs/common';
 import { RoleGuard } from 'src/guards/role.guard';
 import { UpdatePackageDto } from './dto/update-package.dto';
 import { JwtAuthGuard } from 'src/guards/jwt.guard';
+import { ApiTags, ApiBearerAuth, ApiBody } from '@nestjs/swagger';
 
 @Controller('packages')
 @UseGuards(JwtAuthGuard, new RoleGuard(['owner']))
+@ApiTags('Packages')
+@ApiBearerAuth('access-token')
 export class PackageController {
   constructor(private readonly packageService: PackageService) {}
 
   @Post('/purchase')
+  @ApiBody({ type: CreatePackageDto })
   createPackage(
     @Request() req,
     @Body(ValidationPipe) createPackageDto: CreatePackageDto,
@@ -39,6 +43,7 @@ export class PackageController {
   }
 
   @Put('/renew')
+  @ApiBody({ type: UpdatePackageDto })
   async updatePackage(
     @Body(ValidationPipe) updatePackageDto: UpdatePackageDto,
     @Request() req: any,

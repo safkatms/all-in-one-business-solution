@@ -20,6 +20,7 @@ const common_2 = require("@nestjs/common");
 const role_guard_1 = require("../guards/role.guard");
 const update_package_dto_1 = require("./dto/update-package.dto");
 const jwt_guard_1 = require("../guards/jwt.guard");
+const swagger_1 = require("@nestjs/swagger");
 let PackageController = class PackageController {
     constructor(packageService) {
         this.packageService = packageService;
@@ -43,6 +44,7 @@ let PackageController = class PackageController {
 exports.PackageController = PackageController;
 __decorate([
     (0, common_1.Post)('/purchase'),
+    (0, swagger_1.ApiBody)({ type: create_package_dto_1.CreatePackageDto }),
     __param(0, (0, common_2.Request)()),
     __param(1, (0, common_1.Body)(common_1.ValidationPipe)),
     __metadata("design:type", Function),
@@ -58,6 +60,7 @@ __decorate([
 ], PackageController.prototype, "getUserPackage", null);
 __decorate([
     (0, common_1.Put)('/renew'),
+    (0, swagger_1.ApiBody)({ type: update_package_dto_1.UpdatePackageDto }),
     __param(0, (0, common_1.Body)(common_1.ValidationPipe)),
     __param(1, (0, common_2.Request)()),
     __metadata("design:type", Function),
@@ -67,6 +70,8 @@ __decorate([
 exports.PackageController = PackageController = __decorate([
     (0, common_1.Controller)('packages'),
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, new role_guard_1.RoleGuard(['owner'])),
+    (0, swagger_1.ApiTags)('Packages'),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
     __metadata("design:paramtypes", [package_service_1.PackageService])
 ], PackageController);
 //# sourceMappingURL=package.controller.js.map
