@@ -20,6 +20,7 @@ const update_payroll_dto_1 = require("./dto/update-payroll.dto");
 const role_guard_1 = require("../guards/role.guard");
 const jwt_guard_1 = require("../guards/jwt.guard");
 const schema_guard_1 = require("../guards/schema.guard");
+const swagger_1 = require("@nestjs/swagger");
 let PayrollController = class PayrollController {
     constructor(payrollService) {
         this.payrollService = payrollService;
@@ -37,6 +38,7 @@ let PayrollController = class PayrollController {
 exports.PayrollController = PayrollController;
 __decorate([
     (0, common_1.Post)('/create'),
+    (0, swagger_1.ApiBody)({ type: create_payroll_dto_1.CreatePayrollDto }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_payroll_dto_1.CreatePayrollDto]),
@@ -50,6 +52,7 @@ __decorate([
 ], PayrollController.prototype, "getAllPayroll", null);
 __decorate([
     (0, common_1.Patch)('/update/:employeeId/:payrollMonth'),
+    (0, swagger_1.ApiBody)({ type: update_payroll_dto_1.UpdatePayrollDto }),
     __param(0, (0, common_1.Param)('employeeId')),
     __param(1, (0, common_1.Param)('payrollMonth')),
     __param(2, (0, common_1.Body)()),
@@ -60,6 +63,8 @@ __decorate([
 exports.PayrollController = PayrollController = __decorate([
     (0, common_1.Controller)('payroll'),
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, schema_guard_1.SetSchemaGuard, new role_guard_1.RoleGuard(['owner', 'hr'])),
+    (0, swagger_1.ApiTags)('Payroll'),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
     __metadata("design:paramtypes", [payroll_service_1.PayrollService])
 ], PayrollController);
 //# sourceMappingURL=payroll.controller.js.map

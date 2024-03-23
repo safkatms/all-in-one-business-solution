@@ -11,22 +11,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangePasswordDto = void 0;
 const class_validator_1 = require("class-validator");
+const swagger_1 = require("@nestjs/swagger");
 class ChangePasswordDto {
 }
 exports.ChangePasswordDto = ChangePasswordDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Current password' }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MinLength)(6),
     (0, class_validator_1.Matches)(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;'<>,.?\/\\~`\-]).*$/, { message: 'Password must be at least 6 characters long, include at least one uppercase letter, one number, and one special character.' }),
     __metadata("design:type", String)
 ], ChangePasswordDto.prototype, "currentPassword", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'New password' }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MinLength)(6),
     (0, class_validator_1.Matches)(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;'<>,.?\/\\~`\-]).*$/, { message: 'Password must be at least 6 characters long, include at least one uppercase letter, one number, and one special character.' }),
     __metadata("design:type", String)
 ], ChangePasswordDto.prototype, "newPassword", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Confirmation of new password' }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MinLength)(6),
     (0, class_validator_1.Matches)(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;'<>,.?\/\\~`\-]).*$/, { message: 'Password must be at least 6 characters long, include at least one uppercase letter, one number, and one special character.' }),

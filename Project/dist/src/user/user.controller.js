@@ -19,11 +19,12 @@ const create_user_dto_1 = require("./dto/create-user.dto");
 const jwt_guard_1 = require("../guards/jwt.guard");
 const update_profile_dto_1 = require("./dto/update-profile.dto");
 const change_password_dto_1 = require("./dto/change-password.dto");
+const swagger_1 = require("@nestjs/swagger");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
     }
-    create(createUserDto) {
+    async create(createUserDto) {
         return this.userService.registerUser(createUserDto);
     }
     async viewProfile(req) {
@@ -45,14 +46,16 @@ let UserController = class UserController {
 exports.UserController = UserController;
 __decorate([
     (0, common_1.Post)('/register'),
+    (0, swagger_1.ApiBody)({ type: create_user_dto_1.CreateUserDto }),
     __param(0, (0, common_1.Body)(common_1.ValidationPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], UserController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)('profile'),
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -61,6 +64,7 @@ __decorate([
 __decorate([
     (0, common_1.Patch)('profile/update'),
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     __param(0, (0, common_1.Request)()),
     __param(1, (0, common_1.Body)(common_1.ValidationPipe)),
     __metadata("design:type", Function),
@@ -70,6 +74,7 @@ __decorate([
 __decorate([
     (0, common_1.Patch)('change-password'),
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     __param(0, (0, common_1.Request)()),
     __param(1, (0, common_1.Body)(common_1.ValidationPipe)),
     __metadata("design:type", Function),
@@ -77,6 +82,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "changePassword", null);
 exports.UserController = UserController = __decorate([
+    (0, swagger_1.ApiTags)('User'),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
     (0, common_1.Controller)('user'),
     __metadata("design:paramtypes", [user_service_1.UserService])
 ], UserController);

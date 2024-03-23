@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreatePackageDto = void 0;
 const class_validator_1 = require("class-validator");
+const swagger_1 = require("@nestjs/swagger");
 var PackageName;
 (function (PackageName) {
     PackageName["STANDARD"] = "standard";
@@ -20,6 +21,7 @@ class CreatePackageDto {
 }
 exports.CreatePackageDto = CreatePackageDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({ enum: PackageName, enumName: 'PackageName' }),
     (0, class_validator_1.IsEnum)(PackageName, { message: 'Name must be either "standard" or "premium"' }),
     __metadata("design:type", String)
 ], CreatePackageDto.prototype, "name", void 0);

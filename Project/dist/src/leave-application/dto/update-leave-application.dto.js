@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateLeaveApplicationDto = void 0;
 const class_validator_1 = require("class-validator");
+const swagger_1 = require("@nestjs/swagger");
 var ApplicationStatus;
 (function (ApplicationStatus) {
     ApplicationStatus["Approved"] = "Approved";
@@ -20,8 +21,11 @@ class UpdateLeaveApplicationDto {
 }
 exports.UpdateLeaveApplicationDto = UpdateLeaveApplicationDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Status of the leave application. Must be either "Approved" or "Rejected".'
+    }),
     (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsEnum)(ApplicationStatus, { message: 'Status must be either Approved or Rejected' }),
+    (0, class_validator_1.IsEnum)(ApplicationStatus, { message: 'Status must be either "Approved" or "Rejected"' }),
     __metadata("design:type", String)
 ], UpdateLeaveApplicationDto.prototype, "status", void 0);
 //# sourceMappingURL=update-leave-application.dto.js.map

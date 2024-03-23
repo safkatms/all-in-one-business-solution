@@ -20,6 +20,7 @@ const update_leave_application_dto_1 = require("./dto/update-leave-application.d
 const jwt_guard_1 = require("../guards/jwt.guard");
 const schema_guard_1 = require("../guards/schema.guard");
 const role_guard_1 = require("../guards/role.guard");
+const swagger_1 = require("@nestjs/swagger");
 let LeaveApplicationController = class LeaveApplicationController {
     constructor(leaveApplicationService) {
         this.leaveApplicationService = leaveApplicationService;
@@ -44,6 +45,7 @@ exports.LeaveApplicationController = LeaveApplicationController;
 __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(new role_guard_1.RoleGuard(['accountant', 'inventory_manager', 'salesman'])),
+    (0, swagger_1.ApiBody)({ type: create_leave_application_dto_1.CreateLeaveApplicationDto }),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Body)(common_1.ValidationPipe)),
     __metadata("design:type", Function),
@@ -75,6 +77,7 @@ __decorate([
 __decorate([
     (0, common_1.Patch)(':id'),
     (0, common_1.UseGuards)(schema_guard_1.SetSchemaGuard, new role_guard_1.RoleGuard(['owner', 'hr'])),
+    (0, swagger_1.ApiBody)({ type: update_leave_application_dto_1.UpdateLeaveApplicationDto }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)(common_1.ValidationPipe)),
     __metadata("design:type", Function),
@@ -84,6 +87,8 @@ __decorate([
 exports.LeaveApplicationController = LeaveApplicationController = __decorate([
     (0, common_1.Controller)('leave'),
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    (0, swagger_1.ApiTags)('Leave Applications'),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
     __metadata("design:paramtypes", [leave_application_service_1.LeaveApplicationService])
 ], LeaveApplicationController);
 //# sourceMappingURL=leave-application.controller.js.map

@@ -9,13 +9,14 @@ async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     const config = new swagger_1.DocumentBuilder()
         .setTitle('All in One Business Solution')
-        .setDescription('All in one business solution API')
+        .setDescription('All in one business solution API description')
         .setVersion('1.0')
-        .addTag('All in one business solution API')
+        .addTag('AIOBS')
+        .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'access-token')
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config);
     swagger_1.SwaggerModule.setup('api', app, document);
-    await app.listen(3000);
+    await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map
