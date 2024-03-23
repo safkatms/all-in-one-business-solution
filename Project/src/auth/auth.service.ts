@@ -1,4 +1,3 @@
-// auth.service.ts
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
@@ -23,7 +22,12 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const { password, ...result } = user;
+    if (user.status) {
+      throw new UnauthorizedException('Account is banned');
+    }
+
+    // Exclude password from user details returned
+    const { password, status, ...result } = user;
     return result;
   }
 

@@ -15,4 +15,5 @@ export declare class User {
     passwordResetToken: string;
     passwordResetTokenExpires: Date;
     package: Package;
+    status: boolean;
 }

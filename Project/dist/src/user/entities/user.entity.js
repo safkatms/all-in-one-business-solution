@@ -76,6 +76,10 @@ __decorate([
     (0, typeorm_1.JoinColumn)({ name: "packageId" }),
     __metadata("design:type", package_entity_1.Package)
 ], User.prototype, "package", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: false }),
+    __metadata("design:type", Boolean)
+], User.prototype, "status", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)()
 ], User);

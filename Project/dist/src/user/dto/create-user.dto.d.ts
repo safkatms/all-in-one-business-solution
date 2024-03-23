@@ -9,8 +9,9 @@ export declare class CreateUserDto {
     username: string;
     email: string;
     mobileNo: string;
-    password: string;
     company: string;
     gender: Gender;
+    password: string;
+    conPassword: string;
 }
 export {};
