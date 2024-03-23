@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { InventoryManagementService } from './inventory-management.service';
 import { InventoryManagementController } from './inventory-management.controller';
 import { InventoryManagement } from './entities/inventory-management.entity';
@@ -15,6 +15,13 @@ export class InventoryManagementModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(InventoryValidationMiddleware)
-      .forRoutes('inventory-management');
+      .exclude({ path: 'inventory-management', method: RequestMethod.GET })
+      .forRoutes(
+        { path: 'inventory-management/add-item', method: RequestMethod.POST },
+        {
+          path: 'inventory-management/modify-item/:id',
+          method: RequestMethod.PATCH,
+        },
+      );
   }
 }

@@ -41,6 +41,6 @@ __decorate([
     __metadata("design:type", String)
 ], Leave.prototype, "status", void 0);
 exports.Leave = Leave = __decorate([
-    (0, typeorm_1.Entity)()
+    (0, typeorm_1.Entity)('leave')
 ], Leave);
 //# sourceMappingURL=leave-application.entity.js.map

@@ -131,6 +131,20 @@ let UserService = class UserService {
           ON DELETE CASCADE ON UPDATE CASCADE
     )
 `);
+        await this.connection.query(`
+    CREATE TABLE IF NOT EXISTS "${schemaName}"."leave" (
+      "leaveId" SERIAL PRIMARY KEY,
+      "userId" INT NOT NULL,
+      "startDate" DATE NOT NULL,
+      "endDate" DATE NOT NULL,
+      "description" VARCHAR(255) NOT NULL,
+      "status" VARCHAR(255) NOT NULL DEFAULT 'Pending',
+      CONSTRAINT fk_user
+          FOREIGN KEY("userId") 
+          REFERENCES "${schemaName}"."user"("userId")
+          ON DELETE CASCADE ON UPDATE CASCADE
+    )
+`);
     }
     async updateProfile(userId, updateProfileDto) {
         await this.usersRepository.update(userId, updateProfileDto);
