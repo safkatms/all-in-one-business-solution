@@ -20,6 +20,7 @@ const update_customer_dto_1 = require("./dto/update-customer.dto");
 const jwt_guard_1 = require("../guards/jwt.guard");
 const schema_guard_1 = require("../guards/schema.guard");
 const role_guard_1 = require("../guards/role.guard");
+const swagger_1 = require("@nestjs/swagger");
 let CustomerController = class CustomerController {
     constructor(customerService) {
         this.customerService = customerService;
@@ -39,6 +40,8 @@ let CustomerController = class CustomerController {
 };
 exports.CustomerController = CustomerController;
 __decorate([
+    (0, swagger_1.ApiBearerAuth)('access-token'),
+    (0, swagger_1.ApiCreatedResponse)({ description: 'The customer has been successfully created.' }),
     (0, common_1.Post)('/create'),
     __param(0, (0, common_1.Body)(common_1.ValidationPipe)),
     __metadata("design:type", Function),
@@ -46,12 +49,17 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CustomerController.prototype, "createCustomerProfile", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOkResponse)({ description: 'List of all customers.' }),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], CustomerController.prototype, "findAll", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOkResponse)({ description: 'Customer found successfully.' }),
+    (0, swagger_1.ApiNotFoundResponse)({ description: 'Customer not found.' }),
     (0, common_1.Get)('/:contact'),
     __param(0, (0, common_1.Param)('contact')),
     __metadata("design:type", Function),
@@ -59,6 +67,9 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CustomerController.prototype, "findOne", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOkResponse)({ description: 'Customer updated successfully.' }),
+    (0, swagger_1.ApiBadRequestResponse)({ description: 'Bad request, invalid data provided.' }),
     (0, common_1.Patch)('/update/:contact'),
     __param(0, (0, common_1.Param)('contact')),
     __param(1, (0, common_1.Body)()),
@@ -67,6 +78,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CustomerController.prototype, "updateCustomer", null);
 exports.CustomerController = CustomerController = __decorate([
+    (0, swagger_1.ApiTags)('Customer'),
     (0, common_1.Controller)('customer'),
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, schema_guard_1.SetSchemaGuard, new role_guard_1.RoleGuard(['owner', 'salesman'])),
     __metadata("design:paramtypes", [customer_service_1.CustomerService])

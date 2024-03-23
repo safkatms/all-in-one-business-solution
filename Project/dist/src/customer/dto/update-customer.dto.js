@@ -11,10 +11,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateCustomerDto = void 0;
 const class_validator_1 = require("class-validator");
+const swagger_1 = require("@nestjs/swagger");
 class UpdateCustomerDto {
 }
 exports.UpdateCustomerDto = UpdateCustomerDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: 'John Doe', required: false }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)({ message: 'Name must be a string' }),
     (0, class_validator_1.Matches)(/^[A-Z][a-z]*$/, {
@@ -23,6 +25,7 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateCustomerDto.prototype, "name", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: '01712345678', required: false }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.Matches)(/^01[3-9]\d{8}$/, {
@@ -31,6 +34,7 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateCustomerDto.prototype, "contact", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: 'example@example.com', required: false }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
