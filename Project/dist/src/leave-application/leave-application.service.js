@@ -47,17 +47,37 @@ let LeaveApplicationService = class LeaveApplicationService {
         await this.leaveRepository.save(leave);
         return leave;
     }
-    findAll() {
-        return this.leaveRepository.find();
+    findAllPendingApplication() {
+        return this.leaveRepository.find({
+            where: {
+                status: 'Pending'
+            }
+        });
     }
-    findOne(id) {
-        return `This action returns a #${id} leaveApplication`;
+    findAllUpdatedApplication() {
+        return this.leaveRepository.find({
+            where: {
+                status: (0, typeorm_2.In)(['Approved', 'Rejected'])
+            }
+        });
     }
-    update(id, updateLeaveApplicationDto) {
-        return `This action updates a #${id} leaveApplication`;
+    findAllByUserId(userId) {
+        return this.leaveRepository.find({
+            where: {
+                userId: userId
+            }
+        });
     }
-    remove(id) {
-        return `This action removes a #${id} leaveApplication`;
+    async updateStatus(id, updateLeaveApplicationDto) {
+        const leaveApplication = await this.leaveRepository.findOne({
+            where: { leaveId: id }
+        });
+        if (!leaveApplication) {
+            throw new common_1.NotFoundException(`Leave application with ID "${id}" not found`);
+        }
+        leaveApplication.status = updateLeaveApplicationDto.status;
+        await this.leaveRepository.save(leaveApplication);
+        return leaveApplication;
     }
 };
 exports.LeaveApplicationService = LeaveApplicationService;
