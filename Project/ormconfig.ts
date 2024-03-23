@@ -17,7 +17,7 @@ export const config: PostgresConnectionOptions = {
   host: 'localhost',
   port: 5432,
   username: 'postgres',
-  password: '123',
+  password: 'admin',
 
   entities: [
     User,
@@ -30,7 +30,11 @@ export const config: PostgresConnectionOptions = {
     Order,
     OrderItem,
     Invoice,
+
+
+
     Leave
+
   ],
   synchronize: true,
 };
