@@ -1,4 +1,12 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateLeaveApplicationDto } from './create-leave-application.dto';
+import { IsEnum, IsNotEmpty } from "class-validator";
 
-export class UpdateLeaveApplicationDto extends PartialType(CreateLeaveApplicationDto) {}
+enum ApplicationStatus {
+    Approved = "Approved",
+    Rejected = "Rejected"
+}
+
+export class UpdateLeaveApplicationDto {
+    @IsNotEmpty()
+    @IsEnum(ApplicationStatus, { message: 'Status must be either Approved or Rejected' })
+    status: ApplicationStatus;
+}

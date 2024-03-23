@@ -27,17 +27,17 @@ let LeaveApplicationController = class LeaveApplicationController {
     async create(req, createLeaveDto) {
         return this.leaveApplicationService.createLeaveApplication(req.user.userId, createLeaveDto);
     }
-    findAll() {
-        return this.leaveApplicationService.findAll();
+    findAllPendingApplication() {
+        return this.leaveApplicationService.findAllPendingApplication();
     }
-    findOne(id) {
-        return this.leaveApplicationService.findOne(+id);
+    findAll() {
+        return this.leaveApplicationService.findAllUpdatedApplication();
+    }
+    findAllByUserId(req, userId) {
+        return this.leaveApplicationService.findAllByUserId(req.user.userId);
     }
     update(id, updateLeaveApplicationDto) {
-        return this.leaveApplicationService.update(+id, updateLeaveApplicationDto);
-    }
-    remove(id) {
-        return this.leaveApplicationService.remove(+id);
+        return this.leaveApplicationService.updateStatus(+id, updateLeaveApplicationDto);
     }
 };
 exports.LeaveApplicationController = LeaveApplicationController;
@@ -51,34 +51,36 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], LeaveApplicationController.prototype, "create", null);
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Get)('/pending'),
+    (0, common_1.UseGuards)(schema_guard_1.SetSchemaGuard, new role_guard_1.RoleGuard(['owner', 'hr'])),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], LeaveApplicationController.prototype, "findAllPendingApplication", null);
+__decorate([
+    (0, common_1.Get)('/history'),
     (0, common_1.UseGuards)(schema_guard_1.SetSchemaGuard, new role_guard_1.RoleGuard(['owner', 'hr'])),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], LeaveApplicationController.prototype, "findAll", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Get)('user/history'),
+    (0, common_1.UseGuards)(schema_guard_1.SetSchemaGuard, new role_guard_1.RoleGuard(['accountant', 'inventory_manager', 'salesman'])),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Object, Number]),
     __metadata("design:returntype", void 0)
-], LeaveApplicationController.prototype, "findOne", null);
+], LeaveApplicationController.prototype, "findAllByUserId", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    (0, common_1.UseGuards)(schema_guard_1.SetSchemaGuard, new role_guard_1.RoleGuard(['owner', 'hr'])),
     __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
+    __param(1, (0, common_1.Body)(common_1.ValidationPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, update_leave_application_dto_1.UpdateLeaveApplicationDto]),
     __metadata("design:returntype", void 0)
 ], LeaveApplicationController.prototype, "update", null);
-__decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], LeaveApplicationController.prototype, "remove", null);
 exports.LeaveApplicationController = LeaveApplicationController = __decorate([
     (0, common_1.Controller)('leave'),
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
