@@ -13,12 +13,13 @@ export class LeaveApplicationController {
 
   
   @Post()
+  @UseGuards(new RoleGuard(['accountant','inventory_manager','salesman']))
   async create(@Req() req, @Body(ValidationPipe) createLeaveDto: CreateLeaveApplicationDto) {
-    // Assume the user object is attached to the request by JwtAuthGuard.
     return this.leaveApplicationService.createLeaveApplication(req.user.userId, createLeaveDto);
   }
 
   @Get()
+  @UseGuards(SetSchemaGuard, new RoleGuard(['owner','hr']))
   findAll() {
     return this.leaveApplicationService.findAll();
   }

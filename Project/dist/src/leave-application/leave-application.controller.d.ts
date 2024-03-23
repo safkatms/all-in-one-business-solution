@@ -5,7 +5,7 @@ export declare class LeaveApplicationController {
     private readonly leaveApplicationService;
     constructor(leaveApplicationService: LeaveApplicationService);
     create(req: any, createLeaveDto: CreateLeaveApplicationDto): Promise<any>;
-    findAll(): string;
+    findAll(): Promise<import("src/leave-application/entities/leave-application.entity").Leave[]>;
     findOne(id: string): string;
     update(id: string, updateLeaveApplicationDto: UpdateLeaveApplicationDto): string;
     remove(id: string): string;

@@ -24,15 +24,15 @@ export class EmployeeController {
     return this.employeeService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.employeeService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.employeeService.findOne(+id);
+  // }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEmployeeDto: UpdateEmployeeDto) {
-    return this.employeeService.update(+id, updateEmployeeDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateEmployeeDto: UpdateEmployeeDto) {
+  //   return this.employeeService.update(+id, updateEmployeeDto);
+  // }
 
   @Delete('/remove/:id')
   @UseGuards(SetSchemaGuard)

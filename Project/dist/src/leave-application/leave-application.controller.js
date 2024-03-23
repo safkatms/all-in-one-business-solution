@@ -18,6 +18,8 @@ const leave_application_service_1 = require("./leave-application.service");
 const create_leave_application_dto_1 = require("./dto/create-leave-application.dto");
 const update_leave_application_dto_1 = require("./dto/update-leave-application.dto");
 const jwt_guard_1 = require("../guards/jwt.guard");
+const schema_guard_1 = require("../guards/schema.guard");
+const role_guard_1 = require("../guards/role.guard");
 let LeaveApplicationController = class LeaveApplicationController {
     constructor(leaveApplicationService) {
         this.leaveApplicationService = leaveApplicationService;
@@ -41,6 +43,7 @@ let LeaveApplicationController = class LeaveApplicationController {
 exports.LeaveApplicationController = LeaveApplicationController;
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.UseGuards)(new role_guard_1.RoleGuard(['accountant', 'inventory_manager', 'salesman'])),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Body)(common_1.ValidationPipe)),
     __metadata("design:type", Function),
@@ -49,6 +52,7 @@ __decorate([
 ], LeaveApplicationController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, common_1.UseGuards)(schema_guard_1.SetSchemaGuard, new role_guard_1.RoleGuard(['owner', 'hr'])),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)

@@ -22,18 +22,13 @@ export class LeaveApplicationService {
       throw new NotFoundException(`User with ID ${userId} not found`);
     }
 
-    const startDate = new Date(createLeaveDto.startDate);
-    const endDate = new Date(createLeaveDto.endDate);
-  
-    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-      throw new Error('Invalid startDate or endDate');
-    }
-  
+    await this.connection.query(`SET search_path TO "${user.company}"`);
+
     const overlappingLeave = await this.leaveRepository.findOne({
       where: {
-        user: user,
-        startDate: LessThanOrEqual(endDate),
-        endDate: MoreThanOrEqual(startDate),
+        userId:  user.userId , // Correct way to query based on related user's ID
+        startDate: LessThanOrEqual(new Date(createLeaveDto.endDate)),
+        endDate: MoreThanOrEqual(new Date(createLeaveDto.startDate)),
       },
     });
   
@@ -41,20 +36,23 @@ export class LeaveApplicationService {
       throw new ConflictException('Leave application already exists for the given period');
     }
   
+
     const leave = this.leaveRepository.create({
       ...createLeaveDto,
       user,
-      startDate, 
-      endDate,  
     });
-  
+
+
     await this.leaveRepository.save(leave);
-    return createLeaveDto;
+    
+    return leave;
   }
+  
+  
   
 
   findAll() {
-    return `This action returns all leaveApplication`;
+    return this.leaveRepository.find();
   }
 
   findOne(id: number) {
