@@ -26,7 +26,6 @@ export class AuthService {
       throw new UnauthorizedException('Account is banned');
     }
 
-    // Exclude password from user details returned
     const { password, status, ...result } = user;
     return result;
   }
@@ -40,4 +39,6 @@ export class AuthService {
       access_token: this.jwtService.sign(payload),
     };
   }
+
+  
 }
