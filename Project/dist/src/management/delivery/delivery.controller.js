@@ -34,6 +34,9 @@ let DeliveryController = class DeliveryController {
     returnDelivery(id, updateDeliveryDto) {
         return this.deliveryService.returnedDelivery(+id, updateDeliveryDto);
     }
+    findAll() {
+        return this.deliveryService.findAll();
+    }
 };
 exports.DeliveryController = DeliveryController;
 __decorate([
@@ -79,6 +82,14 @@ __decorate([
     __metadata("design:paramtypes", [String, update_delivery_dto_1.UpdateDeliveryDto]),
     __metadata("design:returntype", void 0)
 ], DeliveryController.prototype, "returnDelivery", null);
+__decorate([
+    (0, common_1.Get)(),
+    (0, swagger_1.ApiOkResponse)({ description: 'List of all order.' }),
+    (0, swagger_1.ApiBearerAuth)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], DeliveryController.prototype, "findAll", null);
 exports.DeliveryController = DeliveryController = __decorate([
     (0, swagger_1.ApiTags)('Delivery Management'),
     (0, common_1.Controller)('delivery'),

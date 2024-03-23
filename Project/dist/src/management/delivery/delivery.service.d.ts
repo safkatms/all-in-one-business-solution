@@ -8,7 +8,16 @@ export declare class DeliveryService {
     private readonly inventoryRepository;
     private readonly orderItemRepository;
     constructor(orderRepository: Repository<Order>, inventoryRepository: Repository<InventoryManagement>, orderItemRepository: Repository<OrderItem>);
-    makeDelivery(id: number, updateDeliveryDto: UpdateDeliveryDto): Promise<string>;
+    makeDelivery(id: number, updateDeliveryDto: UpdateDeliveryDto): Promise<{
+        message: string;
+        inventoryUpdate: string;
+        order: Order;
+    }>;
     findOne(id: number): Promise<Order>;
-    returnedDelivery(id: number, updateDeliveryDto: UpdateDeliveryDto): Promise<string>;
+    returnedDelivery(id: number, updateDeliveryDto: UpdateDeliveryDto): Promise<{
+        message: string;
+        inventoryUpdate: string;
+        order: Order;
+    }>;
+    findAll(): Promise<Order[]>;
 }

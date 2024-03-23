@@ -48,7 +48,11 @@ let DeliveryService = class DeliveryService {
                     await this.inventoryRepository.save(inventoryItem);
                 }
             }
-            return `Order #${id} status updated to ${status}`;
+            return {
+                message: `Order #${id} status updated to ${status}`,
+                inventoryUpdate: 'Inventory quantity deducted successfully',
+                order: orderChk,
+            };
         }
         else {
             throw new common_1.BadRequestException('Invalid status provided');
@@ -86,11 +90,18 @@ let DeliveryService = class DeliveryService {
                     await this.inventoryRepository.save(inventoryItem);
                 }
             }
-            return `Order #${id} status updated to ${status}`;
+            return {
+                message: `Order #${id} status updated to ${status}`,
+                inventoryUpdate: 'Returned items quantity added back to inventory successfully',
+                order: orderChk,
+            };
         }
         else {
             throw new common_1.BadRequestException('Invalid status provided');
         }
+    }
+    async findAll() {
+        return await this.orderRepository.find();
     }
 };
 exports.DeliveryService = DeliveryService;

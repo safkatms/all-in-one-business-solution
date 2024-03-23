@@ -76,4 +76,11 @@ export class DeliveryController {
   ) {
     return this.deliveryService.returnedDelivery(+id, updateDeliveryDto);
   }
+  //find all data
+  @Get()
+  @ApiOkResponse({ description: 'List of all order.' })
+  @ApiBearerAuth()
+  findAll() {
+    return this.deliveryService.findAll();
+  }
 }
