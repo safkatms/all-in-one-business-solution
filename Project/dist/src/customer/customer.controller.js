@@ -49,7 +49,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CustomerController.prototype, "createCustomerProfile", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
     (0, swagger_1.ApiOkResponse)({ description: 'List of all customers.' }),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
@@ -57,7 +57,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CustomerController.prototype, "findAll", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
     (0, swagger_1.ApiOkResponse)({ description: 'Customer found successfully.' }),
     (0, swagger_1.ApiNotFoundResponse)({ description: 'Customer not found.' }),
     (0, common_1.Get)('/:contact'),
@@ -67,7 +67,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CustomerController.prototype, "findOne", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
     (0, swagger_1.ApiOkResponse)({ description: 'Customer updated successfully.' }),
     (0, swagger_1.ApiBadRequestResponse)({ description: 'Bad request, invalid data provided.' }),
     (0, common_1.Patch)('/update/:contact'),

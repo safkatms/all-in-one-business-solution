@@ -10,13 +10,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateOrderDto = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class CreateOrderDto {
 }
 exports.CreateOrderDto = CreateOrderDto;
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiProperty)({ description: 'Contact number of the customer. Must be a valid Bangladesh number starting with 013-019.', example: '01712345678' }),
+    (0, class_validator_1.IsNotEmpty)({ message: 'Contact cannot be empty' }),
+    (0, class_validator_1.IsString)({ message: 'Contact must be a string' }),
     (0, class_validator_1.Matches)(/^01[3-9]\d{8}$/, { message: 'Contact must be a valid Bangladesh number.' }),
     __metadata("design:type", String)
 ], CreateOrderDto.prototype, "customerContact", void 0);

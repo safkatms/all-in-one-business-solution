@@ -20,14 +20,14 @@ export class CustomerController {
     return this.customerService.createCustomerProfile(createCustomerDto);
   }
 
-  @ApiBearerAuth() 
+  @ApiBearerAuth('access-token') 
   @ApiOkResponse({ description: 'List of all customers.' }) 
   @Get()
   findAll() {
     return this.customerService.findAll();
   }
 
-  @ApiBearerAuth() 
+  @ApiBearerAuth('access-token') 
   @ApiOkResponse({ description: 'Customer found successfully.' }) 
   @ApiNotFoundResponse({ description: 'Customer not found.' }) 
   @Get('/:contact')
@@ -35,7 +35,7 @@ export class CustomerController {
     return this.customerService.findOne(contact);
   }
 
-  @ApiBearerAuth() 
+  @ApiBearerAuth('access-token') 
   @ApiOkResponse({ description: 'Customer updated successfully.' }) 
   @ApiBadRequestResponse({ description: 'Bad request, invalid data provided.' }) 
   @Patch('/update/:contact')
