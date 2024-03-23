@@ -7,6 +7,8 @@ export class Leave {
   @PrimaryGeneratedColumn()
   leaveId: number;
 
+  @Column()
+  userId:number;
   @ManyToOne(() => User)
   @JoinColumn({ name: 'userId' })
   user: User;

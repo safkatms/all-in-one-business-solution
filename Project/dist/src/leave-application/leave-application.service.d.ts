@@ -9,7 +9,7 @@ export declare class LeaveApplicationService {
     private connection;
     constructor(leaveRepository: Repository<Leave>, userRepository: Repository<User>, connection: Connection);
     createLeaveApplication(userId: number, createLeaveDto: CreateLeaveApplicationDto): Promise<any>;
-    findAll(): string;
+    findAll(): Promise<Leave[]>;
     findOne(id: number): string;
     update(id: number, updateLeaveApplicationDto: UpdateLeaveApplicationDto): string;
     remove(id: number): string;

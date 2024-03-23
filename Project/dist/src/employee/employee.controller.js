@@ -16,7 +16,6 @@ exports.EmployeeController = void 0;
 const common_1 = require("@nestjs/common");
 const employee_service_1 = require("./employee.service");
 const create_employee_dto_1 = require("./dto/create-employee.dto");
-const update_employee_dto_1 = require("./dto/update-employee.dto");
 const jwt_guard_1 = require("../guards/jwt.guard");
 const schema_guard_1 = require("../guards/schema.guard");
 let EmployeeController = class EmployeeController {
@@ -29,12 +28,6 @@ let EmployeeController = class EmployeeController {
     }
     async findAll(req) {
         return this.employeeService.findAll();
-    }
-    findOne(id) {
-        return this.employeeService.findOne(+id);
-    }
-    update(id, updateEmployeeDto) {
-        return this.employeeService.update(+id, updateEmployeeDto);
     }
     remove(id, req) {
         const company = req.company;
@@ -58,21 +51,6 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], EmployeeController.prototype, "findAll", null);
-__decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], EmployeeController.prototype, "findOne", null);
-__decorate([
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_employee_dto_1.UpdateEmployeeDto]),
-    __metadata("design:returntype", void 0)
-], EmployeeController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)('/remove/:id'),
     (0, common_1.UseGuards)(schema_guard_1.SetSchemaGuard),

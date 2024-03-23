@@ -29,16 +29,12 @@ let LeaveApplicationService = class LeaveApplicationService {
         if (!user) {
             throw new common_1.NotFoundException(`User with ID ${userId} not found`);
         }
-        const startDate = new Date(createLeaveDto.startDate);
-        const endDate = new Date(createLeaveDto.endDate);
-        if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-            throw new Error('Invalid startDate or endDate');
-        }
+        await this.connection.query(`SET search_path TO "${user.company}"`);
         const overlappingLeave = await this.leaveRepository.findOne({
             where: {
-                user: user,
-                startDate: (0, typeorm_2.LessThanOrEqual)(endDate),
-                endDate: (0, typeorm_2.MoreThanOrEqual)(startDate),
+                userId: user.userId,
+                startDate: (0, typeorm_2.LessThanOrEqual)(new Date(createLeaveDto.endDate)),
+                endDate: (0, typeorm_2.MoreThanOrEqual)(new Date(createLeaveDto.startDate)),
             },
         });
         if (overlappingLeave) {
@@ -47,14 +43,12 @@ let LeaveApplicationService = class LeaveApplicationService {
         const leave = this.leaveRepository.create({
             ...createLeaveDto,
             user,
-            startDate,
-            endDate,
         });
         await this.leaveRepository.save(leave);
-        return createLeaveDto;
+        return leave;
     }
     findAll() {
-        return `This action returns all leaveApplication`;
+        return this.leaveRepository.find();
     }
     findOne(id) {
         return `This action returns a #${id} leaveApplication`;

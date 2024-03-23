@@ -48,12 +48,6 @@ let EmployeeService = class EmployeeService {
         const employees = await this.employeeRepository.find();
         return employees;
     }
-    findOne(id) {
-        return `This action returns a #${id} employee`;
-    }
-    update(id, updateEmployeeDto) {
-        return `This action updates a #${id} employee`;
-    }
     async remove(id, company) {
         const employee = await this.employeeRepository.findOneOrFail({ where: { employeeid: id } });
         if (!employee) {
