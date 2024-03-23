@@ -228,7 +228,7 @@ export class UserService {
   async createPasswordResetToken(email: string): Promise<void> {
     const user = await this.usersRepository.findOne({ where: { email } });
     if (!user) {
-      throw new Error('User not found');
+      throw new UnauthorizedException('User not found');
     }
 
     const token = uuidv4();

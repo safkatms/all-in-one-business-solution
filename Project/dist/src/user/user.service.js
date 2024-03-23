@@ -185,7 +185,7 @@ let UserService = class UserService {
     async createPasswordResetToken(email) {
         const user = await this.usersRepository.findOne({ where: { email } });
         if (!user) {
-            throw new Error('User not found');
+            throw new common_1.UnauthorizedException('User not found');
         }
         const token = (0, uuid_1.v4)();
         const expiration = new Date();
