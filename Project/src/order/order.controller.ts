@@ -7,7 +7,7 @@ import { AddOrderItemDto } from './dto/add-order-item.dto';
 import { JwtAuthGuard } from 'src/guards/jwt.guard';
 import { SetSchemaGuard } from 'src/guards/schema.guard';
 import { RoleGuard } from 'src/guards/role.guard';
-import { CheckProductGuard } from 'src/middleware/check-product.middleware';
+import { CheckProductGuard } from 'src/guards/check-product.guard';
 
 @Controller('order')
 @UseGuards(JwtAuthGuard,SetSchemaGuard, new RoleGuard(['owner','salesman']))

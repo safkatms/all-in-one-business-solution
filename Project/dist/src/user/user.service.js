@@ -141,7 +141,9 @@ let UserService = class UserService {
       "status" VARCHAR(255) NOT NULL DEFAULT 'Pending',
       CONSTRAINT fk_user
           FOREIGN KEY("userId") 
-          REFERENCES "${schemaName}"."user"("userId")
+
+          REFERENCES public."user"("userId")
+
           ON DELETE CASCADE ON UPDATE CASCADE
     )
 `);

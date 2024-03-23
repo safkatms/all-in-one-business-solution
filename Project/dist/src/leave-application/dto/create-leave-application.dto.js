@@ -9,13 +9,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateLeaveApplicationDto = exports.LeaveStatus = void 0;
+exports.CreateLeaveApplicationDto = void 0;
 const class_validator_1 = require("class-validator");
-var LeaveStatus;
-(function (LeaveStatus) {
-    LeaveStatus["Pending"] = "pending";
-    LeaveStatus["Approved"] = "approved";
-})(LeaveStatus || (exports.LeaveStatus = LeaveStatus = {}));
 class CreateLeaveApplicationDto {
 }
 exports.CreateLeaveApplicationDto = CreateLeaveApplicationDto;

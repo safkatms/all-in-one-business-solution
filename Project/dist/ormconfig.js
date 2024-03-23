@@ -30,7 +30,9 @@ exports.config = {
         order_entity_1.Order,
         order_item_entity_1.OrderItem,
         invoice_entity_1.Invoice,
+
         leave_application_entity_1.Leave,
+
     ],
     synchronize: true,
 };

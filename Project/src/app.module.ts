@@ -15,7 +15,6 @@ import { CustomerModule } from './customer/customer.module';
 import { OrderModule } from './order/order.module';
 import { DeliveryModule } from './management/delivery/delivery.module';
 import { InvoiceModule } from './invoice/invoice.module';
-
 import { LeaveApplicationModule } from './leave-application/leave-application.module';
 
 @Module({

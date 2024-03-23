@@ -30,7 +30,11 @@ export const config: PostgresConnectionOptions = {
     Order,
     OrderItem,
     Invoice,
-    Leave,
+
+
+
+    Leave
+
   ],
   synchronize: true,
 };
