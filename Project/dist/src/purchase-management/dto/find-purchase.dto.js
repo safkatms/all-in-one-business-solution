@@ -10,23 +10,44 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FindPurchaseDto = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class FindPurchaseDto {
 }
 exports.FindPurchaseDto = FindPurchaseDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        required: false,
+        description: 'Name of the vendor',
+        example: 'Hogwartshop ',
+    }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], FindPurchaseDto.prototype, "vendorName", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        required: false,
+        description: 'Contact number of the vendor',
+        example: '01234567890',
+    }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], FindPurchaseDto.prototype, "vendorContact", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        required: false,
+        description: 'Email of the vendor',
+        example: 'hogwarts@gmail.com',
+    }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], FindPurchaseDto.prototype, "vendorEmail", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        required: false,
+        description: 'Date of the purchase',
+        example: '2024-03-23',
+    }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], FindPurchaseDto.prototype, "purchaseDate", void 0);

@@ -10,31 +10,62 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FindProductDto = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class FindProductDto {
 }
 exports.FindProductDto = FindProductDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        required: false,
+        description: 'Name of the product',
+        example: 'Smartphone',
+    }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], FindProductDto.prototype, "productName", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        required: false,
+        description: 'Details of the product',
+        example: 'High-resolution display, 128GB storage',
+    }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], FindProductDto.prototype, "productDetails", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        required: false,
+        description: 'Purchase price of the product',
+        example: 599.99,
+    }),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], FindProductDto.prototype, "productPurchasePrice", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        required: false,
+        description: 'Sell price of the product',
+        example: 799.99,
+    }),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], FindProductDto.prototype, "productSellPrice", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        required: false,
+        description: 'Brand of the product',
+        example: 'Apple',
+    }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], FindProductDto.prototype, "porductBrand", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        required: false,
+        description: 'Quantity of the product',
+        example: 100,
+    }),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], FindProductDto.prototype, "productQuantity", void 0);

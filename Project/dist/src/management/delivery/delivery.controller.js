@@ -20,6 +20,7 @@ const jwt_guard_1 = require("../../guards/jwt.guard");
 const role_guard_1 = require("../../guards/role.guard");
 const schema_guard_1 = require("../../guards/schema.guard");
 const deliveryManagement_guard_1 = require("./guard/deliveryManagement.guard");
+const swagger_1 = require("@nestjs/swagger");
 let DeliveryController = class DeliveryController {
     constructor(deliveryService) {
         this.deliveryService = deliveryService;
@@ -38,6 +39,12 @@ exports.DeliveryController = DeliveryController;
 __decorate([
     (0, common_1.UseGuards)(deliveryManagement_guard_1.DeliveryManagementValidIdGuard),
     (0, common_1.Patch)('make-delivery/:id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Make delivery' }),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'ID of the delivery' }),
+    (0, swagger_1.ApiBody)({ type: update_delivery_dto_1.UpdateDeliveryDto }),
+    (0, swagger_1.ApiOkResponse)({ description: 'Delivery successfully made.' }),
+    (0, swagger_1.ApiBadRequestResponse)({ description: 'Bad request. Invalid input.' }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -47,6 +54,11 @@ __decorate([
 __decorate([
     (0, common_1.UseGuards)(deliveryManagement_guard_1.DeliveryManagementValidIdGuard),
     (0, common_1.Get)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Find delivery by ID' }),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'ID of the delivery' }),
+    (0, swagger_1.ApiOkResponse)({ description: 'Delivery found.' }),
+    (0, swagger_1.ApiNotFoundResponse)({ description: 'Delivery not found.' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -55,6 +67,12 @@ __decorate([
 __decorate([
     (0, common_1.UseGuards)(deliveryManagement_guard_1.DeliveryManagementValidIdGuard),
     (0, common_1.Patch)('returned-delivery/:id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Return delivery' }),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'ID of the delivery' }),
+    (0, swagger_1.ApiBody)({ type: update_delivery_dto_1.UpdateDeliveryDto }),
+    (0, swagger_1.ApiOkResponse)({ description: 'Delivery successfully returned.' }),
+    (0, swagger_1.ApiBadRequestResponse)({ description: 'Bad request. Invalid input.' }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -62,6 +80,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], DeliveryController.prototype, "returnDelivery", null);
 exports.DeliveryController = DeliveryController = __decorate([
+    (0, swagger_1.ApiTags)('Delivery Management'),
     (0, common_1.Controller)('delivery'),
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, schema_guard_1.SetSchemaGuard, new role_guard_1.RoleGuard(['inventory_manager', 'owner'])),
     __metadata("design:paramtypes", [delivery_service_1.DeliveryService])
