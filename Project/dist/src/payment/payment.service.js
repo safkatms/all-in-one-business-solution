@@ -26,7 +26,7 @@ let PaymentService = class PaymentService {
     async makePayment(userId, createPaymentDto) {
         const user = await this.userRepository.findOne({ where: { userId }, relations: ['package'] });
         if (!user || !user.package || user.package.status !== 'unpaid') {
-            throw new common_1.NotFoundException(`No unpaid package found for user ID ${userId}.`);
+            throw new common_1.NotFoundException(`You already have an active package`);
         }
         user.package.status = 'paid';
         await this.packageRepository.save(user.package);
