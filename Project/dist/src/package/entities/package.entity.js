@@ -30,6 +30,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Date)
 ], Package.prototype, "validTill", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: 'unpaid' }),
+    __metadata("design:type", String)
+], Package.prototype, "status", void 0);
 exports.Package = Package = __decorate([
     (0, typeorm_1.Entity)()
 ], Package);

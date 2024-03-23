@@ -14,4 +14,7 @@ export class Package {
 
   @Column()
   validTill: Date;
+
+  @Column({default:'unpaid'})
+  status:string;
 }
