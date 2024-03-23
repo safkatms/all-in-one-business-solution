@@ -4,7 +4,7 @@ import { UpdateLeaveApplicationDto } from './dto/update-leave-application.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Leave } from './entities/leave-application.entity';
 import { User } from 'src/user/entities/user.entity';
-import { Connection, LessThanOrEqual, MoreThanOrEqual, Repository } from 'typeorm';
+import { Connection, In, LessThanOrEqual, MoreThanOrEqual, Repository } from 'typeorm';
 
 @Injectable()
 export class LeaveApplicationService {
@@ -14,7 +14,7 @@ export class LeaveApplicationService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
     private connection: Connection
-  ) {}
+  ) { }
 
   async createLeaveApplication(userId: number, createLeaveDto: CreateLeaveApplicationDto): Promise<any> {
     const user = await this.userRepository.findOneBy({ userId });
@@ -26,16 +26,16 @@ export class LeaveApplicationService {
 
     const overlappingLeave = await this.leaveRepository.findOne({
       where: {
-        userId:  user.userId , // Correct way to query based on related user's ID
+        userId: user.userId,
         startDate: LessThanOrEqual(new Date(createLeaveDto.endDate)),
         endDate: MoreThanOrEqual(new Date(createLeaveDto.startDate)),
       },
     });
-  
+
     if (overlappingLeave) {
       throw new ConflictException('Leave application already exists for the given period');
     }
-  
+
 
     const leave = this.leaveRepository.create({
       ...createLeaveDto,
@@ -44,26 +44,53 @@ export class LeaveApplicationService {
 
 
     await this.leaveRepository.save(leave);
-    
+
     return leave;
   }
+
+
+
+
+  findAllPendingApplication() {
+    return this.leaveRepository.find({
+      where: {
+        status: 'Pending'
+      }
+    });
+  }
+
+  findAllUpdatedApplication() {
+    return this.leaveRepository.find({
+      where: {
+        status: In(['Approved', 'Rejected'])
+      }
+    });
+  }
   
+
+  findAllByUserId(userId: number) {
+    return this.leaveRepository.find({
+      where: {
+        userId: userId
+      }
+    });
+  }
+
+  async updateStatus(id: number, updateLeaveApplicationDto: UpdateLeaveApplicationDto): Promise<Leave> {
+    const leaveApplication = await this.leaveRepository.findOne({
+      where: { leaveId: id }
+    });
+
+    if (!leaveApplication) {
+      throw new NotFoundException(`Leave application with ID "${id}" not found`);
+    }
+
+    leaveApplication.status = updateLeaveApplicationDto.status;
+
+    await this.leaveRepository.save(leaveApplication);
+
+    return leaveApplication;
+  }
+
   
-  
-
-  findAll() {
-    return this.leaveRepository.find();
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} leaveApplication`;
-  }
-
-  update(id: number, updateLeaveApplicationDto: UpdateLeaveApplicationDto) {
-    return `This action updates a #${id} leaveApplication`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} leaveApplication`;
-  }
 }

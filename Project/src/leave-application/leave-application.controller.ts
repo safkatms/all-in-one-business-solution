@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, ValidationPipe, ParseIntPipe } from '@nestjs/common';
 import { LeaveApplicationService } from './leave-application.service';
 import { CreateLeaveApplicationDto } from './dto/create-leave-application.dto';
 import { UpdateLeaveApplicationDto } from './dto/update-leave-application.dto';
@@ -18,24 +18,28 @@ export class LeaveApplicationController {
     return this.leaveApplicationService.createLeaveApplication(req.user.userId, createLeaveDto);
   }
 
-  @Get()
+  @Get('/pending')
   @UseGuards(SetSchemaGuard, new RoleGuard(['owner','hr']))
-  findAll() {
-    return this.leaveApplicationService.findAll();
+  findAllPendingApplication() {
+    return this.leaveApplicationService.findAllPendingApplication();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.leaveApplicationService.findOne(+id);
+  @Get('/history')
+  @UseGuards(SetSchemaGuard, new RoleGuard(['owner','hr']))
+  findAll() {
+    return this.leaveApplicationService.findAllUpdatedApplication();
+  }
+
+  @Get('user/history')
+  @UseGuards(SetSchemaGuard, new RoleGuard(['accountant','inventory_manager','salesman']))
+  findAllByUserId(@Req() req, userId: number) {
+    return this.leaveApplicationService.findAllByUserId(req.user.userId);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLeaveApplicationDto: UpdateLeaveApplicationDto) {
-    return this.leaveApplicationService.update(+id, updateLeaveApplicationDto);
+  @UseGuards(SetSchemaGuard, new RoleGuard(['owner','hr']))
+  update(@Param('id') id: string, @Body(ValidationPipe) updateLeaveApplicationDto: UpdateLeaveApplicationDto) {
+    return this.leaveApplicationService.updateStatus(+id, updateLeaveApplicationDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.leaveApplicationService.remove(+id);
-  }
 }
