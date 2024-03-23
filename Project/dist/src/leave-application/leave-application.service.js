@@ -19,21 +19,39 @@ const leave_application_entity_1 = require("./entities/leave-application.entity"
 const user_entity_1 = require("../user/entities/user.entity");
 const typeorm_2 = require("typeorm");
 let LeaveApplicationService = class LeaveApplicationService {
-    constructor(leaveRepository, userRepository) {
+    constructor(leaveRepository, userRepository, connection) {
         this.leaveRepository = leaveRepository;
         this.userRepository = userRepository;
+        this.connection = connection;
     }
     async createLeaveApplication(userId, createLeaveDto) {
         const user = await this.userRepository.findOneBy({ userId });
         if (!user) {
             throw new common_1.NotFoundException(`User with ID ${userId} not found`);
         }
+        const startDate = new Date(createLeaveDto.startDate);
+        const endDate = new Date(createLeaveDto.endDate);
+        if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+            throw new Error('Invalid startDate or endDate');
+        }
+        const overlappingLeave = await this.leaveRepository.findOne({
+            where: {
+                user: user,
+                startDate: (0, typeorm_2.LessThanOrEqual)(endDate),
+                endDate: (0, typeorm_2.MoreThanOrEqual)(startDate),
+            },
+        });
+        if (overlappingLeave) {
+            throw new common_1.ConflictException('Leave application already exists for the given period');
+        }
         const leave = this.leaveRepository.create({
             ...createLeaveDto,
             user,
+            startDate,
+            endDate,
         });
         await this.leaveRepository.save(leave);
-        return leave;
+        return createLeaveDto;
     }
     findAll() {
         return `This action returns all leaveApplication`;
@@ -54,6 +72,7 @@ exports.LeaveApplicationService = LeaveApplicationService = __decorate([
     __param(0, (0, typeorm_1.InjectRepository)(leave_application_entity_1.Leave)),
     __param(1, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        typeorm_2.Repository])
+        typeorm_2.Repository,
+        typeorm_2.Connection])
 ], LeaveApplicationService);
 //# sourceMappingURL=leave-application.service.js.map

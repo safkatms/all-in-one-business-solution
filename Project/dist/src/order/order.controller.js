@@ -19,7 +19,7 @@ const create_order_dto_1 = require("./dto/create-order.dto");
 const jwt_guard_1 = require("../guards/jwt.guard");
 const schema_guard_1 = require("../guards/schema.guard");
 const role_guard_1 = require("../guards/role.guard");
-const check_product_middleware_1 = require("../middleware/check-product.middleware");
+const check_product_guard_1 = require("../guards/check-product.guard");
 let OrderController = class OrderController {
     constructor(orderService) {
         this.orderService = orderService;
@@ -43,7 +43,7 @@ __decorate([
 ], OrderController.prototype, "createOrder", null);
 __decorate([
     (0, common_1.Post)(':orderId/items'),
-    (0, common_1.UseGuards)(check_product_middleware_1.CheckProductGuard),
+    (0, common_1.UseGuards)(check_product_guard_1.CheckProductGuard),
     __param(0, (0, common_1.Param)('orderId')),
     __param(1, (0, common_1.Body)(common_1.ValidationPipe)),
     __metadata("design:type", Function),

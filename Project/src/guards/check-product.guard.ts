@@ -1,5 +1,3 @@
-// src/orders/guards/check-product.guard.ts
-
 import { Injectable, CanActivate, ExecutionContext, BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';

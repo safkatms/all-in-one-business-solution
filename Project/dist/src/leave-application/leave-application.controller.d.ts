@@ -4,7 +4,7 @@ import { UpdateLeaveApplicationDto } from './dto/update-leave-application.dto';
 export declare class LeaveApplicationController {
     private readonly leaveApplicationService;
     constructor(leaveApplicationService: LeaveApplicationService);
-    create(req: any, createLeaveDto: CreateLeaveApplicationDto): Promise<import("src/leave-application/entities/leave-application.entity").Leave>;
+    create(req: any, createLeaveDto: CreateLeaveApplicationDto): Promise<any>;
     findAll(): string;
     findOne(id: string): string;
     update(id: string, updateLeaveApplicationDto: UpdateLeaveApplicationDto): string;

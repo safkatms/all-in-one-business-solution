@@ -3,6 +3,8 @@ import { LeaveApplicationService } from './leave-application.service';
 import { CreateLeaveApplicationDto } from './dto/create-leave-application.dto';
 import { UpdateLeaveApplicationDto } from './dto/update-leave-application.dto';
 import { JwtAuthGuard } from 'src/guards/jwt.guard';
+import { SetSchemaGuard } from 'src/guards/schema.guard';
+import { RoleGuard } from 'src/guards/role.guard';
 
 @Controller('leave')
 @UseGuards(JwtAuthGuard)
