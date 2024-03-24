@@ -6,7 +6,6 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { Reflector } from '@nestjs/core';
 
 @Injectable()
 export class RoleGuard implements CanActivate {
@@ -20,7 +19,7 @@ export class RoleGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const user = context.switchToHttp().getRequest().user;
-    const userType = user.userType; // Assuming you have 'type' property in your user entity
+    const userType = user.userType;
     if (this.rolesPassed.includes(userType)) {
       return true;
     }

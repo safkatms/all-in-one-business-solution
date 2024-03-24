@@ -3,6 +3,7 @@ import {
   Post,
   Body,
   ValidationPipe,
+  Patch,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
@@ -23,7 +24,7 @@ export class AuthController {
   @ApiOperation({ summary: 'Login user' })
   @ApiResponse({ status: 201, description: 'User logged in successfully' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
-  async login(@Body() loginDto: CreateAuthDto) {
+  async login(@Body(ValidationPipe) loginDto: CreateAuthDto) {
     return this.authService.login(loginDto);
   }
 
@@ -35,7 +36,7 @@ export class AuthController {
     return this.userService.createPasswordResetToken(forgotPasswordDto.email);
   }
 
-  @Post('reset-password')
+  @Patch('reset-password')
   @ApiOperation({ summary: 'Reset password using token' })
   @ApiResponse({ status: 200, description: 'Password has been reset successfully' })
   @ApiBody({ type: ResetPasswordDto })

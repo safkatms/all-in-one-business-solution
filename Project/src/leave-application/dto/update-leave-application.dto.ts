@@ -9,8 +9,8 @@ enum ApplicationStatus {
 export class UpdateLeaveApplicationDto {
     @ApiProperty({ 
         description: 'Status of the leave application. Must be either "Approved" or "Rejected".',
-        enum: ApplicationStatus, // Explicitly specify the enum for Swagger UI
-        example: ApplicationStatus.Approved // Optionally include an example value
+        enum: ApplicationStatus,
+        example: ApplicationStatus.Approved 
     })
     @IsNotEmpty()
     @IsEnum(ApplicationStatus, { message: 'Status must be either "Approved" or "Rejected"' })

@@ -41,7 +41,7 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Login user' }),
     (0, swagger_1.ApiResponse)({ status: 201, description: 'User logged in successfully' }),
     (0, swagger_1.ApiResponse)({ status: 401, description: 'Unauthorized' }),
-    __param(0, (0, common_1.Body)()),
+    __param(0, (0, common_1.Body)(common_1.ValidationPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_auth_dto_1.CreateAuthDto]),
     __metadata("design:returntype", Promise)
@@ -57,7 +57,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "forgotPassword", null);
 __decorate([
-    (0, common_1.Post)('reset-password'),
+    (0, common_1.Patch)('reset-password'),
     (0, swagger_1.ApiOperation)({ summary: 'Reset password using token' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Password has been reset successfully' }),
     (0, swagger_1.ApiBody)({ type: reset_password_dto_1.ResetPasswordDto }),
