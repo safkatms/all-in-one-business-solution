@@ -21,26 +21,41 @@ class CreatePayrollDto {
 }
 exports.CreatePayrollDto = CreatePayrollDto;
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Employee ID', type: Number }),
+    (0, swagger_1.ApiProperty)({
+        description: 'Employee ID',
+        type: Number,
+        example: 1
+    }),
     (0, class_validator_1.IsNotEmpty)({ message: 'Employee ID is required' }),
     (0, class_validator_1.IsNumber)({}, { message: 'Employee ID must be a number' }),
     __metadata("design:type", Number)
 ], CreatePayrollDto.prototype, "employeeId", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Bonus amount (optional)', type: Number }),
+    (0, swagger_1.ApiProperty)({
+        description: 'Bonus amount (optional)',
+        type: Number,
+        example: 500
+    }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNumber)({}, { message: 'Bonus must be a number' }),
     __metadata("design:type", Number)
 ], CreatePayrollDto.prototype, "bonus", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Payroll month in YYYY-MM format' }),
+    (0, swagger_1.ApiProperty)({
+        description: 'Payroll month in YYYY-MM format',
+        example: '2023-01'
+    }),
     (0, class_validator_1.IsNotEmpty)({ message: 'Payroll month is required' }),
     (0, class_validator_1.IsString)({ message: 'Payroll month must be a string' }),
     (0, class_validator_1.Matches)(/^\d{4}-\d{2}$/, { message: 'Payroll month must be in YYYY-MM format' }),
     __metadata("design:type", String)
 ], CreatePayrollDto.prototype, "payrollMonth", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Payroll status (Paid or Unpaid)', enum: PayrollStatus }),
+    (0, swagger_1.ApiProperty)({
+        description: 'Payroll status (Paid or Unpaid)',
+        enum: PayrollStatus,
+        example: PayrollStatus.Paid
+    }),
     (0, class_validator_1.IsNotEmpty)({ message: 'Status is required' }),
     (0, class_validator_1.IsEnum)(PayrollStatus, { message: 'Status must be either "Paid" or "Unpaid"' }),
     __metadata("design:type", String)

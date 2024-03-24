@@ -22,7 +22,7 @@ class UpdateProfileDto {
 }
 exports.UpdateProfileDto = UpdateProfileDto;
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'First name (optional)' }),
+    (0, swagger_1.ApiProperty)({ description: 'First name (optional)', example: 'Jane' }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
@@ -30,7 +30,7 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateProfileDto.prototype, "firstName", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Last name (optional)' }),
+    (0, swagger_1.ApiProperty)({ description: 'Last name (optional)', example: 'Doe' }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
@@ -38,7 +38,7 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateProfileDto.prototype, "lastName", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Mobile number (optional)' }),
+    (0, swagger_1.ApiProperty)({ description: 'Mobile number (optional)', example: '01712345678' }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
@@ -46,7 +46,7 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateProfileDto.prototype, "mobileNo", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Gender (optional)', enum: Gender }),
+    (0, swagger_1.ApiProperty)({ description: 'Gender (optional)', enum: Gender, example: Gender.FEMALE }),
     (0, class_validator_1.IsEnum)(Gender),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
