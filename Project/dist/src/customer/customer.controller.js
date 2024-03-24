@@ -42,6 +42,7 @@ exports.CustomerController = CustomerController;
 __decorate([
     (0, swagger_1.ApiBearerAuth)('access-token'),
     (0, swagger_1.ApiCreatedResponse)({ description: 'The customer has been successfully created.' }),
+    (0, swagger_1.ApiOperation)({ summary: 'Create a new customer profile' }),
     (0, common_1.Post)('/create'),
     __param(0, (0, common_1.Body)(common_1.ValidationPipe)),
     __metadata("design:type", Function),
@@ -51,6 +52,7 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiBearerAuth)('access-token'),
     (0, swagger_1.ApiOkResponse)({ description: 'List of all customers.' }),
+    (0, swagger_1.ApiOperation)({ summary: 'List of all customers' }),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
@@ -60,6 +62,7 @@ __decorate([
     (0, swagger_1.ApiBearerAuth)('access-token'),
     (0, swagger_1.ApiOkResponse)({ description: 'Customer found successfully.' }),
     (0, swagger_1.ApiNotFoundResponse)({ description: 'Customer not found.' }),
+    (0, swagger_1.ApiOperation)({ summary: 'Find a customer by contact number' }),
     (0, common_1.Get)('/:contact'),
     __param(0, (0, common_1.Param)('contact')),
     __metadata("design:type", Function),
@@ -70,6 +73,7 @@ __decorate([
     (0, swagger_1.ApiBearerAuth)('access-token'),
     (0, swagger_1.ApiOkResponse)({ description: 'Customer updated successfully.' }),
     (0, swagger_1.ApiBadRequestResponse)({ description: 'Bad request, invalid data provided.' }),
+    (0, swagger_1.ApiOperation)({ summary: 'Update a customer profile by contact number' }),
     (0, common_1.Patch)('/update/:contact'),
     __param(0, (0, common_1.Param)('contact')),
     __param(1, (0, common_1.Body)()),
