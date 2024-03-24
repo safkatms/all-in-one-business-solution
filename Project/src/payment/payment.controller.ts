@@ -3,7 +3,7 @@ import { PaymentService } from './payment.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { JwtAuthGuard } from 'src/guards/jwt.guard';
 import { RoleGuard } from 'src/guards/role.guard';
-import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiTags, ApiBadRequestResponse, ApiUnauthorizedResponse, ApiInternalServerErrorResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiTags, ApiBadRequestResponse, ApiUnauthorizedResponse, ApiInternalServerErrorResponse, ApiOperation } from '@nestjs/swagger';
 
 @ApiBearerAuth('access-token')
 @ApiTags('Payments')
@@ -12,6 +12,7 @@ import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiTags, ApiBadRequestRespo
 export class PaymentController {
   constructor(private readonly paymentService: PaymentService) {}
 
+  @ApiOperation({ summary: 'Make a payment' })
   @Post()
   @ApiBody({ type: CreatePaymentDto })
   @ApiCreatedResponse({ description: 'Payment successfully processed' })

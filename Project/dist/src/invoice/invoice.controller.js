@@ -29,6 +29,7 @@ let InvoiceController = class InvoiceController {
 };
 exports.InvoiceController = InvoiceController;
 __decorate([
+    (0, swagger_1.ApiOperation)({ summary: 'Get invoice for a specific order' }),
     (0, common_1.Get)('/order/:orderId'),
     (0, swagger_1.ApiParam)({ name: 'orderId', description: 'ID of the order', type: Number }),
     (0, swagger_1.ApiOkResponse)({ description: 'Successfully retrieved invoice for the order' }),

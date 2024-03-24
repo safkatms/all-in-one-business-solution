@@ -36,6 +36,7 @@ let OrderController = class OrderController {
 };
 exports.OrderController = OrderController;
 __decorate([
+    (0, swagger_1.ApiOperation)({ summary: 'Create a new order' }),
     (0, common_1.Post)(),
     (0, swagger_1.ApiBody)({ type: create_order_dto_1.CreateOrderDto }),
     (0, swagger_1.ApiCreatedResponse)({ description: 'Order successfully created' }),
@@ -49,6 +50,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], OrderController.prototype, "createOrder", null);
 __decorate([
+    (0, swagger_1.ApiOperation)({ summary: 'Add items to an existing order' }),
     (0, common_1.Post)(':orderId/items'),
     (0, swagger_1.ApiParam)({ name: 'orderId', description: 'ID of the order' }),
     (0, swagger_1.ApiBody)({ type: add_order_item_dto_1.AddOrderItemDto, isArray: true }),

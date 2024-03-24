@@ -6,7 +6,7 @@ import { JwtAuthGuard } from 'src/guards/jwt.guard';
 import { SetSchemaGuard } from 'src/guards/schema.guard';
 import { RoleGuard } from 'src/guards/role.guard';
 import { CheckProductGuard } from 'src/guards/check-product.guard';
-import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiTags, ApiBadRequestResponse, ApiUnauthorizedResponse, ApiInternalServerErrorResponse, ApiParam } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiTags, ApiBadRequestResponse, ApiUnauthorizedResponse, ApiInternalServerErrorResponse, ApiParam, ApiOperation } from '@nestjs/swagger';
 
 @ApiBearerAuth('access-token')
 @ApiTags('Order')
@@ -15,6 +15,7 @@ import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiTags, ApiBadRequestRespo
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
+  @ApiOperation({ summary: 'Create a new order' })
   @Post()
   @ApiBody({ type: CreateOrderDto })
   @ApiCreatedResponse({ description: 'Order successfully created' })
@@ -26,6 +27,7 @@ export class OrderController {
     return this.orderService.createOrder(userName, createOrderDto);
   }
 
+  @ApiOperation({ summary: 'Add items to an existing order' })
   @Post(':orderId/items')
   @ApiParam({ name: 'orderId', description: 'ID of the order' })
   @ApiBody({ type: AddOrderItemDto, isArray: true })

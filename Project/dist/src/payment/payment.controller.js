@@ -30,6 +30,7 @@ let PaymentController = class PaymentController {
 };
 exports.PaymentController = PaymentController;
 __decorate([
+    (0, swagger_1.ApiOperation)({ summary: 'Make a payment' }),
     (0, common_1.Post)(),
     (0, swagger_1.ApiBody)({ type: create_payment_dto_1.CreatePaymentDto }),
     (0, swagger_1.ApiCreatedResponse)({ description: 'Payment successfully processed' }),
