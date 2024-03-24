@@ -14,7 +14,7 @@ import { Request } from '@nestjs/common';
 import { RoleGuard } from 'src/guards/role.guard';
 import { UpdatePackageDto } from './dto/update-package.dto';
 import { JwtAuthGuard } from 'src/guards/jwt.guard';
-import { ApiTags, ApiBearerAuth, ApiBody } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 
 @Controller('packages')
 @UseGuards(JwtAuthGuard, new RoleGuard(['owner']))
@@ -24,6 +24,9 @@ export class PackageController {
   constructor(private readonly packageService: PackageService) {}
 
   @Post('/purchase')
+  @ApiOperation({ summary: 'Purchase a new package' })
+  @ApiResponse({ status: 201, description: 'Package successfully purchased.' })
+  @ApiResponse({ status: 400, description: 'Bad Request.' })
   @ApiBody({ type: CreatePackageDto })
   createPackage(
     @Request() req,
@@ -34,6 +37,9 @@ export class PackageController {
   }
 
   @Get()
+  @ApiOperation({ summary: 'Get the user\'s current package' })
+  @ApiResponse({ status: 200, description: 'Returns the user\'s current package.' })
+  @ApiResponse({ status: 404, description: 'User does not have an associated package.' })
   async getUserPackage(@Request() req) {
     const userPackage = req.user.packageId;
     if (!userPackage) {
@@ -43,6 +49,9 @@ export class PackageController {
   }
 
   @Put('/renew')
+  @ApiOperation({ summary: 'Renew or update the user\'s package' })
+  @ApiResponse({ status: 200, description: 'Package successfully updated.' })
+  @ApiResponse({ status: 404, description: 'Package not found or user does not have an associated package.' })
   @ApiBody({ type: UpdatePackageDto })
   async updatePackage(
     @Body(ValidationPipe) updatePackageDto: UpdatePackageDto,

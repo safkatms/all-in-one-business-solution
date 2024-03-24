@@ -17,13 +17,21 @@ class UpdatePayrollDto {
 }
 exports.UpdatePayrollDto = UpdatePayrollDto;
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Bonus amount (optional)', type: Number }),
+    (0, swagger_1.ApiProperty)({
+        description: 'Bonus amount (optional)',
+        type: Number,
+        example: 200
+    }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNumber)({}, { message: 'Bonus must be a number if provided' }),
     __metadata("design:type", Number)
 ], UpdatePayrollDto.prototype, "bonus", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Payroll status (Paid or Unpaid, optional)', enum: create_payroll_dto_1.PayrollStatus }),
+    (0, swagger_1.ApiProperty)({
+        description: 'Payroll status (Paid or Unpaid, optional)',
+        enum: create_payroll_dto_1.PayrollStatus,
+        example: create_payroll_dto_1.PayrollStatus.Unpaid
+    }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsEnum)(create_payroll_dto_1.PayrollStatus, { message: 'Status must be either "Paid" or "Unpaid" if provided' }),
     __metadata("design:type", String)

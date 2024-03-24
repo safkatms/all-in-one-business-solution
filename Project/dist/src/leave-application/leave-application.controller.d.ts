@@ -8,5 +8,5 @@ export declare class LeaveApplicationController {
     findAllPendingApplication(): Promise<import("src/leave-application/entities/leave-application.entity").Leave[]>;
     findAll(): Promise<import("src/leave-application/entities/leave-application.entity").Leave[]>;
     findAllByUserId(req: any, userId: number): Promise<import("src/leave-application/entities/leave-application.entity").Leave[]>;
-    update(id: string, updateLeaveApplicationDto: UpdateLeaveApplicationDto): Promise<import("src/leave-application/entities/leave-application.entity").Leave>;
+    update(id: number, updateLeaveApplicationDto: UpdateLeaveApplicationDto): Promise<import("src/leave-application/entities/leave-application.entity").Leave>;
 }

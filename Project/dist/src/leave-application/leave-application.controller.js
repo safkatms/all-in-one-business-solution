@@ -38,13 +38,16 @@ let LeaveApplicationController = class LeaveApplicationController {
         return this.leaveApplicationService.findAllByUserId(req.user.userId);
     }
     update(id, updateLeaveApplicationDto) {
-        return this.leaveApplicationService.updateStatus(+id, updateLeaveApplicationDto);
+        return this.leaveApplicationService.updateStatus(id, updateLeaveApplicationDto);
     }
 };
 exports.LeaveApplicationController = LeaveApplicationController;
 __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(new role_guard_1.RoleGuard(['accountant', 'inventory_manager', 'salesman'])),
+    (0, swagger_1.ApiOperation)({ summary: 'Create a leave application' }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Leave application created successfully.' }),
+    (0, swagger_1.ApiResponse)({ status: 400, description: 'Bad Request.' }),
     (0, swagger_1.ApiBody)({ type: create_leave_application_dto_1.CreateLeaveApplicationDto }),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Body)(common_1.ValidationPipe)),
@@ -55,6 +58,8 @@ __decorate([
 __decorate([
     (0, common_1.Get)('/pending'),
     (0, common_1.UseGuards)(schema_guard_1.SetSchemaGuard, new role_guard_1.RoleGuard(['owner', 'hr'])),
+    (0, swagger_1.ApiOperation)({ summary: 'Find all pending leave applications' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'List of pending leave applications.' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
@@ -62,6 +67,8 @@ __decorate([
 __decorate([
     (0, common_1.Get)('/history'),
     (0, common_1.UseGuards)(schema_guard_1.SetSchemaGuard, new role_guard_1.RoleGuard(['owner', 'hr'])),
+    (0, swagger_1.ApiOperation)({ summary: 'Find all leave application history' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Leave application history.' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
@@ -69,6 +76,8 @@ __decorate([
 __decorate([
     (0, common_1.Get)('user/history'),
     (0, common_1.UseGuards)(schema_guard_1.SetSchemaGuard, new role_guard_1.RoleGuard(['accountant', 'inventory_manager', 'salesman'])),
+    (0, swagger_1.ApiOperation)({ summary: 'Find leave application history by user ID' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Leave application history for a specific user.' }),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Number]),
@@ -77,18 +86,22 @@ __decorate([
 __decorate([
     (0, common_1.Patch)(':id'),
     (0, common_1.UseGuards)(schema_guard_1.SetSchemaGuard, new role_guard_1.RoleGuard(['owner', 'hr'])),
+    (0, swagger_1.ApiOperation)({ summary: 'Update the status of a leave application' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Leave application status updated successfully.' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Leave application not found.' }),
+    (0, swagger_1.ApiParam)({ name: 'id', type: 'number', description: 'Leave application ID' }),
     (0, swagger_1.ApiBody)({ type: update_leave_application_dto_1.UpdateLeaveApplicationDto }),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)(common_1.ValidationPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_leave_application_dto_1.UpdateLeaveApplicationDto]),
+    __metadata("design:paramtypes", [Number, update_leave_application_dto_1.UpdateLeaveApplicationDto]),
     __metadata("design:returntype", void 0)
 ], LeaveApplicationController.prototype, "update", null);
 exports.LeaveApplicationController = LeaveApplicationController = __decorate([
-    (0, common_1.Controller)('leave'),
-    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
     (0, swagger_1.ApiTags)('Leave Applications'),
     (0, swagger_1.ApiBearerAuth)('access-token'),
+    (0, common_1.Controller)('leave'),
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
     __metadata("design:paramtypes", [leave_application_service_1.LeaveApplicationService])
 ], LeaveApplicationController);
 //# sourceMappingURL=leave-application.controller.js.map

@@ -22,7 +22,9 @@ class UpdateLeaveApplicationDto {
 exports.UpdateLeaveApplicationDto = UpdateLeaveApplicationDto;
 __decorate([
     (0, swagger_1.ApiProperty)({
-        description: 'Status of the leave application. Must be either "Approved" or "Rejected".'
+        description: 'Status of the leave application. Must be either "Approved" or "Rejected".',
+        enum: ApplicationStatus,
+        example: ApplicationStatus.Approved
     }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsEnum)(ApplicationStatus, { message: 'Status must be either "Approved" or "Rejected"' }),

@@ -16,19 +16,28 @@ class CreateLeaveApplicationDto {
 }
 exports.CreateLeaveApplicationDto = CreateLeaveApplicationDto;
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'The start date of the leave application in ISO string format.' }),
+    (0, swagger_1.ApiProperty)({
+        description: 'The start date of the leave application in ISO string format.',
+        example: '2023-04-01'
+    }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsDateString)(),
     __metadata("design:type", String)
 ], CreateLeaveApplicationDto.prototype, "startDate", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'The end date of the leave application in ISO string format.' }),
+    (0, swagger_1.ApiProperty)({
+        description: 'The end date of the leave application in ISO string format.',
+        example: '2023-04-10'
+    }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsDateString)(),
     __metadata("design:type", String)
 ], CreateLeaveApplicationDto.prototype, "endDate", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Description of the leave application.' }),
+    (0, swagger_1.ApiProperty)({
+        description: 'Description of the leave application.',
+        example: 'Taking annual leave for a family vacation.'
+    }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)

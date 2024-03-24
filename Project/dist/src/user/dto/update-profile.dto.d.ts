@@ -4,9 +4,9 @@ declare enum Gender {
     OTHER = "other"
 }
 export declare class UpdateProfileDto {
-    firstName: string;
-    lastName: string;
-    mobileNo: string;
-    gender: Gender;
+    firstName?: string;
+    lastName?: string;
+    mobileNo?: string;
+    gender?: Gender;
 }
 export {};
