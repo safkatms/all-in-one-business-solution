@@ -5,6 +5,6 @@ export declare class PackageController {
     private readonly packageService;
     constructor(packageService: PackageService);
     createPackage(req: any, createPackageDto: CreatePackageDto): Promise<any>;
-    getUserPackage(req: any): Promise<import("src/package/entities/package.entity").Package>;
+    getUserPackage(req: any): Promise<import("./entities/package.entity").Package>;
     updatePackage(updatePackageDto: UpdatePackageDto, req: any): Promise<any>;
 }

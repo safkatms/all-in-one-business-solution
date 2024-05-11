@@ -6,13 +6,13 @@ export declare class DeliveryController {
     makeDelivery(id: string, updateDeliveryDto: UpdateDeliveryDto): Promise<{
         message: string;
         inventoryUpdate: string;
-        order: import("src/order/entities/order.entity").Order;
+        order: import("../../order/entities/order.entity").Order;
     }>;
-    findOne(id: string): Promise<import("src/order/entities/order.entity").Order>;
+    findOne(id: string): Promise<import("../../order/entities/order.entity").Order>;
     returnDelivery(id: string, updateDeliveryDto: UpdateDeliveryDto): Promise<{
         message: string;
         inventoryUpdate: string;
-        order: import("src/order/entities/order.entity").Order;
+        order: import("../../order/entities/order.entity").Order;
     }>;
-    findAll(): Promise<import("src/order/entities/order.entity").Order[]>;
+    findAll(): Promise<import("../../order/entities/order.entity").Order[]>;
 }

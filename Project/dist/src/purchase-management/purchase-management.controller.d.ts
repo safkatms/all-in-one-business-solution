@@ -6,16 +6,16 @@ export declare class PurchaseManagementController {
     constructor(purchaseManagementService: PurchaseManagementService);
     create(createPurchaseManagementDto: CreatePurchaseManagementDto): Promise<{
         message: string;
-        purchase: import("src/purchase-management/entities/purchase-management.entity").PurchaseManagement;
+        purchase: import("./entities/purchase-management.entity").PurchaseManagement;
     } | {
         message: string;
         purchase?: undefined;
     }>;
-    findAll(): Promise<import("src/purchase-management/entities/purchase-management.entity").PurchaseManagement[]>;
-    findOne(id: string): Promise<import("src/purchase-management/entities/purchase-management.entity").PurchaseManagement>;
+    findAll(): Promise<import("./entities/purchase-management.entity").PurchaseManagement[]>;
+    findOne(id: string): Promise<import("./entities/purchase-management.entity").PurchaseManagement>;
     update(id: string, updatePurchaseManagementDto: UpdatePurchaseManagementDto): Promise<{
         message: string;
-        product: import("src/purchase-management/entities/purchase-management.entity").PurchaseManagement;
+        product: import("./entities/purchase-management.entity").PurchaseManagement;
     }>;
     remove(id: string): Promise<{
         message: string;

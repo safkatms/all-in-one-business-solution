@@ -5,5 +5,5 @@ export declare class OrderController {
     private readonly orderService;
     constructor(orderService: OrderService);
     createOrder(createOrderDto: CreateOrderDto, req: any): Promise<any>;
-    addOrderItems(orderId: number, itemsDto: AddOrderItemDto[]): Promise<import("src/order/entities/order.entity").Order>;
+    addOrderItems(orderId: number, itemsDto: AddOrderItemDto[]): Promise<import("./entities/order.entity").Order>;
 }

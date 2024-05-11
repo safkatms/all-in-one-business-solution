@@ -4,5 +4,5 @@ import { FindPurchaseDto } from 'src/purchase-management/dto/find-purchase.dto';
 export declare class SearchController {
     private readonly searchService;
     constructor(searchService: SearchService);
-    findOne(qry: FindProductDto | FindPurchaseDto): Promise<import("src/inventory-management/entities/inventory-management.entity").InventoryManagement[] | import("src/purchase-management/entities/purchase-management.entity").PurchaseManagement[]>;
+    findOne(qry: FindProductDto | FindPurchaseDto): Promise<import("../inventory-management/entities/inventory-management.entity").InventoryManagement[] | import("../purchase-management/entities/purchase-management.entity").PurchaseManagement[]>;
 }

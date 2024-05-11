@@ -6,14 +6,14 @@ export declare class InventoryManagementController {
     constructor(inventoryManagementService: InventoryManagementService);
     create(createInventoryManagementDto: CreateInventoryManagementDto): Promise<{
         message: string;
-        product: import("src/inventory-management/entities/inventory-management.entity").InventoryManagement;
+        product: import("./entities/inventory-management.entity").InventoryManagement;
     }>;
-    findAll(): Promise<import("src/inventory-management/entities/inventory-management.entity").InventoryManagement[]>;
-    findByUsername(itemName: string): Promise<import("src/inventory-management/entities/inventory-management.entity").InventoryManagement>;
-    findOne(id: string): Promise<import("src/inventory-management/entities/inventory-management.entity").InventoryManagement>;
+    findAll(): Promise<import("./entities/inventory-management.entity").InventoryManagement[]>;
+    findByUsername(itemName: string): Promise<import("./entities/inventory-management.entity").InventoryManagement>;
+    findOne(id: string): Promise<import("./entities/inventory-management.entity").InventoryManagement>;
     update(id: number, updateInventoryManagementDto: UpdateInventoryManagementDto): Promise<{
         message: string;
-        product: import("src/inventory-management/entities/inventory-management.entity").InventoryManagement;
+        product: import("./entities/inventory-management.entity").InventoryManagement;
     }>;
     remove(id: string): Promise<{
         message: string;
