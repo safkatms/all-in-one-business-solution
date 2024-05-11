@@ -1,9 +1,4 @@
-import {
-  Controller,
-  Post,
-  Body,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Controller, Post, Body, ValidationPipe } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { ForgotPasswordDto } from './dto/forget-password.dto';
@@ -31,15 +26,25 @@ export class AuthController {
   @ApiOperation({ summary: 'Request password reset' })
   @ApiResponse({ status: 200, description: 'Password reset token created' })
   @ApiBody({ type: ForgotPasswordDto })
-  async forgotPassword(@Body(ValidationPipe) forgotPasswordDto: ForgotPasswordDto) {
+  async forgotPassword(
+    @Body(ValidationPipe) forgotPasswordDto: ForgotPasswordDto,
+  ) {
     return this.userService.createPasswordResetToken(forgotPasswordDto.email);
   }
 
   @Post('reset-password')
   @ApiOperation({ summary: 'Reset password using token' })
-  @ApiResponse({ status: 200, description: 'Password has been reset successfully' })
+  @ApiResponse({
+    status: 200,
+    description: 'Password has been reset successfully',
+  })
   @ApiBody({ type: ResetPasswordDto })
-  async resetPassword(@Body(ValidationPipe) resetPasswordDto: ResetPasswordDto) {
-    return this.userService.resetPassword(resetPasswordDto.token, resetPasswordDto.password);
+  async resetPassword(
+    @Body(ValidationPipe) resetPasswordDto: ResetPasswordDto,
+  ) {
+    return this.userService.resetPassword(
+      resetPasswordDto.token,
+      resetPasswordDto.password,
+    );
   }
 }

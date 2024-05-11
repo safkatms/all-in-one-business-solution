@@ -59,7 +59,10 @@ __decorate([
 __decorate([
     (0, common_1.Post)('reset-password'),
     (0, swagger_1.ApiOperation)({ summary: 'Reset password using token' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Password has been reset successfully' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Password has been reset successfully',
+    }),
     (0, swagger_1.ApiBody)({ type: reset_password_dto_1.ResetPasswordDto }),
     __param(0, (0, common_1.Body)(common_1.ValidationPipe)),
     __metadata("design:type", Function),
