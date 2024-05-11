@@ -1,9 +1,12 @@
+import Header from "@/components/publicheader";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <main>
-      <h1>Hello</h1>
-    </main>
+    <div>
+    <Header/>
+    <h1>Welcome to Next.js!</h1>
+    <p>This is the home page.</p>
+  </div>
   );
 }
