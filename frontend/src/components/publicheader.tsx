@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <header className="bg-gray-800 py-4">
+    <header className="bg-customBlack py-4">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo or site title */}
         <h1 className="text-white text-lg font-semibold text-start">
@@ -17,12 +17,12 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link href="/about" className="text-white hover:text-gray-300">
+              <Link href="/login" className="text-white hover:text-gray-300">
               Login
               </Link>
             </li>
             <li>
-              <Link href="/contact" className="text-white hover:text-gray-300">
+              <Link href="/signup" className="text-white hover:text-gray-300">
                 Signup
               </Link>
             </li>
