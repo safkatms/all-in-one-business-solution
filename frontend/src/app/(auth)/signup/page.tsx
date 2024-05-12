@@ -3,8 +3,10 @@ import Header from "@/components/publicheader";
 import React, { ChangeEvent, SyntheticEvent, use, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function Signup() {
+  const router = useRouter();
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
   const [username, setusername] = useState("");
@@ -35,7 +37,7 @@ export default function Signup() {
     setCompany(e.target.value);
   };
   const handleChangeGender = (e: ChangeEvent<HTMLInputElement>) => {
-    setgender(e.target.value);
+    setgender(e.target.id);
   };
   const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
@@ -86,6 +88,7 @@ export default function Signup() {
         setgender("");
         setPassword("");
         setConfirmPassword("");
+        router.push("/login");
       } catch (error) {
         setError("Error creating user");
       }
@@ -106,14 +109,14 @@ export default function Signup() {
       formData.append("conPassword", conPassword);
 
       const response = await axios.post(
-        "http://localhost:3000/user/registration",
+        `${process.env.NEXT_PUBLIC_BACKEND_API_ENDPOINT}/user/registration`,
         formData,
         {
           headers: {
-            'Content-Type': 'application/json'
-          }
+            "Content-Type": "application/json",
+          },
         }
-      );      
+      );
 
       const data = response.data;
       console.log(data);
@@ -267,6 +270,7 @@ export default function Signup() {
                     <label htmlFor="others">Others</label>
                   </td>
                 </tr>
+
                 <tr>
                   <td colSpan={2}>
                     <label className="text-lg">Password</label>
