@@ -19,7 +19,7 @@ function Package() {
       alert("Select a Package");
     } else {
       try {
-        const response = await postData();
+        router.push("/payment");
       } catch (error) {
         setError("Error logging in");
       }
