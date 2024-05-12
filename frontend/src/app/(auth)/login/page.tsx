@@ -10,7 +10,7 @@ export default function Login() {
         <div>
           <h1 className="text-3xl font-bold">Welcome to All in One Business Solution</h1>
           <h6 className="font-normal">All Business Solution in One Platform!</h6>
-          <button className="bg-customTeal text-white rounded-lg font-semibold py-1 px-1">REGISTRATION</button>
+          <Link href='/signup'><button className="bg-customTeal text-white rounded-lg font-semibold py-1 px-1">REGISTRATION</button></Link>
         </div>
         <div className="bg-white m-10 shadow-2xl">
             <h1 className="text-4xl font-extrabold flex justify-center mt-8">Login</h1>
@@ -23,7 +23,7 @@ export default function Login() {
                         <tr><td colSpan={2}><input type="password" name="" id="" className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"/></td></tr>
                         <tr><td colSpan={2}><button className="bg-customTeal text-white rounded-lg font-semibold w-full mt-2 py-2 px-3">Login</button></td></tr>
                         <tr><td><input type="checkbox" name="" id="" /> <label className="text-s">Show Password</label></td>
-                        <td><Link href="/" className="ml-3 hover:text-gray-300">Forget password?</Link></td></tr>
+                        <td><Link href="/forget-password" className="ml-3 hover:text-gray-300">Forget password?</Link></td></tr>
                         <tr><td colSpan={2}>Don't have an account? <Link href="/signup" className="ml-3 hover:text-gray-300">Register</Link></td></tr>
                     </tbody>
                 </table>
