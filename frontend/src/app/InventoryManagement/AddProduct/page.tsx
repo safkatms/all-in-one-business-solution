@@ -109,7 +109,7 @@ export default function AddProduct() {
         </form>
       </div>
 
-      {/* <InventoryProductTable/> */}
+      { <InventoryProductTable/> }
     </>
   );
 }
