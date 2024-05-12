@@ -1,8 +1,130 @@
+"use client";
 import Header from "@/components/publicheader";
-import React from "react";
+import React, { ChangeEvent, SyntheticEvent, use, useState } from "react";
 import Link from "next/link";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function Signup() {
+  const router = useRouter();
+  const [firstName, setfirstName] = useState("");
+  const [lastName, setlastName] = useState("");
+  const [username, setusername] = useState("");
+  const [email, setemail] = useState("");
+  const [mobileNo, setmobileNo] = useState("");
+  const [company, setCompany] = useState("");
+  const [gender, setgender] = useState("");
+  const [password, setPassword] = useState("");
+  const [conPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleChangeFirstName = (e: ChangeEvent<HTMLInputElement>) => {
+    setfirstName(e.target.value);
+  };
+  const handleChangeLastName = (e: ChangeEvent<HTMLInputElement>) => {
+    setlastName(e.target.value);
+  };
+  const handleChangeUsername = (e: ChangeEvent<HTMLInputElement>) => {
+    setusername(e.target.value);
+  };
+  const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
+    setemail(e.target.value);
+  };
+  const handleChangeMobile = (e: ChangeEvent<HTMLInputElement>) => {
+    setmobileNo(e.target.value);
+  };
+  const handleChangeCompany = (e: ChangeEvent<HTMLInputElement>) => {
+    setCompany(e.target.value);
+  };
+  const handleChangeGender = (e: ChangeEvent<HTMLInputElement>) => {
+    setgender(e.target.id);
+  };
+  const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+  const handleChangeConPassword = (e: ChangeEvent<HTMLInputElement>) => {
+    setConfirmPassword(e.target.value);
+  };
+
+  const handleSubmit = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    console.log("Submit button clicked!"); // Check if handleSubmit is being called
+    console.log("Form data:", {
+      firstName,
+      lastName,
+      username,
+      email,
+      mobileNo,
+      company,
+      gender,
+      password,
+      conPassword,
+    }); // Log form data
+    if (
+      !firstName ||
+      !lastName ||
+      !username ||
+      !email ||
+      !mobileNo ||
+      !company ||
+      !gender ||
+      !password ||
+      !conPassword
+    ) {
+      setError("All fields are required");
+    } else if (password !== conPassword) {
+      setError("Passwords do not match");
+    } else {
+      try {
+        await postData();
+        setError("User created successfully");
+        // Reset form fields
+        setfirstName("");
+        setlastName("");
+        setusername("");
+        setemail("");
+        setmobileNo("");
+        setCompany("");
+        setgender("");
+        setPassword("");
+        setConfirmPassword("");
+        router.push("/login");
+      } catch (error) {
+        setError("Error creating user");
+      }
+    }
+  };
+
+  async function postData() {
+    try {
+      const formData = new FormData();
+      formData.append("firstName", firstName);
+      formData.append("lastName", lastName);
+      formData.append("username", username);
+      formData.append("email", email);
+      formData.append("mobileNo", mobileNo);
+      formData.append("company", company);
+      formData.append("gender", gender);
+      formData.append("password", password);
+      formData.append("conPassword", conPassword);
+
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_API_ENDPOINT}/user/registration`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data = response.data;
+      console.log(data);
+    } catch (error) {
+      throw new Error("Error creating user");
+    }
+  }
+
   return (
     <div>
       <Header />
@@ -14,15 +136,17 @@ export default function Signup() {
           <h6 className="font-normal">
             All Business Solution in One Platform!
           </h6>
-          <button className="bg-customTeal text-white rounded-lg font-semibold py-1 px-12">
-            Login
-          </button>
+          <Link href="/login">
+            <button className="bg-customTeal text-white rounded-lg font-semibold py-1 px-12">
+              Login
+            </button>
+          </Link>
         </div>
         <div className="bg-white m-10 shadow-2xl">
           <h1 className="text-4xl font-extrabold flex justify-center mt-8">
             Signup
           </h1>
-          <form>
+          <form onSubmit={handleSubmit}>
             <table className="m-8">
               <tbody>
                 <tr>
@@ -37,16 +161,18 @@ export default function Signup() {
                   <td>
                     <input
                       type="text"
-                      name=""
-                      id=""
+                      name="firstName"
+                      value={firstName}
+                      onChange={handleChangeFirstName}
                       className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
                     />
                   </td>
                   <td>
                     <input
                       type="text"
-                      name=""
-                      id=""
+                      name="lastName"
+                      value={lastName}
+                      onChange={handleChangeLastName}
                       className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
                     />
                   </td>
@@ -60,8 +186,9 @@ export default function Signup() {
                   <td colSpan={2}>
                     <input
                       type="text"
-                      name=""
-                      id=""
+                      name="username"
+                      value={username}
+                      onChange={handleChangeUsername}
                       className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
                     />
                   </td>
@@ -78,16 +205,18 @@ export default function Signup() {
                   <td>
                     <input
                       type="email"
-                      name=""
-                      id=""
+                      name="email"
+                      value={email}
+                      onChange={handleChangeEmail}
                       className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
                     />
                   </td>
                   <td>
                     <input
                       type="text"
-                      name=""
-                      id=""
+                      name="mobileNo"
+                      value={mobileNo}
+                      onChange={handleChangeMobile}
                       className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
                     />
                   </td>
@@ -101,8 +230,9 @@ export default function Signup() {
                   <td colSpan={2}>
                     <input
                       type="text"
-                      name=""
-                      id=""
+                      name="company"
+                      value={company}
+                      onChange={handleChangeCompany}
                       className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
                     />
                   </td>
@@ -114,14 +244,33 @@ export default function Signup() {
                 </tr>
                 <tr>
                   <td colSpan={2} className="flex justify-between items-center">
-                    <input type="radio" name="Gender" id="male" />
+                    <input
+                      type="radio"
+                      name="gender"
+                      value={gender}
+                      onChange={handleChangeGender}
+                      id="male"
+                    />
                     <label htmlFor="male">Male</label>
-                    <input type="radio" name="Gender" id="female" />
+                    <input
+                      type="radio"
+                      name="gender"
+                      value={gender}
+                      onChange={handleChangeGender}
+                      id="female"
+                    />
                     <label htmlFor="female">Female</label>
-                    <input type="radio" name="Gender" id="others" />
+                    <input
+                      type="radio"
+                      name="gender"
+                      value={gender}
+                      onChange={handleChangeGender}
+                      id="others"
+                    />
                     <label htmlFor="others">Others</label>
                   </td>
                 </tr>
+
                 <tr>
                   <td colSpan={2}>
                     <label className="text-lg">Password</label>
@@ -131,8 +280,9 @@ export default function Signup() {
                   <td colSpan={2}>
                     <input
                       type="password"
-                      name=""
-                      id=""
+                      name="password"
+                      value={password}
+                      onChange={handleChangePassword}
                       className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
                     />
                   </td>
@@ -146,15 +296,19 @@ export default function Signup() {
                   <td colSpan={2}>
                     <input
                       type="password"
-                      name=""
-                      id=""
+                      name="conPassword"
+                      value={conPassword}
+                      onChange={handleChangeConPassword}
                       className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
                     />
                   </td>
                 </tr>
                 <tr>
                   <td colSpan={2}>
-                    <button className="bg-customTeal text-white rounded-lg font-semibold w-full mt-2 py-2 px-3">
+                    <button
+                      type="submit"
+                      className="bg-customTeal text-white rounded-lg font-semibold w-full mt-2 py-2 px-3"
+                    >
                       Signup
                     </button>
                   </td>
