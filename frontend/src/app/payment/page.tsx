@@ -1,10 +1,9 @@
-import InventoryProductTable from "@/components/Inventorytable";
-import Header from "@/components/publicheader";
+import InsideHeader from "@/components/insideheader";
 
 export default function Payment() {
   return (
     <>
-      <Header />
+      <InsideHeader />
 
       <div className="container mx-auto h-screen flex items-center justify-center">
         <form className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
