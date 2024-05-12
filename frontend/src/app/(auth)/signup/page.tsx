@@ -1,3 +1,4 @@
+"use client";
 import Header from "@/components/publicheader";
 import React, { ChangeEvent, SyntheticEvent, use, useState } from "react";
 import Link from "next/link";
@@ -45,60 +46,81 @@ export default function Signup() {
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    if (!firstName || !lastName || !username || !email || !mobileNo || !company || !gender || !password || !conPassword) {
-      setError('All fields are required');
+    console.log("Submit button clicked!"); // Check if handleSubmit is being called
+    console.log("Form data:", {
+      firstName,
+      lastName,
+      username,
+      email,
+      mobileNo,
+      company,
+      gender,
+      password,
+      conPassword,
+    }); // Log form data
+    if (
+      !firstName ||
+      !lastName ||
+      !username ||
+      !email ||
+      !mobileNo ||
+      !company ||
+      !gender ||
+      !password ||
+      !conPassword
+    ) {
+      setError("All fields are required");
     } else if (password !== conPassword) {
-      setError('Passwords do not match');
+      setError("Passwords do not match");
     } else {
       try {
         await postData();
         setError("User created successfully");
         // Reset form fields
-        setfirstName('');
-        setlastName('');
-        setusername('');
-        setemail('');
-        setmobileNo('');
-        setCompany('');
-        setgender('');
-        setPassword('');
-        setConfirmPassword('');
+        setfirstName("");
+        setlastName("");
+        setusername("");
+        setemail("");
+        setmobileNo("");
+        setCompany("");
+        setgender("");
+        setPassword("");
+        setConfirmPassword("");
       } catch (error) {
-        setError('Error creating user');
+        setError("Error creating user");
       }
     }
   };
 
-async function postData() {
-  try {
-    const formData = new FormData();
-    formData.append('firstName', firstName);
-    formData.append('lastName', lastName);
-    formData.append('username', username);
-    formData.append('email', email);
-    formData.append('mobileNo', mobileNo);
-    formData.append('company', company);
-    formData.append('gender', gender);
-    formData.append('password', password);
-    
-    const response = await axios.post(
-      `${process.env.NEXT_BACKEND_API_ENDPOINT}/backend/signup/`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+  async function postData() {
+    try {
+      const formData = new FormData();
+      formData.append("firstName", firstName);
+      formData.append("lastName", lastName);
+      formData.append("username", username);
+      formData.append("email", email);
+      formData.append("mobileNo", mobileNo);
+      formData.append("company", company);
+      formData.append("gender", gender);
+      formData.append("password", password);
+      formData.append("conPassword", conPassword);
+
+      const response = await axios.post(
+        "http://localhost:3000/user/registration",
+        formData,
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
         }
-      }
-    );
-    
-    const data = response.data;
-    console.log(data);
-  } catch (error) {
-    throw new Error('Error creating user');
+      );      
+
+      const data = response.data;
+      console.log(data);
+    } catch (error) {
+      throw new Error("Error creating user");
+    }
   }
-}
-
-
 
   return (
     <div>
@@ -121,7 +143,7 @@ async function postData() {
           <h1 className="text-4xl font-extrabold flex justify-center mt-8">
             Signup
           </h1>
-          <form>
+          <form onSubmit={handleSubmit}>
             <table className="m-8">
               <tbody>
                 <tr>
@@ -138,6 +160,7 @@ async function postData() {
                       type="text"
                       name="firstName"
                       value={firstName}
+                      onChange={handleChangeFirstName}
                       className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
                     />
                   </td>
@@ -146,6 +169,7 @@ async function postData() {
                       type="text"
                       name="lastName"
                       value={lastName}
+                      onChange={handleChangeLastName}
                       className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
                     />
                   </td>
@@ -161,6 +185,7 @@ async function postData() {
                       type="text"
                       name="username"
                       value={username}
+                      onChange={handleChangeUsername}
                       className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
                     />
                   </td>
@@ -179,6 +204,7 @@ async function postData() {
                       type="email"
                       name="email"
                       value={email}
+                      onChange={handleChangeEmail}
                       className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
                     />
                   </td>
@@ -187,7 +213,7 @@ async function postData() {
                       type="text"
                       name="mobileNo"
                       value={mobileNo}
-
+                      onChange={handleChangeMobile}
                       className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
                     />
                   </td>
@@ -203,7 +229,7 @@ async function postData() {
                       type="text"
                       name="company"
                       value={company}
-
+                      onChange={handleChangeCompany}
                       className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
                     />
                   </td>
@@ -215,11 +241,29 @@ async function postData() {
                 </tr>
                 <tr>
                   <td colSpan={2} className="flex justify-between items-center">
-                    <input type="radio" name="gender" value={gender} id="male" />
+                    <input
+                      type="radio"
+                      name="gender"
+                      value={gender}
+                      onChange={handleChangeGender}
+                      id="male"
+                    />
                     <label htmlFor="male">Male</label>
-                    <input type="radio" name="gender" value={gender} id="female" />
+                    <input
+                      type="radio"
+                      name="gender"
+                      value={gender}
+                      onChange={handleChangeGender}
+                      id="female"
+                    />
                     <label htmlFor="female">Female</label>
-                    <input type="radio" name="gender" value={gender} id="others" />
+                    <input
+                      type="radio"
+                      name="gender"
+                      value={gender}
+                      onChange={handleChangeGender}
+                      id="others"
+                    />
                     <label htmlFor="others">Others</label>
                   </td>
                 </tr>
@@ -234,6 +278,7 @@ async function postData() {
                       type="password"
                       name="password"
                       value={password}
+                      onChange={handleChangePassword}
                       className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
                     />
                   </td>
@@ -249,13 +294,17 @@ async function postData() {
                       type="password"
                       name="conPassword"
                       value={conPassword}
+                      onChange={handleChangeConPassword}
                       className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
                     />
                   </td>
                 </tr>
                 <tr>
                   <td colSpan={2}>
-                    <button type="submit" className="bg-customTeal text-white rounded-lg font-semibold w-full mt-2 py-2 px-3">
+                    <button
+                      type="submit"
+                      className="bg-customTeal text-white rounded-lg font-semibold w-full mt-2 py-2 px-3"
+                    >
                       Signup
                     </button>
                   </td>
