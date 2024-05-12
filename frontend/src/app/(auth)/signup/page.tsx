@@ -20,7 +20,7 @@ export default function Signup() {
         </div>
         <div className="bg-white m-10 shadow-2xl">
           <h1 className="text-4xl font-extrabold flex justify-center mt-8">
-            Registration
+            Signup
           </h1>
           <form>
             <table className="m-8">
