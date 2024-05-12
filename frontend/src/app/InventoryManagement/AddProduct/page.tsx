@@ -68,16 +68,26 @@ export default function AddProduct() {
   //post data in db
   async function postData() {
     try {
-      const formData = new FormData();
-      formData.append("productName", productName);
-      formData.append("productDetails", productDetails);
-      formData.append("productPurchasePrice", productPurchasePrice);
-      formData.append("productSellPrice", productSellPrice);
-      formData.append("porductBrand", porductBrand);
-      formData.append("productQuantity", productQuantity);
+      // const formData = new FormData();
+      // formData.append("productName", productName);
+      // formData.append("productDetails", productDetails);
+      // formData.append("productPurchasePrice", productPurchasePrice);
+      // formData.append("productSellPrice", productSellPrice);
+      // formData.append("porductBrand", porductBrand);
+      // formData.append("productQuantity", productQuantity);
+
+      const data1 = {
+        productName: productName,
+        productDetails: productDetails,
+        productPurchasePrice: parseInt(productPurchasePrice),
+        productSellPrice: parseInt(productSellPrice),
+        porductBrand: porductBrand,
+        productQuantity: parseInt(productQuantity),
+      };
+      console.log(data1);
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_API_ENDPOINT}/inventory-management/add-item`,
-        formData,
+        data1,
         {
           headers: {
             "Content-Type": "application/json",
