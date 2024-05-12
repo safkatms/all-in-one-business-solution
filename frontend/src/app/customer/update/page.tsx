@@ -1,14 +1,20 @@
 import React from 'react';
-import Header from "@/components/publicheader";
 import CustomerListTable from '@/components/customerlisttable';
 import CustomerSearch from '@/components/customersearch';
+import InsideHeader from '@/components/insideheader';
 
-const CRegistration = () => {
+const CUpdate = () => {
   return (
     <>
-    <Header />
-    <h1 className="text-3xl text-center mt-8">Customer Registration</h1>
+    <InsideHeader />
+    
+    <h1 className="text-3xl text-center mt-8">Update Customer Info</h1>
+     <div className="relative flex justify-center">
+        <CustomerSearch />
+      </div>
+    
     <div className="flex justify-center mt-3">
+   
       <form className="w-full max-w-md bg-white rounded-lg shadow-md p-10">
         <div className="mb-3">
           <label
@@ -60,7 +66,7 @@ const CRegistration = () => {
             type="submit"
             className="bg-customTeal hover:bg-customBlack2 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline mr-2 w-full sm:w-auto"
           >
-            Register 
+            Update
           </button>
           
         </div>
@@ -69,13 +75,11 @@ const CRegistration = () => {
     <>
     
     </>
-    <div className="fixed flex justify-end  right-5 ">
-        <CustomerSearch />
-      </div>
-      <CustomerListTable />
+    
+     
   </>
   
   );
 };
 
-export default CRegistration;
+export default CUpdate;
