@@ -34,7 +34,7 @@ export default function Login() {
         const token = response.data.access_token;
         // Store the token in a cookie
         Cookies.set("jwtToken", token, { expires: 7 });
-        setError("Login successful");
+        alert("Login successful");
         setPassword("");
         // Check if the user has a package associated with their account
         if (!response.data.packageId) {
