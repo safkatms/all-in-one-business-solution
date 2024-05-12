@@ -17,9 +17,6 @@ const common_1 = require("@nestjs/common");
 const inventory_management_service_1 = require("./inventory-management.service");
 const create_inventory_management_dto_1 = require("./dto/create-inventory-management.dto");
 const update_inventory_management_dto_1 = require("./dto/update-inventory-management.dto");
-const jwt_guard_1 = require("../guards/jwt.guard");
-const schema_guard_1 = require("../guards/schema.guard");
-const role_guard_1 = require("../guards/role.guard");
 const swagger_1 = require("@nestjs/swagger");
 let InventoryManagementController = class InventoryManagementController {
     constructor(inventoryManagementService) {
@@ -117,7 +114,6 @@ __decorate([
 exports.InventoryManagementController = InventoryManagementController = __decorate([
     (0, swagger_1.ApiTags)('Inventory Management'),
     (0, common_1.Controller)('inventory-management'),
-    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, schema_guard_1.SetSchemaGuard, new role_guard_1.RoleGuard(['inventory_manager', 'owner'])),
     __metadata("design:paramtypes", [inventory_management_service_1.InventoryManagementService])
 ], InventoryManagementController);
 //# sourceMappingURL=inventory-management.controller.js.map
