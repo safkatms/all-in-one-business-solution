@@ -228,6 +228,7 @@ export default function AddProduct() {
         </div>
       </div>
 
+
       <InventoryProductTable />
     </>
   );
