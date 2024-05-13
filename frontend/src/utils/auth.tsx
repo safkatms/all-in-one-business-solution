@@ -37,11 +37,8 @@ export const getUserRole = () => {
 export const hasRole = (roles: string | string[]) => {
   const userRole = getUserRole();
   if (!userRole) {
-    // If user role is not available (e.g., user is not authenticated), return false
-    return false;
+   return false;
   }
-  // Convert roles to an array if it's a single role
   const targetRoles = Array.isArray(roles) ? roles : [roles];
-  // Check if the user has any of the target roles
   return targetRoles.some((role) => userRole === role);
 };

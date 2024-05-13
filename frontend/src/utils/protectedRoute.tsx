@@ -9,12 +9,11 @@ const ProtectedRoute = ({ children, requiredRole }: { children: React.ReactNode,
     useEffect(() => {
       const checkAuthentication = async () => {
         if (!isAuthenticated()) {
-          router.push('/login'); // Redirect to login page if not authenticated
+          router.push('/login'); 
         } else {
-          // Check if the user has the required role
           const hasRequiredRole = await hasRole(requiredRole);
           if (!hasRequiredRole) {
-            router.push('/login'); // Redirect to dashboard if user doesn't have the required role
+            router.push('/login');
           }
         }
       };

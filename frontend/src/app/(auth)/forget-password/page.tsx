@@ -2,7 +2,6 @@
 import { useRouter } from "next/navigation";
 import Header from "@/components/publicheader";
 import React, { SyntheticEvent } from "react";
-import Link from "next/link";
 
 function Forget() {
     const router = useRouter();
