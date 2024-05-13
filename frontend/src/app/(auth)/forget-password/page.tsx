@@ -13,7 +13,6 @@ function Forget() {
     setEmail(e.target.value);
   };
 
-
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     console.log("Submit button clicked!");
