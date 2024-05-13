@@ -14,13 +14,15 @@ export default function Signup() {
           <h6 className="font-normal">
             All Business Solution in One Platform!
           </h6>
-          <button className="bg-customTeal text-white rounded-lg font-semibold py-1 px-12">
-            Login
-          </button>
+          <Link href="/login">
+            <button className="bg-customTeal text-white rounded-lg font-semibold py-1 px-12">
+              Login
+            </button>
+          </Link>
         </div>
         <div className="bg-white m-10 shadow-2xl">
           <h1 className="text-4xl font-extrabold flex justify-center mt-8">
-            Registration
+            Signup
           </h1>
           <form>
             <table className="m-8">
