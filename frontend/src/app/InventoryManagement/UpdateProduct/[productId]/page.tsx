@@ -11,41 +11,41 @@ interface Product {
   productDetails: string;
   productPurchasePrice: number;
   productSellPrice: number;
-  productBrand: string;
+  porductBrand: string;
   productQuantity: number;
 }
 
-export default function UpdateProduct() {
-  // const router = useRouter();
-  // const { productId } = router.query;
-  // const [product, setProduct] = useState<Product>({
-  //   productId: 0,
-  //   productName: "",
-  //   productDetails: "",
-  //   productPurchasePrice: 0,
-  //   productSellPrice: 0,
-  //   productBrand: "",
-  //   productQuantity: 0,
-  // });
+export default function UpdateProduct({
+  params,
+}: {
+  params: { productId: string };
+}) {
+  const { productId } = params;
+  const [product, setProduct] = useState<Product>({
+    productId: 0,
+    productName: "",
+    productDetails: "",
+    productPurchasePrice: 0,
+    productSellPrice: 0,
+    porductBrand: "",
+    productQuantity: 0,
+  });
 
-  // useEffect(() => {
-  //   if (productId && typeof productId === "string") {
-  //     fetchProductDetails(productId);
-  //   }
-  // }, [productId]);
+  useEffect(() => {
+    const fetchProductDetails = async () => {
+      try {
+        const response = await axios.get<Product>(
+          `http://localhost:3000/inventory-management/${productId}`
+        );
+        setProduct(response.data);
+      } catch (error) {
+        console.error("Error fetching product details:", error);
+      }
+    };
 
-  // const fetchProductDetails = async (productId: string) => {
-  //   try {
-  //     const response = await axios.get<Product>(
-  //       `http://localhost:3000/inventory-management/${productId}`
-  //     );
-  //     setProduct(response.data);
-  //   } catch (error) {
-  //     console.error("Error fetching product details:", error);
-  //   }
-  // };
+    fetchProductDetails();
+  }, [productId]);
 
-  
   return (
     <>
       <Header />
@@ -80,6 +80,7 @@ export default function UpdateProduct() {
               type="text"
               name="productName"
               id="productName"
+              value={product.productName}
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
@@ -94,6 +95,7 @@ export default function UpdateProduct() {
               type="text"
               name="productDetails"
               id="productDetails"
+              value={product.productDetails}
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
@@ -108,6 +110,7 @@ export default function UpdateProduct() {
               type="number"
               name="productPurchasePrice"
               id="productPurchasePrice"
+              value={product.productPurchasePrice}
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
@@ -122,6 +125,7 @@ export default function UpdateProduct() {
               type="number"
               name="productSellPrice"
               id="productSellPrice"
+              value={product.productSellPrice}
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
@@ -136,6 +140,7 @@ export default function UpdateProduct() {
               type="text"
               name="productBrand"
               id="productBrand"
+              value={product.porductBrand}
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
@@ -150,6 +155,7 @@ export default function UpdateProduct() {
               type="number"
               name="productQuantity"
               id="productQuantity"
+              value={product.productQuantity}
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>

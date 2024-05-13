@@ -66,9 +66,10 @@ function Payment() {
     }
   }
 
+
   return (
     <>
-      <Header />
+      <InsideHeader />
 
       <div className="container mx-auto h-screen flex items-center justify-center">
         <form

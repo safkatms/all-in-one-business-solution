@@ -1,10 +1,10 @@
 "use client";
 import { useRouter } from "next/navigation";
-import Header from "@/components/publicheader";
 import React, { ChangeEvent, SyntheticEvent, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import Cookies from 'js-cookie';
+import InsideHeader from "@/components/insideheader";
 
 function Package() {
   const [name, setName] = useState("");
@@ -52,7 +52,7 @@ function Package() {
 
   return (
     <div>
-      <Header />
+      <InsideHeader />
       <div className="container mx-auto h-screen flex items-center justify-center">
         <div className="bg-white shadow-2xl">
           <h1 className="text-4xl font-extrabold flex justify-center mt-8 ">
