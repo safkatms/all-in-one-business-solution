@@ -1,13 +1,84 @@
-import InsideHeader from "@/components/insideheader";
+"use client";
+import Header from "@/components/publicheader";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { ChangeEvent, SyntheticEvent } from "react";
 
-export default function Payment() {
+function Payment() {
+  const [cardNumber, setCardNumber] = useState("");
+  const [cardExpiry, setCardExpiry] = useState("");
+  const [cardCVC, setCardCVC] = useState("");
+  const [error, setError] = useState("");
+  const router = useRouter();
+
+  const handleChangeCardNumber = (e: ChangeEvent<HTMLInputElement>) => {
+    setCardNumber(e.target.value);
+  };
+
+  const handleChangeCardExpiry = (e: ChangeEvent<HTMLInputElement>) => {
+    setCardExpiry(e.target.value);
+  };
+
+  const handleChangeCardCVC = (e: ChangeEvent<HTMLInputElement>) => {
+    setCardCVC(e.target.value);
+  };
+
+  const handleSubmit = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    console.log("Payment Processing");
+    console.log("Form data:", { cardNumber });
+    if (!cardNumber) {
+      alert("Please put Card Number");
+    } else {
+      try {
+        
+        router.push("/dashboard");
+      } catch (error) {
+        setError("Error Processing Payment");
+      }
+    }
+  };
+
+  async function postData() {
+    try {
+      const token = Cookies.get("jwtToken");
+
+      if (!token) {
+        setError("No token found");
+        return;
+      }
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_API_ENDPOINT}/payments`,
+        { cardNumber, cardExpiry, cardCVC },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("ERROR",response.data)
+      return response;
+    } catch (error) {
+      throw new Error("Error Processing Payment");
+    }
+  }
+
+
   return (
     <>
       <InsideHeader />
 
       <div className="container mx-auto h-screen flex items-center justify-center">
-        <form className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
-          <h1 className="text-3xl text-center font-semibold m-8">Card Details</h1>
+        <form
+          onSubmit={handleSubmit}
+          className="w-full max-w-md bg-white rounded-lg shadow-md p-6"
+        >
+          <h1 className="text-3xl text-center font-semibold m-8">
+            Card Details
+          </h1>
           <div className="flex justify-end items-center space-x-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -75,7 +146,8 @@ export default function Payment() {
             <input
               type="text"
               name="cardNumber"
-              id="cardNumber"
+              value={cardNumber}
+              onChange={handleChangeCardNumber}
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
@@ -89,7 +161,8 @@ export default function Payment() {
             <input
               type="text"
               name="cardExpiry"
-              id="cardExpiry"
+              value={cardExpiry}
+              onChange={handleChangeCardExpiry}
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
@@ -103,7 +176,8 @@ export default function Payment() {
             <input
               type="text"
               name="cardCVC"
-              id="cardCVC"
+              value={cardCVC}
+              onChange={handleChangeCardCVC}
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
@@ -120,3 +194,4 @@ export default function Payment() {
     </>
   );
 }
+export default Payment;
