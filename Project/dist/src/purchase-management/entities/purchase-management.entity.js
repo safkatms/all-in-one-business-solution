@@ -31,7 +31,7 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiProperty)({
         description: 'Contact number of the vendor',
-        example: '01234567890',
+        example: '01734567890',
     }),
     (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)
