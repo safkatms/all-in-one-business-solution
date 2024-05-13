@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, SyntheticEvent } from "react";
 import InsideHeader from "@/components/insideheader";
+import ProtectedRoute from "@/utils/protectedRoute";
 
 function Payment() {
   const [cardNumber, setCardNumber] = useState("");
@@ -68,7 +69,7 @@ function Payment() {
 
 
   return (
-    <>
+    <ProtectedRoute requiredRole={"owner"}>
       <InsideHeader />
 
       <div className="container mx-auto h-screen flex items-center justify-center">
@@ -191,7 +192,7 @@ function Payment() {
           </div>
         </form>
       </div>
-    </>
+    </ProtectedRoute>
   );
 }
 export default Payment;

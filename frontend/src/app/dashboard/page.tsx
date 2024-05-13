@@ -5,7 +5,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <ProtectedRoute requiredRole={["admin", "owner"]}>
+    <ProtectedRoute requiredRole={["admin", "owner","hr","accountant","inventory_manager","salesman"]}>
       <InsideHeader />
       <div className="flex">
         <Sidebar />

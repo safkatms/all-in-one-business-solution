@@ -5,6 +5,7 @@ import Link from "next/link";
 import axios from "axios";
 import Cookies from 'js-cookie';
 import InsideHeader from "@/components/insideheader";
+import ProtectedRoute from "@/utils/protectedRoute";
 
 function Package() {
   const [name, setName] = useState("");
@@ -53,7 +54,7 @@ function Package() {
   }
 
   return (
-    <div>
+    <ProtectedRoute requiredRole={"owner"}>
       <InsideHeader />
       <div className="container mx-auto h-screen flex items-center justify-center">
         <div className="bg-white shadow-2xl">
@@ -308,7 +309,7 @@ function Package() {
           </form>
         </div>
       </div>
-    </div>
+    </ProtectedRoute>
   );
 }
 
