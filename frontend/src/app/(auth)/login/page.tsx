@@ -1,8 +1,70 @@
+"use client";
 import Header from "@/components/publicheader";
-import React from "react";
+import React, { ChangeEvent, SyntheticEvent } from "react";
 import Link from "next/link";
+import { useState } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const router = useRouter();
+
+  const handleChangeUsername = (e: ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value);
+  };
+
+  const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSubmit = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    console.log("Submit button clicked!"); // Check if handleSubmit is being called
+    console.log("Form data:", { username, password }); // Log form data
+    if (!username || !password) {
+      setError("All fields are required");
+    } else {
+      try {
+        const response = await postData();
+        const token = response.data.access_token;
+        // Store the token in a cookie
+        Cookies.set("jwtToken", token, { expires: 7 });
+        alert("Login successful");
+        setPassword("");
+        // Check if the user has a package associated with their account
+        if (!response.data.packageId) {
+          router.push("/package");
+        } else {
+          router.push("/dashboard");
+        }
+      } catch (error) {
+        setError("Error logging in");
+      }
+    }
+  };
+
+  async function postData() {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_API_ENDPOINT}/auth/login`,
+        { username, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response;
+    } catch (error) {
+      throw new Error("Error logging in");
+    }
+  }
+
   return (
     <div>
       <Header />
@@ -24,7 +86,7 @@ export default function Login() {
           <h1 className="text-4xl font-extrabold flex justify-center mt-8">
             Login
           </h1>
-          <form>
+          <form onSubmit={handleSubmit}>
             <table className="m-8">
               <tbody>
                 <tr>
@@ -36,8 +98,9 @@ export default function Login() {
                   <td colSpan={2}>
                     <input
                       type="text"
-                      name=""
-                      id=""
+                      name="username"
+                      value={username}
+                      onChange={handleChangeUsername}
                       className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
                     />
                   </td>
@@ -51,8 +114,9 @@ export default function Login() {
                   <td colSpan={2}>
                     <input
                       type="password"
-                      name=""
-                      id=""
+                      name="password"
+                      value={password}
+                      onChange={handleChangePassword}
                       className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
                     />
                   </td>
