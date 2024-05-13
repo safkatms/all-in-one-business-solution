@@ -1,12 +1,12 @@
 "use client";
 import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
+import { removeToken } from "@/utils/auth";
 
 const LogoutButton = () => {
   const router = useRouter();
 
   const handleLogout = () => {
-    Cookies.remove("jwtToken");
+    removeToken();
     router.push("/login");
   };
 
