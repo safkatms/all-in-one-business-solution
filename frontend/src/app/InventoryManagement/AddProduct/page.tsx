@@ -1,9 +1,9 @@
 "use client";
 import InventoryProductTable from "@/components/Inventorytable";
-import Header from "@/components/publicheader";
 import Sidebar from "@/components/sidebar";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import axios from "axios";
+import InsideHeader from "@/components/insideheader";
 
 export default function AddProduct() {
   const [productName, setProductName] = useState("");
@@ -102,7 +102,7 @@ export default function AddProduct() {
   }
   return (
     <>
-      <Header />
+      <InsideHeader />
       <div className="flex">
         {/* <Sidebar /> */}
         <div className="flex-1">

@@ -35,9 +35,11 @@ export default function InventoryProductTable() {
   const handleUpdate = (productId: number) => {
     router.push(`/InventoryManagement/UpdateProduct/${productId}`);
   };
-  //remove
+  //remove page
   const handleRemove = (productId: number) => {
-    router.push(`/InventoryManagement/UpdateProduct?productId=${productId}`);
+    router.push(`/InventoryManagement/RemoveProduct/${productId}`);
+
+
   };
 
   return (
@@ -67,7 +69,7 @@ export default function InventoryProductTable() {
                   <td className="px-4 py-2">{product.productPurchasePrice}</td>
                   <td className="px-4 py-2">{product.productSellPrice}</td>
                   <td className="px-4 py-2">{product.porductBrand}</td>
-                  <td className="px-4 py-2">{product.porductBrand}</td>
+                  <td className="px-4 py-2">{product.productQuantity}</td>
                   <td className="px-4 py-2">
                     <button
                       type="submit"

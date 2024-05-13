@@ -1,10 +1,10 @@
 "use client";
 import InventoryProductTable from "@/components/Inventorytable";
-import Header from "@/components/publicheader";
+import InsideHeader from "@/components/insideheader";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
-import InsideHeader from "@/components/insideheader";
+import { SyntheticEvent, useEffect, useState } from "react";
+import ConfirmationModal from "@/components/ConfirmationModal";
 
 interface Product {
   productId: number;
@@ -16,7 +16,7 @@ interface Product {
   productQuantity: number;
 }
 
-export default function UpdateProduct({
+export default function RemoveProduct({
   params,
 }: {
   params: { productId: string };
@@ -32,36 +32,7 @@ export default function UpdateProduct({
     productQuantity: 0,
   });
 
-  const [productName, setProductName] = useState("");
-  const [productDetails, setProductDetails] = useState("");
-  const [productPurchasePrice, setProductPurchasePrice] = useState(0);
-  const [productSellPrice, setProductSellPrice] = useState(0);
-  const [porductBrand, setPorductBrand] = useState("");
-  const [productQuantity, setProductQuantity] = useState(0);
   const [error, setError] = useState("");
-
-  const handleChangeProductName = (e: ChangeEvent<HTMLInputElement>) => {
-    setProductName(e.target.value);
-  };
-
-  const handleProductDetails = (e: ChangeEvent<HTMLInputElement>) => {
-    setProductDetails(e.target.value);
-  };
-
-  const handleProductPurchasePrice = (e: ChangeEvent<HTMLInputElement>) => {
-    setProductPurchasePrice(parseInt(e.target.value));
-  };
-
-  const handleProductSellPrice = (e: ChangeEvent<HTMLInputElement>) => {
-    setProductSellPrice(parseInt(e.target.value));
-  };
-
-  const handleProductBrand = (e: ChangeEvent<HTMLInputElement>) => {
-    setPorductBrand(e.target.value);
-  };
-  const handleProductQuantity = (e: ChangeEvent<HTMLInputElement>) => {
-    setProductQuantity(parseInt(e.target.value));
-  };
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -70,13 +41,6 @@ export default function UpdateProduct({
           `http://localhost:3000/inventory-management/${productId}`
         );
         setProduct(response.data);
-
-        setProductName(response.data.productName);
-        setProductDetails(response.data.productDetails);
-        setProductPurchasePrice(response.data.productPurchasePrice);
-        setProductSellPrice(response.data.productSellPrice);
-        setPorductBrand(response.data.porductBrand);
-        setProductQuantity(response.data.productQuantity);
       } catch (error) {
         console.error("Error fetching product details:", error);
       }
@@ -86,62 +50,34 @@ export default function UpdateProduct({
   }, [productId]);
 
   //handle on submit
-  const handleSubmit = async (e: SyntheticEvent) => {
-    e.preventDefault();
-    if (
-      !productName ||
-      !productDetails ||
-      !productPurchasePrice ||
-      !productSellPrice ||
-      !porductBrand ||
-      !productQuantity
-    ) {
-      setError("All fields are required");
-    } else {
-      try {
-        await postData();
-        alert("product Update successfully");
-      } catch (e: any) {
-        setError(e);
-      }
-      setProductName("");
-      setProductDetails("");
-      setProductPurchasePrice(parseInt(""));
-      setProductSellPrice(parseInt(""));
-      setPorductBrand("");
-      setProductQuantity(parseInt(""));
-      setError("");
+  const [showConfirmation, setShowConfirmation] = useState(false);
+
+  const handleConfirmation = async () => {
+    try {
+      await postData();
+      setShowConfirmation(false);
+      alert("Product removed successfully");
+    } catch (e: any) {
+      setError(e);
     }
   };
+//handle popup cancel
+  const handleCancel = () => {
+    setShowConfirmation(false);
+  };
+
+  const handleSubmit = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    setShowConfirmation(true);
+  };
+
 
   //post data in db
   async function postData() {
     try {
-      // const formData = new FormData();
-      // formData.append("productName", productName);
-      // formData.append("productDetails", productDetails);
-      // formData.append("productPurchasePrice", productPurchasePrice);
-      // formData.append("productSellPrice", productSellPrice);
-      // formData.append("porductBrand", porductBrand);
-      // formData.append("productQuantity", productQuantity);
-
-      const data1 = {
-        productName: productName,
-        productDetails: productDetails,
-        productPurchasePrice: productPurchasePrice,
-        productSellPrice: productSellPrice,
-        porductBrand: porductBrand,
-        productQuantity: productQuantity,
-      };
-      console.log(data1);
-      const response = await axios.patch(
-        `${process.env.NEXT_PUBLIC_BACKEND_API_ENDPOINT}/inventory-management/modify-item/${productId}`,
-        data1,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      const response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_BACKEND_API_ENDPOINT}/inventory-management/remove-item/${productId}`,
+        {}
       );
       const data = response.data;
       console.log(data);
@@ -149,7 +85,6 @@ export default function UpdateProduct({
       console.error(error);
     }
   }
-
   return (
     <>
       <InsideHeader />
@@ -170,7 +105,7 @@ export default function UpdateProduct({
         </div>
       </div>
 
-      <h1 className="text-3xl text-center mt-8">Update Product</h1>
+      <h1 className="text-3xl text-center mt-8">Remove Product</h1>
       <div className="flex justify-center mt-3">
         <form
           onSubmit={handleSubmit}
@@ -187,8 +122,7 @@ export default function UpdateProduct({
               type="text"
               name="productName"
               id="productName"
-              value={productName}
-              onChange={handleChangeProductName}
+              value={product.productName}
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
@@ -203,8 +137,7 @@ export default function UpdateProduct({
               type="text"
               name="productDetails"
               id="productDetails"
-              value={productDetails}
-              onChange={handleProductDetails}
+              value={product.productDetails}
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
@@ -219,8 +152,7 @@ export default function UpdateProduct({
               type="number"
               name="productPurchasePrice"
               id="productPurchasePrice"
-              value={productPurchasePrice}
-              onChange={handleProductPurchasePrice}
+              value={product.productPurchasePrice.toString()}
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
@@ -235,8 +167,7 @@ export default function UpdateProduct({
               type="number"
               name="productSellPrice"
               id="productSellPrice"
-              value={productSellPrice}
-              onChange={handleProductSellPrice}
+              value={product.productSellPrice.toString()}
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
@@ -251,8 +182,7 @@ export default function UpdateProduct({
               type="text"
               name="productBrand"
               id="productBrand"
-              value={porductBrand}
-              onChange={handleProductBrand}
+              value={product.porductBrand}
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
@@ -267,28 +197,28 @@ export default function UpdateProduct({
               type="number"
               name="productQuantity"
               id="productQuantity"
-              value={productQuantity}
-              onChange={handleProductQuantity}
+              value={product.productQuantity.toString()}
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
           <div className="text-center">
             <button
               type="submit"
-              className="bg-customTeal hover:bg-buttonHover text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline mr-2 w-full sm:w-auto"
+              className=" bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline mr-2 w-full sm:w-auto"
             >
-              Update Product
-            </button>
-            <button
-              type="reset"
-              className="bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto"
-            >
-              Reset Product
+              Remove Product
             </button>
             {error && <p>{error}</p>}
           </div>
         </form>
       </div>
+      {showConfirmation && (
+        <ConfirmationModal
+          message="Are you sure you want to remove this product?"
+          onConfirm={handleConfirmation}
+          onCancel={handleCancel}
+        />
+      )}
       <InventoryProductTable />
     </>
   );
