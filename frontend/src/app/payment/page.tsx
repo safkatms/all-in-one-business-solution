@@ -1,10 +1,10 @@
 "use client";
-import Header from "@/components/publicheader";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, SyntheticEvent } from "react";
+import InsideHeader from "@/components/insideheader";
 
 function Payment() {
   const [cardNumber, setCardNumber] = useState("");
@@ -28,12 +28,12 @@ function Payment() {
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     console.log("Payment Processing");
-    console.log("Form data:", { cardNumber });
+    console.log("Form data:", { cardNumber,cardExpiry,cardCVC });
     if (!cardNumber) {
       alert("Please put Card Number");
     } else {
       try {
-        
+        const response=await postData();
         router.push("/dashboard");
       } catch (error) {
         setError("Error Processing Payment");

@@ -1,11 +1,19 @@
-import React from 'react';
+import InsideHeader from "@/components/insideheader";
+import Sidebar from "@/components/sidebar";
+import React from "react";
 
 const page = () => {
-    return (
+  return (
+    <div>
+      <InsideHeader />
+      <div className="flex">
+        <Sidebar />
         <div>
-            <h1>hello</h1>
+          <h1>Welcome to Dashboard</h1>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default page;
