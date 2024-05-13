@@ -16,9 +16,11 @@ function Package() {
     console.log("Submit button clicked!");
     console.log("Form data:", { name });
     if (!name) {
+      
       alert("Select a Package");
     } else {
       try {
+        const response = await postData();
         router.push("/payment");
       } catch (error) {
         setError("Error logging in");
