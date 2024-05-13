@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Header from "@/components/publicheader";
 import React, { ChangeEvent, SyntheticEvent } from "react";
 import Link from "next/link";
