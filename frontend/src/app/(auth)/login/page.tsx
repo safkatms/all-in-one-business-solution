@@ -43,7 +43,7 @@ export default function Login() {
           router.push("/dashboard");
         }
       } catch (error) {
-        setError("Error logging in");
+        setError("Invalid Credentital");
       }
     }
   };
@@ -86,6 +86,7 @@ export default function Login() {
           <h1 className="text-4xl font-extrabold flex justify-center mt-8">
             Login
           </h1>
+          {error && <p className="text-red-500 text-center mt-4">{error}</p>}
           <form onSubmit={handleSubmit}>
             <table className="m-8">
               <tbody>

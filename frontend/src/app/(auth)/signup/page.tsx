@@ -48,7 +48,7 @@ export default function Signup() {
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    console.log("Submit button clicked!"); // Check if handleSubmit is being called
+    console.log("Submit button clicked!");
     console.log("Form data:", {
       firstName,
       lastName,
@@ -59,9 +59,8 @@ export default function Signup() {
       gender,
       password,
       conPassword,
-    }); // Log form data
+    });
 
-    // Reset error state
     setError("");
 
     if (!firstName || !lastName || !username || !email || !mobileNo || !company || !gender || !password || !conPassword) {
@@ -113,12 +112,10 @@ export default function Signup() {
       return;
     }
 
-    // Form submission
     try {
       const response = await postData();
       console.log("User created successfully:", response);
       setError("User created successfully");
-      // Reset form fields
       setfirstName("");
       setlastName("");
       setusername("");
@@ -131,7 +128,7 @@ export default function Signup() {
       router.push("/login");
     } catch (error) {
       console.error("Error creating user:", error);
-      setError("Error creating user");
+      setError("Username/Email/Company Already Exist");
     }
 };
 
