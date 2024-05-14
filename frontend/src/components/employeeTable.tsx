@@ -24,7 +24,7 @@ export default function EmployeeTable() {
   };
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchEmployee = async () => {
       try {
         const token = getToken();
         const response = await axios.get(
@@ -41,7 +41,7 @@ export default function EmployeeTable() {
       }
     };
 
-    fetchProducts();
+    fetchEmployee();
   }, []);
 
   const router = useRouter();
@@ -87,7 +87,7 @@ export default function EmployeeTable() {
     <ProtectedRoute requiredRole={["owner","hr"]}>
       <div className="flex justify-center p-4">
         <div className="w-100%">
-          <h1 className="text-2xl text-left mb-2"> All Products:</h1>
+          <h1 className="text-2xl text-left mb-2"> All Employee:</h1>
           <form onSubmit={handleSubmit}>
             <table className="min-w-full bg-white rounded-lg overflow-hidden text-sm">
               <thead className="bg-gray-600 text-white">
