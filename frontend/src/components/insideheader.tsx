@@ -3,6 +3,7 @@ import Link from "next/link";
 import LogoutButton from "./logout";
 import Cookies from 'js-cookie';
 import React, { useState } from 'react';
+import { getUsername } from "@/utils/auth";
 
 
 const InsideHeader = () => {
@@ -65,7 +66,7 @@ const InsideHeader = () => {
               )}
             </li>
             <li>
-              <p className="text-white">Logged in As </p>
+              <p className="text-white">Logged in As {getUsername()}</p>
             </li>
             <li>
               <LogoutButton />

@@ -10,7 +10,7 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // State for controlling password visibility
+  const [showPassword, setShowPassword] = useState(false); 
 
   const router = useRouter();
 
@@ -37,7 +37,8 @@ export default function Login() {
         const response = await postData();
         const token = response.data.access_token;
         Cookies.set("jwtToken", token, { expires: 7 });
-        alert("Login successful");
+        Cookies.set("username", response.data.username, { expires: 7 });
+        Cookies.set("usertype", response.data.userType, { expires: 7 });
         setPassword("");
         if (!response.data.packageId) {
           router.push("/package");
@@ -133,8 +134,8 @@ export default function Login() {
                   <td>
                     <input
                       type="checkbox"
-                      checked={showPassword} // Bind the checkbox to the showPassword state
-                      onChange={toggleShowPassword} // Call toggleShowPassword when the checkbox changes
+                      checked={showPassword} 
+                      onChange={toggleShowPassword} 
                     />{" "}
                     <label className="text-s">Show Password</label>
                   </td>

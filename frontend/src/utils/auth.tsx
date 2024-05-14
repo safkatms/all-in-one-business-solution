@@ -7,6 +7,10 @@ export const getToken = () => {
   return Cookies.get(TOKEN_KEY);
 };
 
+export const getUsername = () => {
+  return Cookies.get("username");
+};
+
 export const setToken = (token: any) => {
   Cookies.set(TOKEN_KEY, token);
 };
