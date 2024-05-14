@@ -85,7 +85,7 @@ export default function EmployeeTable() {
 
   return (
     <ProtectedRoute requiredRole={["owner","hr"]}>
-      <div className="flex justify-center mt-8">
+      <div className="flex justify-center p-4">
         <div className="w-100%">
           <h1 className="text-2xl text-left mb-2"> All Products:</h1>
           <form onSubmit={handleSubmit}>
