@@ -81,7 +81,7 @@ export default function OrderItems() {
   
 
   return (
-    <ProtectedRoute requiredRole={["owner"]}>
+    <ProtectedRoute requiredRole={["owner","salesman"]}>
       <InsideHeader />
       <div className="flex justify-between">
         <Sidebar />
