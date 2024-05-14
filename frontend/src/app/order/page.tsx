@@ -70,10 +70,10 @@ export default function OrderItems() {
       console.log("Order submitted successfully:", response.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        // Handle Axios errors
+       
         setError(error.response?.data?.message || "An error occurred");
       } else {
-        // Handle other errors
+       
         setError("An error occurred");
       }
     }
