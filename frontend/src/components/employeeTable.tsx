@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { getToken } from "@/utils/auth";
 import ConfirmationModal from "./ConfirmationModal";
+import ProtectedRoute from "@/utils/protectedRoute";
 interface Employee {
   employeeid: number;
   userid: number;
@@ -49,7 +50,6 @@ export default function EmployeeTable() {
     try {
       await postData();
       setShowConfirmation(false);
-      alert("Product removed successfully");
     } catch (e: any) {
       setError(e);
     }
@@ -84,7 +84,7 @@ export default function EmployeeTable() {
   }
 
   return (
-    <>
+    <ProtectedRoute requiredRole={["owner","hr"]}>
       <div className="flex justify-center mt-8">
         <div className="w-100%">
           <h1 className="text-2xl text-left mb-2"> All Products:</h1>
@@ -129,14 +129,12 @@ export default function EmployeeTable() {
       </div>
       {showConfirmation && (
         <ConfirmationModal
-          message="Are you sure you want to remove this product?"
+          message="Are you sure you want to remove this employee?"
           onConfirm={handleConfirmation}
           onCancel={handleCancel}
         />
       )}
-    </>
+    </ProtectedRoute>
   );
 }
-function setShowConfirmation(arg0: boolean) {
-  throw new Error("Function not implemented.");
-}
+

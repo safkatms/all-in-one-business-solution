@@ -183,7 +183,7 @@ export default function Employee() {
   }
 
   return (
-    <ProtectedRoute requiredRole={["owner"]}>
+    <ProtectedRoute requiredRole={["owner","hr"]}>
       <InsideHeader />
       <div className="flex">
         <Sidebar />

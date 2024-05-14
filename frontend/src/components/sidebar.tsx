@@ -220,7 +220,7 @@ const Sidebar = () => {
                 </li>
                 <li>
                   <Link
-                    href="#"
+                    href="/customer"
                     className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-customBlack2"
                   >
                     Customer
