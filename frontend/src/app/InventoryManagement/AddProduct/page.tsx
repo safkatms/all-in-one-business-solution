@@ -4,6 +4,7 @@ import Sidebar from "@/components/sidebar";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import axios from "axios";
 import InsideHeader from "@/components/insideheader";
+import SearchComponent from "@/components/searchComponent";
 
 export default function AddProduct() {
   const [productName, setProductName] = useState("");
@@ -68,14 +69,6 @@ export default function AddProduct() {
   //post data in db
   async function postData() {
     try {
-      // const formData = new FormData();
-      // formData.append("productName", productName);
-      // formData.append("productDetails", productDetails);
-      // formData.append("productPurchasePrice", productPurchasePrice);
-      // formData.append("productSellPrice", productSellPrice);
-      // formData.append("porductBrand", porductBrand);
-      // formData.append("productQuantity", productQuantity);
-
       const data1 = {
         productName: productName,
         productDetails: productDetails,
@@ -103,8 +96,9 @@ export default function AddProduct() {
   return (
     <>
       <InsideHeader />
+      {/* <SearchComponent /> */}
       <div className="flex">
-        {/* <Sidebar /> */}
+        <Sidebar />
         <div className="flex-1">
           <div className="flex justify-end mt-3">
             <div className="flex items-center w-3/10">
@@ -122,12 +116,12 @@ export default function AddProduct() {
             </div>
           </div>
 
-          <h1 className="text-3xl text-center mt-8">Add Product</h1>
           <div className="flex justify-center mt-3">
             <form
               onSubmit={handleSubmit}
               className="w-full max-w-md bg-white rounded-lg shadow-md p-6 "
             >
+              <h1 className="text-2xl text-center mt-0 mb-3">Add Product</h1>
               <div className="mb-3">
                 <label
                   htmlFor="productName"
@@ -237,7 +231,6 @@ export default function AddProduct() {
           </div>
         </div>
       </div>
-
 
       <InventoryProductTable />
     </>

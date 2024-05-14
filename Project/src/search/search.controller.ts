@@ -15,11 +15,11 @@ import { FindPurchaseDto } from 'src/purchase-management/dto/find-purchase.dto';
 
 @ApiTags('Search')
 @Controller('search')
-@UseGuards(
-  JwtAuthGuard,
-  SetSchemaGuard,
-  new RoleGuard(['inventory_manager', 'owner']),
-)
+// @UseGuards(
+//   JwtAuthGuard,
+//   SetSchemaGuard,
+//   new RoleGuard(['inventory_manager', 'owner']),
+// )
 export class SearchController {
   constructor(private readonly searchService: SearchService) {}
 

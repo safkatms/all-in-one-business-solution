@@ -1,8 +1,9 @@
 "use client";
+import ConfirmationModal from "@/components/ConfirmationModal";
 import PurchaseDetailsTable from "@/components/Purchasetable";
 import InsideHeader from "@/components/insideheader";
 import axios from "axios";
-import { useState, ChangeEvent, useEffect, SyntheticEvent } from "react";
+import { useState, useEffect, SyntheticEvent } from "react";
 
 interface Purchase {
   purchaseId: number;
@@ -15,7 +16,7 @@ interface Purchase {
   purchaseTotalPrice: number;
   purchaseDate: string;
 }
-export default function UpdatePurchase({
+export default function RemovePurchase({
   params,
 }: {
   params: { purchaseId: string };
@@ -33,54 +34,7 @@ export default function UpdatePurchase({
     purchaseDate: "",
   });
 
-  const [vendorName, setVendorName] = useState("");
-  const [vendorContact, setVendorContact] = useState("");
-  const [vendorEmail, setVendorEmail] = useState("");
-  const [productName, setProductName] = useState("");
-  const [productQuantity, setProductQuantity] = useState(0);
-  const [productPurchasePrice, setProductPurchasePrice] = useState(0);
-  const [purchaseTotalPrice, setPurchaseTotalPrice] = useState(0);
-  const [purchaseDate, setPurchaseDate] = useState("");
   const [error, setError] = useState("");
-
-  const handleChangeVendorName = (e: ChangeEvent<HTMLInputElement>) => {
-    setVendorName(e.target.value);
-  };
-
-  const handleChangeVendorContact = (e: ChangeEvent<HTMLInputElement>) => {
-    setVendorContact(e.target.value);
-  };
-
-  const handleChangeVendorEmail = (e: ChangeEvent<HTMLInputElement>) => {
-    setVendorEmail(e.target.value);
-  };
-
-  const handleChangeProductName = (e: ChangeEvent<HTMLInputElement>) => {
-    setProductName(e.target.value);
-  };
-
-  const handleChangeProductQuantity = (e: ChangeEvent<HTMLInputElement>) => {
-    setProductQuantity(parseInt(e.target.value));
-  };
-
-  const handleChangeProductPurchasePrice = (
-    e: ChangeEvent<HTMLInputElement>
-  ) => {
-    setProductPurchasePrice(parseInt(e.target.value));
-  };
-
-  const handleChangePurchaseTotalPrice = (e: ChangeEvent<HTMLInputElement>) => {
-    setPurchaseTotalPrice(parseInt(e.target.value));
-  };
-
-  const handleChangePurchaseDate = (e: ChangeEvent<HTMLInputElement>) => {
-    const selectedDate = new Date(e.target.value);
-    const year = selectedDate.getFullYear();
-    const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
-    const day = String(selectedDate.getDate()).padStart(2, "0");
-    const formattedDate = `${year}-${month}-${day}`;
-    setPurchaseDate(formattedDate);
-  };
 
   useEffect(() => {
     const fetchPurchaseDetails = async () => {
@@ -89,15 +43,6 @@ export default function UpdatePurchase({
           `http://localhost:3000/purchase-management/${purchaseId}`
         );
         setProduct(response.data);
-
-        setVendorName(response.data.vendorName);
-        setVendorContact(response.data.vendorContact);
-        setVendorEmail(response.data.vendorEmail);
-        setProductName(response.data.productName);
-        setProductQuantity(response.data.productQuantity);
-        setProductPurchasePrice(response.data.productPurchasePrice);
-        setPurchaseTotalPrice(response.data.purchaseTotalPrice);
-        setPurchaseDate(response.data.purchaseDate);
       } catch (error) {
         console.error("Error fetching purchase details:", error);
       }
@@ -107,60 +52,33 @@ export default function UpdatePurchase({
   }, [purchaseId]);
 
   //handle on submit
+  const [showConfirmation, setShowConfirmation] = useState(false);
+
+  const handleConfirmation = async () => {
+    try {
+      await removeData();
+      setShowConfirmation(false);
+      alert("Purchase removed successfully");
+    } catch (e: any) {
+      setError(e);
+    }
+  };
+  //handle popup cancel
+  const handleCancel = () => {
+    setShowConfirmation(false);
+  };
+
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    if (
-      !vendorName ||
-      !vendorContact ||
-      !vendorEmail ||
-      !productName ||
-      !productQuantity ||
-      !productPurchasePrice ||
-      !purchaseTotalPrice ||
-      !purchaseDate
-    ) {
-      setError("All fields are required");
-    } else {
-      try {
-        await postData();
-        alert("product Update successfully");
-      } catch (e: any) {
-        setError(e);
-      }
-      setVendorName("");
-      setVendorContact("");
-      setVendorEmail("");
-      setProductName("");
-      setProductQuantity(parseInt(""));
-      setProductPurchasePrice(parseInt(""));
-      setPurchaseTotalPrice(parseInt(""));
-      setPurchaseDate("");
-      setError("");
-    }
+    setShowConfirmation(true);
   };
 
   //post data in db
-  async function postData() {
+  async function removeData() {
     try {
-      const data1 = {
-        vendorName: vendorName,
-        vendorContact: vendorContact,
-        vendorEmail: vendorEmail,
-        productName: productName,
-        productQuantity: productQuantity,
-        productPurchasePrice: productPurchasePrice,
-        purchaseTotalPrice: purchaseTotalPrice,
-        purchaseDate: purchaseDate,
-      };
-      console.log(data1);
-      const response = await axios.patch(
-        `${process.env.NEXT_PUBLIC_BACKEND_API_ENDPOINT}/purchase-management/modify-purchase/${purchaseId}`,
-        data1,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      const response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_BACKEND_API_ENDPOINT}/purchase-management/remove-purchase/${purchaseId}`,
+        {}
       );
       const data = response.data;
       console.log(data);
@@ -187,13 +105,12 @@ export default function UpdatePurchase({
           </button>
         </div>
       </div>
-
       <div className="flex justify-center mt-3">
         <form
           onSubmit={handleSubmit}
           className="w-full max-w-2xl bg-white rounded-lg shadow-md p-6 "
         >
-          <h1 className="text-2xl text-center mb-6">Update Purchase</h1>
+          <h1 className="text-2xl text-center mb-6">Remove Purchase</h1>
           <div className="mb-3 flex justify-between">
             <div className="w-1/2 pr-2">
               <label
@@ -206,8 +123,7 @@ export default function UpdatePurchase({
                 type="text"
                 name="vendorName"
                 id="vendorName"
-                value={vendorName}
-                onChange={handleChangeVendorName}
+                value={purchase.vendorName}
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
@@ -222,8 +138,7 @@ export default function UpdatePurchase({
                 type="text"
                 name="vendorContact"
                 id="vendorContact"
-                value={vendorContact}
-                onChange={handleChangeVendorContact}
+                value={purchase.vendorContact}
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
@@ -240,8 +155,7 @@ export default function UpdatePurchase({
                 type="email"
                 name="vendorEmail"
                 id="vendorEmail"
-                value={vendorEmail}
-                onChange={handleChangeVendorEmail}
+                value={purchase.vendorEmail}
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
@@ -256,8 +170,7 @@ export default function UpdatePurchase({
                 type="text"
                 name="productName"
                 id="productName"
-                value={productName}
-                onChange={handleChangeProductName}
+                value={purchase.productName}
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
@@ -274,8 +187,7 @@ export default function UpdatePurchase({
                 type="number"
                 name="productQuantity"
                 id="productQuantity"
-                value={productQuantity}
-                onChange={handleChangeProductQuantity}
+                value={purchase.productQuantity}
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
@@ -290,8 +202,7 @@ export default function UpdatePurchase({
                 type="number"
                 name="productPurchasePrice"
                 id="productPurchasePrice"
-                value={productPurchasePrice}
-                onChange={handleChangeProductPurchasePrice}
+                value={purchase.productPurchasePrice}
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
@@ -308,8 +219,7 @@ export default function UpdatePurchase({
                 type="number"
                 name="purchaseTotalPrice"
                 id="purchaseTotalPrice"
-                value={purchaseTotalPrice}
-                onChange={handleChangePurchaseTotalPrice}
+                value={purchase.purchaseTotalPrice}
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
@@ -324,8 +234,7 @@ export default function UpdatePurchase({
                 type="date"
                 name="purchaseDate"
                 id="purchaseDate"
-                value={purchaseDate}
-                onChange={handleChangePurchaseDate}
+                value={purchase.purchaseDate}
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
@@ -333,20 +242,22 @@ export default function UpdatePurchase({
           <div className="text-center">
             <button
               type="submit"
-              className="bg-customTeal hover:bg-buttonHover text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline mr-2 w-full sm:w-auto"
+              className="bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline mr-2 w-full sm:w-auto"
             >
-              Update Purchase
+              Remove Purchase
             </button>
-            <button
-              type="reset"
-              className="bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto"
-            >
-              Reset Purchase
-            </button>
+            
           </div>
         </form>
       </div>
-
+      {/* popup */}
+      {showConfirmation && (
+        <ConfirmationModal
+          message="Are you sure you want to remove this Purchase?"
+          onConfirm={handleConfirmation}
+          onCancel={handleCancel}
+        />
+      )}
       <PurchaseDetailsTable />
     </>
   );

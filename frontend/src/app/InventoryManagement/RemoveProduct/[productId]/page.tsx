@@ -105,12 +105,12 @@ export default function RemoveProduct({
         </div>
       </div>
 
-      <h1 className="text-3xl text-center mt-8">Remove Product</h1>
       <div className="flex justify-center mt-3">
         <form
           onSubmit={handleSubmit}
           className="w-full max-w-md bg-white rounded-lg shadow-md p-6"
         >
+           <h1 className="text-2xl text-center mt-0 mb-3">Remove Product</h1>
           <div className="mb-3">
             <label
               htmlFor="productName"

@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 interface Purchase {
   purchaseId: number;
@@ -31,6 +32,16 @@ export default function PurchaseDetailsTable() {
 
     fetchPurchases();
   }, []);
+
+  const router = useRouter();
+  //navigate Update Product page
+  const handleUpdate = (purchaseId: number) => {
+    router.push(`/PurchaseManagement/UpdatePurchase/${purchaseId}`);
+  };
+  //remove page
+  const handleRemove = (purchaseId: number) => {
+    router.push(`/PurchaseManagement/RemovePurchase/${purchaseId}`);
+  };
 
   return (
     <>
@@ -68,12 +79,14 @@ export default function PurchaseDetailsTable() {
                     <button
                       type="submit"
                       className="bg-customTeal hover:bg-customBlack2 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline mr-2 w-full sm:w-auto"
+                      onClick={() => handleUpdate(purchase.purchaseId)}
                     >
                       Update
                     </button>
                     <button
                       type="submit"
                       className="bg-red-600 hover:bg-red-500 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto"
+                      onClick={() => handleRemove(purchase.purchaseId)}
                     >
                       Remove
                     </button>

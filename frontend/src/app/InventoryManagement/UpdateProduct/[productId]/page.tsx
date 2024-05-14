@@ -1,7 +1,5 @@
 "use client";
 import InventoryProductTable from "@/components/Inventorytable";
-import Header from "@/components/publicheader";
-import { useRouter } from "next/router";
 import axios from "axios";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import InsideHeader from "@/components/insideheader";
@@ -170,12 +168,12 @@ export default function UpdateProduct({
         </div>
       </div>
 
-      <h1 className="text-3xl text-center mt-8">Update Product</h1>
       <div className="flex justify-center mt-3">
         <form
           onSubmit={handleSubmit}
           className="w-full max-w-md bg-white rounded-lg shadow-md p-6"
         >
+          <h1 className="text-2xl text-center mt-0 mb-3">Update Product</h1>
           <div className="mb-3">
             <label
               htmlFor="productName"
