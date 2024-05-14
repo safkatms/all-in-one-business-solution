@@ -7,6 +7,7 @@ import { SyntheticEvent, useEffect, useState } from "react";
 import ConfirmationModal from "@/components/ConfirmationModal";
 import Cookies from "js-cookie";
 import ProtectedRoute from "@/utils/protectedRoute";
+import Sidebar from "@/components/sidebar";
 
 interface Product {
   productId: number;
@@ -100,6 +101,9 @@ export default function RemoveProduct({
   return (
     <ProtectedRoute requiredRole={"owner"}>
       <InsideHeader />
+      <div className="flex">
+        <Sidebar />
+        <div className="flex-1">
 
       <div className="flex justify-end mt-3">
         <div className="flex items-center w-3/10">
@@ -224,6 +228,9 @@ export default function RemoveProduct({
           </div>
         </form>
       </div>
+      <InventoryProductTable />
+      </div>
+      </div>
       {showConfirmation && (
         <ConfirmationModal
           message="Are you sure you want to remove this product?"
@@ -231,7 +238,7 @@ export default function RemoveProduct({
           onCancel={handleCancel}
         />
       )}
-      <InventoryProductTable />
+      {/* <InventoryProductTable /> */}
     </ProtectedRoute>
   );
 }

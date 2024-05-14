@@ -5,6 +5,7 @@ import DeliveryManagementTable from "@/components/deliveryManTable";
 import InsideHeader from "@/components/insideheader";
 import ProtectedRoute from "@/utils/protectedRoute";
 import Cookies from "js-cookie";
+import Sidebar from "@/components/sidebar";
 
 interface OrderDelivery {
   orderId: number;
@@ -97,6 +98,9 @@ export default function ReturnedDelivery({
   return (
     <ProtectedRoute requiredRole={"owner"}>
       <InsideHeader />
+      <div className="flex">
+        <Sidebar />
+        <div className="flex-1">
       <div className="flex justify-end mt-3">{/* Search input */}</div>
 
       <div className="flex justify-center mt-3">
@@ -194,8 +198,11 @@ export default function ReturnedDelivery({
           </div>
         </form>
       </div>
-
       <DeliveryManagementTable />
+      </div>
+      </div>
+
+      {/* <DeliveryManagementTable /> */}
     </ProtectedRoute>
   );
 }
