@@ -6,6 +6,7 @@ import ProtectedRoute from "@/utils/protectedRoute";
 import axios from "axios";
 import { useState, useEffect, SyntheticEvent } from "react";
 import Cookies from "js-cookie";
+import Sidebar from "@/components/sidebar";
 
 interface Purchase {
   purchaseId: number;
@@ -103,6 +104,9 @@ export default function RemovePurchase({
   return (
     <ProtectedRoute requiredRole={"owner"}>
       <InsideHeader />
+      <div className="flex">
+        <Sidebar />
+        <div className="flex-1">
       <div className="flex justify-end mt-3">
         <div className="flex items-center w-3/10">
           <input
@@ -262,6 +266,10 @@ export default function RemovePurchase({
           </div>
         </form>
       </div>
+      <PurchaseDetailsTable />
+      </div>
+      </div>
+  
       {/* popup */}
       {showConfirmation && (
         <ConfirmationModal
@@ -270,7 +278,7 @@ export default function RemovePurchase({
           onCancel={handleCancel}
         />
       )}
-      <PurchaseDetailsTable />
+      {/* <PurchaseDetailsTable /> */}
     </ProtectedRoute>
   );
 }

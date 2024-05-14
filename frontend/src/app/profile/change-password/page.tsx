@@ -8,7 +8,7 @@ import ProtectedRoute from "@/utils/protectedRoute";
 import InsideHeader from "@/components/insideheader";
 import Sidebar from "@/components/sidebar";
 
-export default function Signup() {
+export default function ChangePassword() {
   const router = useRouter();
   const [currentPassword, setcurrentPassword] = useState("");
   const [newPassword, setnewPassword] = useState("");

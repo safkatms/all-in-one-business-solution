@@ -233,10 +233,11 @@ export default function AddProduct() {
               </div>
             </form>
           </div>
+          <InventoryProductTable />
         </div>
       </div>
 
-      <InventoryProductTable />
+      {/* <InventoryProductTable /> */}
     </ProtectedRoute>
   );
 }
