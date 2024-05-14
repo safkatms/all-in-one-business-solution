@@ -9,5 +9,7 @@ export declare class AuthService {
     login(loginDto: CreateAuthDto): Promise<{
         access_token: string;
         packageId: any;
+        userType: any;
+        username: any;
     }>;
 }
