@@ -4,6 +4,7 @@ import PurchaseDetailsTable from "@/components/Purchasetable";
 import Header from "@/components/publicheader";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import axios from "axios";
+import InsideHeader from "@/components/insideheader";
 
 export default function AddPurchase() {
   //
@@ -131,7 +132,7 @@ export default function AddPurchase() {
 
   return (
     <>
-      <Header />
+      <InsideHeader />
       <div className="flex justify-end mt-3">
         <div className="flex items-center w-3/10">
           <input
