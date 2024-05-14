@@ -38,8 +38,6 @@ export default function InventoryProductTable() {
   //remove page
   const handleRemove = (productId: number) => {
     router.push(`/InventoryManagement/RemoveProduct/${productId}`);
-
-
   };
 
   return (

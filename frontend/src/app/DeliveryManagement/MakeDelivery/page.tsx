@@ -1,4 +1,5 @@
 import InventoryProductTable from "@/components/Inventorytable";
+import DeliveryManagementTable from "@/components/deliveryManTable";
 import Header from "@/components/publicheader";
 
 export default function MakeDelivery() {
@@ -52,7 +53,7 @@ export default function MakeDelivery() {
         </form>
       </div>
 
-      <InventoryProductTable/>
+      <DeliveryManagementTable/>
     </>
   );
 }
