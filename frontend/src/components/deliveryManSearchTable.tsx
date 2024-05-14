@@ -1,8 +1,8 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+
 interface OrderDelivery {
   orderId: number;
   soldBy: string;
@@ -12,36 +12,23 @@ interface OrderDelivery {
   orderStatus: string;
 }
 
-export default function DeliveryManagementTable() {
-  const [orderDelivery, setOrderDelivery] = useState<OrderDelivery[]>([]);
+interface DeliveryManagementTableProps {
+  data: OrderDelivery[];
+}
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const token = Cookies.get("jwtToken");
-        const response = await axios.get("http://localhost:3000/delivery/", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setOrderDelivery(response.data);
-      } catch (error) {
-        console.error("Error fetching orders:", error);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
+const DeliveryManagementSearchTable: React.FC<DeliveryManagementTableProps> = ({
+  data,
+}) => {
   const router = useRouter();
-  //navigate make delivery Product page
   const handleMakeDelivery = (orderId: number) => {
     router.push(`/DeliveryManagement/MakeDelivery/${orderId}`);
   };
-  //returned page
+
   const handleReturnedDelivery = (orderId: number) => {
     router.push(`/DeliveryManagement/ReturnedDelivery/${orderId}`);
   };
+
+  console.log(data);
 
   return (
     <>
@@ -61,7 +48,7 @@ export default function DeliveryManagementTable() {
               </tr>
             </thead>
             <tbody className="text-gray-700">
-              {orderDelivery.map((order) => (
+              {data.map((order) => (
                 <tr key={order.orderId}>
                   <td className="px-4 py-2">{order.orderId}</td>
                   <td className="px-4 py-2">{order.soldBy}</td>
@@ -93,4 +80,6 @@ export default function DeliveryManagementTable() {
       </div>
     </>
   );
-}
+};
+
+export default DeliveryManagementSearchTable;

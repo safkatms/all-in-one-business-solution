@@ -7,6 +7,7 @@ import axios from "axios";
 import InsideHeader from "@/components/insideheader";
 import ProtectedRoute from "@/utils/protectedRoute";
 import Cookies from "js-cookie";
+import Sidebar from "@/components/sidebar";
 
 export default function AddPurchase() {
   //
@@ -138,6 +139,9 @@ export default function AddPurchase() {
   return (
     <ProtectedRoute requiredRole={"owner"}>
       <InsideHeader />
+      <div className="flex">
+        <Sidebar />
+        <div className="flex-1">
       <div className="flex justify-end mt-3">
         <div className="flex items-center w-3/10">
           <input
@@ -154,7 +158,6 @@ export default function AddPurchase() {
         </div>
       </div>
 
-      {/* <h1 className="text-3xl text-center mt-8">Add Purchase</h1> */}
       <div className="flex justify-center mt-3">
         <form
           onSubmit={handleSubmit}
@@ -305,8 +308,12 @@ export default function AddPurchase() {
           </div>
         </form>
       </div>
-
       <PurchaseDetailsTable />
+      </div>
+      
+      </div>
+
+      {/* <PurchaseDetailsTable /> */}
     /</ProtectedRoute>
   );
 }
