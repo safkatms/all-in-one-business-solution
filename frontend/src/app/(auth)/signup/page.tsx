@@ -68,24 +68,47 @@ export default function Signup() {
 
     setError("");
 
-    // Validate form fields
-    if (
-      !firstName ||
-      !lastName ||
-      !username ||
-      !email ||
-      !mobileNo ||
-      !company ||
-      !gender ||
-      !password ||
-      !conPassword
-    ) {
+    if (!firstName || !lastName || !username || !email || !mobileNo || !company || !gender || !password || !conPassword) {
       setError("All fields are required");
       return;
     }
 
     if (password !== conPassword) {
       setError("Passwords do not match");
+      return;
+    }
+    if (!firstName.match(/^[A-Z][a-z]*$/)) {
+      setError("First name must start with a capital letter and contain no numbers or special characters.");
+      return;
+    }
+
+    if (!lastName.match(/^[A-Z][a-z]*$/)) {
+      setError("Last name must start with a capital letter and contain no numbers or special characters.");
+      return;
+    }
+
+    if (!username.match(/^[a-z0-9_]+$/)) {
+      setError("Username must be lowercase, may include underscores and numbers, but no spaces or special characters.");
+      return;
+    }
+
+    if (!email.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
+      setError("Invalid email address.");
+      return;
+    }
+
+    if (!mobileNo.match(/^01[3-9]\d{8}$/)) {
+      setError("Mobile number must be a valid Bangladesh number.");
+      return;
+    }
+
+    if (!company.match(/^[A-Z]+$/)) {
+      setError("Company must be all uppercase, with no numbers, spaces, or special characters.");
+      return;
+    }
+
+    if (!password.match(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;'<>,.?\/\\~`\-]).{6,}$/)) {
+      setError("Password must be at least 6 characters long, include at least one uppercase letter, one number, and one special character.");
       return;
     }
 
