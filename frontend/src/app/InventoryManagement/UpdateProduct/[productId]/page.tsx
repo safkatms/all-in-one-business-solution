@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import ProtectedRoute from "@/utils/protectedRoute";
 import Sidebar from "@/components/sidebar";
 import SuccessMessage from "@/components/successMessage";
+import  { useRouter } from "next/navigation";
 
 interface Product {
   productId: number;
@@ -50,6 +51,8 @@ export default function UpdateProduct({
     productQuantity: "",
   });
 
+  const router = useRouter();
+
   const handleChangeProductName = (e: ChangeEvent<HTMLInputElement>) => {
     setProductName(e.target.value);
   };
@@ -74,8 +77,8 @@ export default function UpdateProduct({
   };
   const closeSuccessMessage = () => {
     setSuccessMessage("");
+    router.push("/InventoryManagement");
   };
-
 
   //validation fucn
   const validateFields = () => {
@@ -182,7 +185,10 @@ export default function UpdateProduct({
       try {
         // Validation passed, submit data
         await postData();
-        Cookies.set('successMessage', `Information about ${productName} Updated successfully !`);
+        Cookies.set(
+          "successMessage",
+          `Information about ${productName} Updated successfully !`
+        );
         setSuccessMessage("Product Updated successfully !");
         // Reset form state
         setProductName("");
@@ -414,7 +420,12 @@ export default function UpdateProduct({
           <InventoryProductTable />
         </div>
       </div>
-      {successMessage && <SuccessMessage message={successMessage} onClose={closeSuccessMessage} />}
+      {successMessage && (
+        <SuccessMessage
+          message={successMessage}
+          onClose={closeSuccessMessage}
+        />
+      )}
       {/* <InventoryProductTable /> */}
     </ProtectedRoute>
   );

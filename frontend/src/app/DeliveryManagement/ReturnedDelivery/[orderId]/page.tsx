@@ -7,6 +7,7 @@ import ProtectedRoute from "@/utils/protectedRoute";
 import Cookies from "js-cookie";
 import Sidebar from "@/components/sidebar";
 import SuccessMessage from "@/components/successMessage";
+import { useRouter } from "next/navigation";
 
 interface OrderDelivery {
   orderId: number;
@@ -36,8 +37,10 @@ export default function ReturnedDelivery({
   const [status, setOrderStatus] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
+  const router = useRouter();
   const closeSuccessMessage = () => {
     setSuccessMessage("");
+    router.push("/DeliveryManagement");
   };
   // Fetch order details
   useEffect(() => {

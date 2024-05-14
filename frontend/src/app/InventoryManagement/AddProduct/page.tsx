@@ -7,7 +7,7 @@ import InsideHeader from "@/components/insideheader";
 import ProtectedRoute from "@/utils/protectedRoute";
 import Cookies from "js-cookie";
 import SuccessMessage from "@/components/successMessage";
-
+import { useRouter } from "next/navigation";
 
 export default function AddProduct() {
   const [productName, setProductName] = useState("");
@@ -51,8 +51,10 @@ export default function AddProduct() {
   };
   const closeSuccessMessage = () => {
     setSuccessMessage("");
+    router.push("/InventoryManagement"); 
   };
 
+  const router = useRouter();
   //validation fucntion
 
   const validateFields = () => {
@@ -130,7 +132,10 @@ export default function AddProduct() {
       try {
         // Validation passed, submit data
         await postData();
-        Cookies.set('successMessage', `New product named ${productName} registered successfully !`);
+        Cookies.set(
+          "successMessage",
+          `New product name ${productName} registered successfully !`
+        );
         setSuccessMessage("Product registered successfully !");
         // Reset form state
         setProductName("");
@@ -355,7 +360,12 @@ export default function AddProduct() {
           <InventoryProductTable />
         </div>
       </div>
-      {successMessage && <SuccessMessage message={successMessage} onClose={closeSuccessMessage} />}
+      {successMessage && (
+        <SuccessMessage
+          message={successMessage}
+          onClose={closeSuccessMessage}
+        />
+      )}
       {/* <InventoryProductTable /> */}
     </ProtectedRoute>
   );

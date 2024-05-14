@@ -7,6 +7,7 @@ import { useState, ChangeEvent, useEffect, SyntheticEvent } from "react";
 import Cookies from "js-cookie";
 import Sidebar from "@/components/sidebar";
 import SuccessMessage from "@/components/successMessage";
+import { useRouter } from "next/navigation";
 
 interface Purchase {
   purchaseId: number;
@@ -58,6 +59,8 @@ export default function UpdatePurchase({
     purchaseDate: "",
   });
 
+  const router = useRouter();
+  
   const handleChangeVendorName = (e: ChangeEvent<HTMLInputElement>) => {
     setVendorName(e.target.value);
   };
@@ -89,6 +92,7 @@ export default function UpdatePurchase({
   };
   const closeSuccessMessage = () => {
     setSuccessMessage("");
+    router.push("/PurchaseManagement");
   };
 
   const handleChangePurchaseDate = (e: ChangeEvent<HTMLInputElement>) => {

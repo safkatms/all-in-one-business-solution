@@ -9,6 +9,7 @@ import ProtectedRoute from "@/utils/protectedRoute";
 import Cookies from "js-cookie";
 import Sidebar from "@/components/sidebar";
 import SuccessMessage from "@/components/successMessage";
+import { useRouter } from "next/navigation";
 
 export default function AddPurchase() {
   //
@@ -32,6 +33,7 @@ export default function AddPurchase() {
     purchaseTotalPrice: "",
     purchaseDate: "",
   });
+  const router = useRouter();
 
   const handleChangeVendorName = (e: ChangeEvent<HTMLInputElement>) => {
     setVendorName(e.target.value);
@@ -64,6 +66,7 @@ export default function AddPurchase() {
   };
   const closeSuccessMessage = () => {
     setSuccessMessage("");
+    router.push("/PurchaseManagement")
   };
 
   const handleChangePurchaseDate = (e: ChangeEvent<HTMLInputElement>) => {

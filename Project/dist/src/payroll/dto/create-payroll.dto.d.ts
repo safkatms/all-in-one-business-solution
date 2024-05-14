@@ -1,6 +1,6 @@
 export declare enum PayrollStatus {
-    Paid = "paid",
-    Unpaid = "unpaid"
+    Paid = "Paid",
+    Unpaid = "Unpaid"
 }
 export declare class CreatePayrollDto {
     employeeId: number;

@@ -2,8 +2,8 @@ import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, Matches } from 'cla
 import { ApiProperty } from '@nestjs/swagger';
 
 export enum PayrollStatus {
-  Paid = 'paid',
-  Unpaid = 'unpaid',
+  Paid = 'Paid',
+  Unpaid = 'Unpaid',
 }
 
 export class CreatePayrollDto {

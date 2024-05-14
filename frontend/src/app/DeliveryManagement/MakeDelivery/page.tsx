@@ -24,7 +24,7 @@ const DeliveryDashboard: React.FC = () => {
           },
         }
       );
-      setDeliveryData(response.data);
+      setDeliveryData([response.data]);
     } catch (error) {
       console.error("Error fetching delivery data:", error);
       setDeliveryData([]);
