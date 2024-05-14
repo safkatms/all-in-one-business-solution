@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 interface Purchase {
   purchaseId: number;
@@ -19,10 +20,16 @@ export default function PurchaseDetailsTable() {
   const [purchases, setPurchases] = useState<Purchase[]>([]);
 
   useEffect(() => {
+    const token = Cookies.get("jwtToken");
     const fetchPurchases = async () => {
       try {
         const response = await axios.get<Purchase[]>(
-          "http://localhost:3000/purchase-management/"
+          "http://localhost:3000/purchase-management/",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setPurchases(response.data);
       } catch (error) {

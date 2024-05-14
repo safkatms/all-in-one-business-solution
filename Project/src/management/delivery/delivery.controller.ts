@@ -18,11 +18,11 @@ import {
 
 @ApiTags('Delivery Management')
 @Controller('delivery')
-// @UseGuards(
-//   JwtAuthGuard,
-//   SetSchemaGuard,
-//   new RoleGuard(['inventory_manager', 'owner']),
-// )
+@UseGuards(
+  JwtAuthGuard,
+  SetSchemaGuard,
+  new RoleGuard(['inventory_manager', 'owner']),
+)
 export class DeliveryController {
   constructor(private readonly deliveryService: DeliveryService) {}
   @UseGuards(DeliveryManagementValidIdGuard)

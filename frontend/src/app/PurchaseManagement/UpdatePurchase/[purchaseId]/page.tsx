@@ -1,8 +1,10 @@
 "use client";
 import PurchaseDetailsTable from "@/components/Purchasetable";
 import InsideHeader from "@/components/insideheader";
+import ProtectedRoute from "@/utils/protectedRoute";
 import axios from "axios";
 import { useState, ChangeEvent, useEffect, SyntheticEvent } from "react";
+import Cookies from "js-cookie";
 
 interface Purchase {
   purchaseId: number;
@@ -85,8 +87,14 @@ export default function UpdatePurchase({
   useEffect(() => {
     const fetchPurchaseDetails = async () => {
       try {
+        const token = Cookies.get("jwtToken");
         const response = await axios.get<Purchase>(
-          `http://localhost:3000/purchase-management/${purchaseId}`
+          `http://localhost:3000/purchase-management/${purchaseId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setProduct(response.data);
 
@@ -142,6 +150,8 @@ export default function UpdatePurchase({
   //post data in db
   async function postData() {
     try {
+      const token = Cookies.get("jwtToken");
+
       const data1 = {
         vendorName: vendorName,
         vendorContact: vendorContact,
@@ -159,6 +169,7 @@ export default function UpdatePurchase({
         {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -170,7 +181,7 @@ export default function UpdatePurchase({
   }
 
   return (
-    <>
+    <ProtectedRoute requiredRole={"owner"}>
       <InsideHeader />
       <div className="flex justify-end mt-3">
         <div className="flex items-center w-3/10">
@@ -348,6 +359,6 @@ export default function UpdatePurchase({
       </div>
 
       <PurchaseDetailsTable />
-    </>
+    </ProtectedRoute>
   );
 }

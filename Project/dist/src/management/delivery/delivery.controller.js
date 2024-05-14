@@ -16,6 +16,9 @@ exports.DeliveryController = void 0;
 const common_1 = require("@nestjs/common");
 const delivery_service_1 = require("./delivery.service");
 const update_delivery_dto_1 = require("./dto/update-delivery.dto");
+const jwt_guard_1 = require("../../guards/jwt.guard");
+const role_guard_1 = require("../../guards/role.guard");
+const schema_guard_1 = require("../../guards/schema.guard");
 const deliveryManagement_guard_1 = require("./guard/deliveryManagement.guard");
 const swagger_1 = require("@nestjs/swagger");
 let DeliveryController = class DeliveryController {
@@ -90,6 +93,7 @@ __decorate([
 exports.DeliveryController = DeliveryController = __decorate([
     (0, swagger_1.ApiTags)('Delivery Management'),
     (0, common_1.Controller)('delivery'),
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, schema_guard_1.SetSchemaGuard, new role_guard_1.RoleGuard(['inventory_manager', 'owner'])),
     __metadata("design:paramtypes", [delivery_service_1.DeliveryService])
 ], DeliveryController);
 //# sourceMappingURL=delivery.controller.js.map

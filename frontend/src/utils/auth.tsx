@@ -37,7 +37,7 @@ export const getUserRole = () => {
 export const hasRole = (roles: string | string[]) => {
   const userRole = getUserRole();
   if (!userRole) {
-   return false;
+    return false;
   }
   const targetRoles = Array.isArray(roles) ? roles : [roles];
   return targetRoles.some((role) => userRole === role);

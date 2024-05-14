@@ -5,6 +5,8 @@ import Header from "@/components/publicheader";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import axios from "axios";
 import InsideHeader from "@/components/insideheader";
+import ProtectedRoute from "@/utils/protectedRoute";
+import Cookies from "js-cookie";
 
 export default function AddPurchase() {
   //
@@ -102,6 +104,8 @@ export default function AddPurchase() {
       //   formData.append("purchaseTotalPrice", purchaseTotalPrice);
       //   formData.append("purchaseDate", purchaseDate);
 
+      const token = Cookies.get("jwtToken");
+
       const data1 = {
         vendorName: vendorName,
         vendorContact: vendorContact,
@@ -120,6 +124,7 @@ export default function AddPurchase() {
         {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -131,7 +136,7 @@ export default function AddPurchase() {
   }
 
   return (
-    <>
+    <ProtectedRoute requiredRole={"owner"}>
       <InsideHeader />
       <div className="flex justify-end mt-3">
         <div className="flex items-center w-3/10">
@@ -302,6 +307,6 @@ export default function AddPurchase() {
       </div>
 
       <PurchaseDetailsTable />
-    </>
+    /</ProtectedRoute>
   );
 }

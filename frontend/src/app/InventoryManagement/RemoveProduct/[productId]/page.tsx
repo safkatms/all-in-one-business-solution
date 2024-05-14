@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { SyntheticEvent, useEffect, useState } from "react";
 import ConfirmationModal from "@/components/ConfirmationModal";
+import Cookies from "js-cookie";
+import ProtectedRoute from "@/utils/protectedRoute";
 
 interface Product {
   productId: number;
@@ -37,8 +39,13 @@ export default function RemoveProduct({
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
+        const token = Cookies.get("jwtToken");
         const response = await axios.get<Product>(
-          `http://localhost:3000/inventory-management/${productId}`
+          `http://localhost:3000/inventory-management/${productId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setProduct(response.data);
       } catch (error) {
@@ -75,9 +82,14 @@ export default function RemoveProduct({
   //post data in db
   async function postData() {
     try {
+      const token = Cookies.get("jwtToken");
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BACKEND_API_ENDPOINT}/inventory-management/remove-item/${productId}`,
-        {}
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       const data = response.data;
       console.log(data);
@@ -86,7 +98,7 @@ export default function RemoveProduct({
     }
   }
   return (
-    <>
+    <ProtectedRoute requiredRole={"owner"}>
       <InsideHeader />
 
       <div className="flex justify-end mt-3">
@@ -220,6 +232,6 @@ export default function RemoveProduct({
         />
       )}
       <InventoryProductTable />
-    </>
+    </ProtectedRoute>
   );
 }

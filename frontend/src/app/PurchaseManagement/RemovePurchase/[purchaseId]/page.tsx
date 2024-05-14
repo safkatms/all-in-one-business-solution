@@ -2,8 +2,10 @@
 import ConfirmationModal from "@/components/ConfirmationModal";
 import PurchaseDetailsTable from "@/components/Purchasetable";
 import InsideHeader from "@/components/insideheader";
+import ProtectedRoute from "@/utils/protectedRoute";
 import axios from "axios";
 import { useState, useEffect, SyntheticEvent } from "react";
+import Cookies from "js-cookie";
 
 interface Purchase {
   purchaseId: number;
@@ -39,8 +41,14 @@ export default function RemovePurchase({
   useEffect(() => {
     const fetchPurchaseDetails = async () => {
       try {
+        const token = Cookies.get("jwtToken");
         const response = await axios.get<Purchase>(
-          `http://localhost:3000/purchase-management/${purchaseId}`
+          `http://localhost:3000/purchase-management/${purchaseId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setProduct(response.data);
       } catch (error) {
@@ -76,9 +84,14 @@ export default function RemovePurchase({
   //post data in db
   async function removeData() {
     try {
+      const token = Cookies.get("jwtToken");
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BACKEND_API_ENDPOINT}/purchase-management/remove-purchase/${purchaseId}`,
-        {}
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       const data = response.data;
       console.log(data);
@@ -88,7 +101,7 @@ export default function RemovePurchase({
   }
 
   return (
-    <>
+    <ProtectedRoute requiredRole={"owner"}>
       <InsideHeader />
       <div className="flex justify-end mt-3">
         <div className="flex items-center w-3/10">
@@ -246,7 +259,6 @@ export default function RemovePurchase({
             >
               Remove Purchase
             </button>
-            
           </div>
         </form>
       </div>
@@ -259,6 +271,6 @@ export default function RemovePurchase({
         />
       )}
       <PurchaseDetailsTable />
-    </>
+    </ProtectedRoute>
   );
 }
