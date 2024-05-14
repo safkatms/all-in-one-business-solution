@@ -167,6 +167,7 @@ let UserService = class UserService {
                 'username',
                 'mobileNo',
                 'gender',
+                'company'
             ],
         });
     }
