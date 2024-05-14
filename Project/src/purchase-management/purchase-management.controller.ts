@@ -29,11 +29,11 @@ import {
 
 @ApiTags('Purchase Management')
 @Controller('purchase-management')
-// @UseGuards(
-//   JwtAuthGuard,
-//   SetSchemaGuard,
-//   new RoleGuard(['inventory_manager', 'owner']),
-// )
+@UseGuards(
+  JwtAuthGuard,
+  SetSchemaGuard,
+  new RoleGuard(['inventory_manager', 'owner']),
+)
 export class PurchaseManagementController {
   constructor(
     private readonly purchaseManagementService: PurchaseManagementService,

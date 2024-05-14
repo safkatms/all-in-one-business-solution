@@ -3,6 +3,8 @@ import InventoryProductTable from "@/components/Inventorytable";
 import axios from "axios";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import InsideHeader from "@/components/insideheader";
+import Cookies from "js-cookie";
+import ProtectedRoute from "@/utils/protectedRoute";
 
 interface Product {
   productId: number;
@@ -64,8 +66,14 @@ export default function UpdateProduct({
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
+        const token = Cookies.get("jwtToken");
         const response = await axios.get<Product>(
-          `http://localhost:3000/inventory-management/${productId}`
+          `http://localhost:3000/inventory-management/${productId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setProduct(response.data);
 
@@ -122,6 +130,7 @@ export default function UpdateProduct({
       // formData.append("productSellPrice", productSellPrice);
       // formData.append("porductBrand", porductBrand);
       // formData.append("productQuantity", productQuantity);
+      const token = Cookies.get("jwtToken");
 
       const data1 = {
         productName: productName,
@@ -138,6 +147,7 @@ export default function UpdateProduct({
         {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -149,7 +159,7 @@ export default function UpdateProduct({
   }
 
   return (
-    <>
+    <ProtectedRoute requiredRole={"owner"}>
       <InsideHeader />
 
       <div className="flex justify-end mt-3">
@@ -288,6 +298,6 @@ export default function UpdateProduct({
         </form>
       </div>
       <InventoryProductTable />
-    </>
+    </ProtectedRoute>
   );
 }

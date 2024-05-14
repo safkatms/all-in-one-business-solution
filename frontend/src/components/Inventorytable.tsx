@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 interface Product {
   productId: number;
   productName: string;
@@ -18,8 +19,14 @@ export default function InventoryProductTable() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        const token = Cookies.get("jwtToken");
         const response = await axios.get(
-          "http://localhost:3000/inventory-management/"
+          "http://localhost:3000/inventory-management/",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setProducts(response.data);
       } catch (error) {

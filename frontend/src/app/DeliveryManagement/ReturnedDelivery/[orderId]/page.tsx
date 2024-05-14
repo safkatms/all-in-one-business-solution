@@ -3,6 +3,8 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import axios from "axios";
 import DeliveryManagementTable from "@/components/deliveryManTable";
 import InsideHeader from "@/components/insideheader";
+import ProtectedRoute from "@/utils/protectedRoute";
+import Cookies from "js-cookie";
 
 interface OrderDelivery {
   orderId: number;
@@ -35,8 +37,14 @@ export default function ReturnedDelivery({
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
+        const token = Cookies.get("jwtToken");
         const response = await axios.get<OrderDelivery>(
-          `http://localhost:3000/delivery/${orderId}`
+          `http://localhost:3000/delivery/${orderId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setOrder(response.data);
       } catch (error) {
@@ -66,6 +74,7 @@ export default function ReturnedDelivery({
   // Post data to update order status
   const postData = async () => {
     try {
+      const token = Cookies.get("jwtToken");
       const data1 = {
         status: status,
       };
@@ -76,6 +85,7 @@ export default function ReturnedDelivery({
         {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -85,7 +95,7 @@ export default function ReturnedDelivery({
   };
 
   return (
-    <>
+    <ProtectedRoute requiredRole={"owner"}>
       <InsideHeader />
       <div className="flex justify-end mt-3">{/* Search input */}</div>
 
@@ -186,6 +196,6 @@ export default function ReturnedDelivery({
       </div>
 
       <DeliveryManagementTable />
-    </>
+    </ProtectedRoute>
   );
 }

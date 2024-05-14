@@ -5,6 +5,8 @@ import { ChangeEvent, SyntheticEvent, useState } from "react";
 import axios from "axios";
 import InsideHeader from "@/components/insideheader";
 import SearchComponent from "@/components/searchComponent";
+import ProtectedRoute from "@/utils/protectedRoute";
+import Cookies from "js-cookie";
 
 export default function AddProduct() {
   const [productName, setProductName] = useState("");
@@ -69,6 +71,7 @@ export default function AddProduct() {
   //post data in db
   async function postData() {
     try {
+      const token = Cookies.get("jwtToken");
       const data1 = {
         productName: productName,
         productDetails: productDetails,
@@ -84,6 +87,7 @@ export default function AddProduct() {
         {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -94,7 +98,7 @@ export default function AddProduct() {
     }
   }
   return (
-    <>
+    <ProtectedRoute requiredRole={"owner"}>
       <InsideHeader />
       {/* <SearchComponent /> */}
       <div className="flex">
@@ -233,6 +237,6 @@ export default function AddProduct() {
       </div>
 
       <InventoryProductTable />
-    </>
+    </ProtectedRoute>
   );
 }

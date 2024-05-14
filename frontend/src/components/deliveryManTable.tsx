@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 interface OrderDelivery {
   orderId: number;
   soldBy: string;
@@ -17,7 +18,12 @@ export default function DeliveryManagementTable() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/delivery/");
+        const token = Cookies.get("jwtToken");
+        const response = await axios.get("http://localhost:3000/delivery/", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setOrderDelivery(response.data);
       } catch (error) {
         console.error("Error fetching orders:", error);

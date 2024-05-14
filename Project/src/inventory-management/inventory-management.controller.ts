@@ -30,11 +30,11 @@ import {
 
 @ApiTags('Inventory Management')
 @Controller('inventory-management')
-//@UseGuards(
-//   JwtAuthGuard,
-//SetSchemaGuard,
-//   new RoleGuard(['inventory_manager', 'owner']),
-//)
+@UseGuards(
+  JwtAuthGuard,
+  SetSchemaGuard,
+  new RoleGuard(['inventory_manager', 'owner']),
+)
 export class InventoryManagementController {
   constructor(
     private readonly inventoryManagementService: InventoryManagementService,
