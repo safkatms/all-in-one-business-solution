@@ -7,6 +7,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import ProtectedRoute from "@/utils/protectedRoute";
 import DeliveryManTable from "@/components/deliveryManTable";
+import InventoryProductTable from "@/components/Inventorytable";
 
 interface OrderDelivery {
   orderId: number;
@@ -132,6 +133,7 @@ const DeliveryDashboard: React.FC = () => {
             </div>
           </div>
           <DeliveryManTable />
+          <InventoryProductTable />
         </div>
       </div>
     </ProtectedRoute>
