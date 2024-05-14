@@ -17,6 +17,9 @@ const common_1 = require("@nestjs/common");
 const purchase_management_service_1 = require("./purchase-management.service");
 const create_purchase_management_dto_1 = require("./dto/create-purchase-management.dto");
 const update_purchase_management_dto_1 = require("./dto/update-purchase-management.dto");
+const jwt_guard_1 = require("../guards/jwt.guard");
+const schema_guard_1 = require("../guards/schema.guard");
+const role_guard_1 = require("../guards/role.guard");
 const swagger_1 = require("@nestjs/swagger");
 let PurchaseManagementController = class PurchaseManagementController {
     constructor(purchaseManagementService) {
@@ -98,6 +101,7 @@ __decorate([
 exports.PurchaseManagementController = PurchaseManagementController = __decorate([
     (0, swagger_1.ApiTags)('Purchase Management'),
     (0, common_1.Controller)('purchase-management'),
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, schema_guard_1.SetSchemaGuard, new role_guard_1.RoleGuard(['inventory_manager', 'owner'])),
     __metadata("design:paramtypes", [purchase_management_service_1.PurchaseManagementService])
 ], PurchaseManagementController);
 //# sourceMappingURL=purchase-management.controller.js.map

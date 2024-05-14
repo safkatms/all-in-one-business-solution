@@ -1,8 +1,7 @@
 'use client'
 import Header from "@/components/publicheader";
-import React, { ChangeEvent, SyntheticEvent } from "react";
+import React, { ChangeEvent, SyntheticEvent, useState } from "react";
 import Link from "next/link";
-import { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
@@ -11,6 +10,7 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // State for controlling password visibility
 
   const router = useRouter();
 
@@ -22,28 +22,30 @@ export default function Login() {
     setPassword(e.target.value);
   };
 
+  const toggleShowPassword = () => {
+    setShowPassword((prevState) => !prevState);
+  };
+
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    console.log("Submit button clicked!"); // Check if handleSubmit is being called
-    console.log("Form data:", { username, password }); // Log form data
+    console.log("Submit button clicked!");
+    console.log("Form data:", { username, password });
     if (!username || !password) {
       setError("All fields are required");
     } else {
       try {
         const response = await postData();
         const token = response.data.access_token;
-        // Store the token in a cookie
         Cookies.set("jwtToken", token, { expires: 7 });
         alert("Login successful");
         setPassword("");
-        // Check if the user has a package associated with their account
         if (!response.data.packageId) {
           router.push("/package");
         } else {
           router.push("/dashboard");
         }
       } catch (error) {
-        setError("Error logging in");
+        setError("Invalid Credential");
       }
     }
   };
@@ -73,9 +75,7 @@ export default function Login() {
           <h1 className="text-3xl font-bold">
             Welcome to All in One Business Solution
           </h1>
-          <h6 className="font-normal">
-            All Business Solution in One Platform!
-          </h6>
+          <h6 className="font-normal">All Business Solution in One Platform!</h6>
           <Link href="/signup">
             <button className="bg-customTeal text-white rounded-lg font-semibold py-1 px-1">
               REGISTRATION
@@ -86,6 +86,7 @@ export default function Login() {
           <h1 className="text-4xl font-extrabold flex justify-center mt-8">
             Login
           </h1>
+          {error && <p className="text-red-500 text-center mt-4">{error}</p>}
           <form onSubmit={handleSubmit}>
             <table className="m-8">
               <tbody>
@@ -113,7 +114,7 @@ export default function Login() {
                 <tr>
                   <td colSpan={2}>
                     <input
-                      type="password"
+                      type={showPassword ? "text" : "password"} // Toggle between text and password type
                       name="password"
                       value={password}
                       onChange={handleChangePassword}
@@ -130,7 +131,11 @@ export default function Login() {
                 </tr>
                 <tr>
                   <td>
-                    <input type="checkbox" name="" id="" />{" "}
+                    <input
+                      type="checkbox"
+                      checked={showPassword} // Bind the checkbox to the showPassword state
+                      onChange={toggleShowPassword} // Call toggleShowPassword when the checkbox changes
+                    />{" "}
                     <label className="text-s">Show Password</label>
                   </td>
                   <td>

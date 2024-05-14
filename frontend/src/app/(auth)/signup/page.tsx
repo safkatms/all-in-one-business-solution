@@ -1,6 +1,6 @@
-"use client";
+'use client'
 import Header from "@/components/publicheader";
-import React, { ChangeEvent, SyntheticEvent, use, useState } from "react";
+import React, { ChangeEvent, SyntheticEvent, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -17,6 +17,7 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [conPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // State for controlling password visibility
 
   const handleChangeFirstName = (e: ChangeEvent<HTMLInputElement>) => {
     setfirstName(e.target.value);
@@ -46,9 +47,13 @@ export default function Signup() {
     setConfirmPassword(e.target.value);
   };
 
+  const toggleShowPassword = () => {
+    setShowPassword((prevState) => !prevState);
+  };
+
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    console.log("Submit button clicked!"); // Check if handleSubmit is being called
+    console.log("Submit button clicked!");
     console.log("Form data:", {
       firstName,
       lastName,
@@ -59,39 +64,74 @@ export default function Signup() {
       gender,
       password,
       conPassword,
-    }); // Log form data
-    if (
-      !firstName ||
-      !lastName ||
-      !username ||
-      !email ||
-      !mobileNo ||
-      !company ||
-      !gender ||
-      !password ||
-      !conPassword
-    ) {
+    });
+
+    setError("");
+
+    if (!firstName || !lastName || !username || !email || !mobileNo || !company || !gender || !password || !conPassword) {
       setError("All fields are required");
-    } else if (password !== conPassword) {
+      return;
+    }
+
+    if (password !== conPassword) {
       setError("Passwords do not match");
-    } else {
-      try {
-        await postData();
-        setError("User created successfully");
-        // Reset form fields
-        setfirstName("");
-        setlastName("");
-        setusername("");
-        setemail("");
-        setmobileNo("");
-        setCompany("");
-        setgender("");
-        setPassword("");
-        setConfirmPassword("");
-        router.push("/login");
-      } catch (error) {
-        setError("Error creating user");
-      }
+      return;
+    }
+    if (!firstName.match(/^[A-Z][a-z]*$/)) {
+      setError("First name must start with a capital letter and contain no numbers or special characters.");
+      return;
+    }
+
+    if (!lastName.match(/^[A-Z][a-z]*$/)) {
+      setError("Last name must start with a capital letter and contain no numbers or special characters.");
+      return;
+    }
+
+    if (!username.match(/^[a-z0-9_]+$/)) {
+      setError("Username must be lowercase, may include underscores and numbers, but no spaces or special characters.");
+      return;
+    }
+
+    if (!email.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
+      setError("Invalid email address.");
+      return;
+    }
+
+    if (!mobileNo.match(/^01[3-9]\d{8}$/)) {
+      setError("Mobile number must be a valid Bangladesh number.");
+      return;
+    }
+
+    if (!company.match(/^[A-Z]+$/)) {
+      setError("Company must be all uppercase, with no numbers, spaces, or special characters.");
+      return;
+    }
+
+    if (!password.match(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;'<>,.?\/\\~`\-]).{6,}$/)) {
+      setError("Password must be at least 6 characters long, include at least one uppercase letter, one number, and one special character.");
+      return;
+    }
+
+    // Perform additional validations...
+
+    try {
+      const response = await postData();
+      console.log("User created successfully:", response);
+      setError("User created successfully");
+      // Reset form fields
+      setfirstName("");
+      setlastName("");
+      setusername("");
+      setemail("");
+      setmobileNo("");
+      setCompany("");
+      setgender("");
+      setPassword("");
+      setConfirmPassword("");
+      router.push("/login");
+    } catch (error) {
+      console.error("Error creating user:", error);
+      setError("Username/Email/Company Already Exist");
     }
   };
 
@@ -146,6 +186,7 @@ export default function Signup() {
           <h1 className="text-4xl font-extrabold flex justify-center mt-8">
             Signup
           </h1>
+          {error && <p className="text-red-500 text-center mt-4">{error}</p>}
           <form onSubmit={handleSubmit}>
             <table className="m-8">
               <tbody>
@@ -247,7 +288,7 @@ export default function Signup() {
                     <input
                       type="radio"
                       name="gender"
-                      value={gender}
+                      value="male"
                       onChange={handleChangeGender}
                       id="male"
                     />
@@ -255,7 +296,7 @@ export default function Signup() {
                     <input
                       type="radio"
                       name="gender"
-                      value={gender}
+                      value="female"
                       onChange={handleChangeGender}
                       id="female"
                     />
@@ -263,7 +304,7 @@ export default function Signup() {
                     <input
                       type="radio"
                       name="gender"
-                      value={gender}
+                      value="others"
                       onChange={handleChangeGender}
                       id="others"
                     />
@@ -279,7 +320,7 @@ export default function Signup() {
                 <tr>
                   <td colSpan={2}>
                     <input
-                      type="password"
+                      type={showPassword ? "text" : "password"} 
                       name="password"
                       value={password}
                       onChange={handleChangePassword}
@@ -295,7 +336,7 @@ export default function Signup() {
                 <tr>
                   <td colSpan={2}>
                     <input
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       name="conPassword"
                       value={conPassword}
                       onChange={handleChangeConPassword}
@@ -315,7 +356,11 @@ export default function Signup() {
                 </tr>
                 <tr>
                   <td>
-                    <input type="checkbox" name="" id="" />
+                    <input
+                      type="checkbox"
+                      checked={showPassword}
+                      onChange={toggleShowPassword} 
+                    />
                     <label className="text-s">Show Password</label>
                   </td>
                 </tr>

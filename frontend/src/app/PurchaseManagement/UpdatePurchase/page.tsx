@@ -1,11 +1,10 @@
-import InventoryProductTable from "@/components/Inventorytable";
 import PurchaseDetailsTable from "@/components/Purchasetable";
-import Header from "@/components/publicheader";
+import InsideHeader from "@/components/insideheader";
 
 export default function UpdatePurchase() {
   return (
     <>
-      <Header />
+      <InsideHeader />
       <div className="flex justify-end mt-3">
         <div className="flex items-center w-3/10">
           <input

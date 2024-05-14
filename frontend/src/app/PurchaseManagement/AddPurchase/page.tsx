@@ -4,6 +4,9 @@ import PurchaseDetailsTable from "@/components/Purchasetable";
 import Header from "@/components/publicheader";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import axios from "axios";
+import InsideHeader from "@/components/insideheader";
+import ProtectedRoute from "@/utils/protectedRoute";
+import Cookies from "js-cookie";
 
 export default function AddPurchase() {
   //
@@ -50,7 +53,7 @@ export default function AddPurchase() {
   const handleChangePurchaseDate = (e: ChangeEvent<HTMLInputElement>) => {
     const selectedDate = new Date(e.target.value);
     const year = selectedDate.getFullYear();
-    const month = String(selectedDate.getMonth() + 1).padStart(2, "0"); 
+    const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
     const day = String(selectedDate.getDate()).padStart(2, "0");
     const formattedDate = `${year}-${month}-${day}`;
     setPurchaseDate(formattedDate);
@@ -91,22 +94,37 @@ export default function AddPurchase() {
 
   async function postData() {
     try {
-      const formData = new FormData();
-      formData.append("vendorName", vendorName);
-      formData.append("vendorContact", vendorContact);
-      formData.append("vendorEmail", vendorEmail);
-      formData.append("productName", productName);
-      formData.append("productQuantity", productQuantity);
-      formData.append("productPurchasePrice", productPurchasePrice);
-      formData.append("purchaseTotalPrice", purchaseTotalPrice);
-      formData.append("purchaseDate", purchaseDate);
+      //   const formData = new FormData();
+      //   formData.append("vendorName", vendorName);
+      //   formData.append("vendorContact", vendorContact);
+      //   formData.append("vendorEmail", vendorEmail);
+      //   formData.append("productName", productName);
+      //   formData.append("productQuantity", productQuantity);
+      //   formData.append("productPurchasePrice", productPurchasePrice);
+      //   formData.append("purchaseTotalPrice", purchaseTotalPrice);
+      //   formData.append("purchaseDate", purchaseDate);
+
+      const token = Cookies.get("jwtToken");
+
+      const data1 = {
+        vendorName: vendorName,
+        vendorContact: vendorContact,
+        vendorEmail: vendorEmail,
+        productName: productName,
+        productQuantity: parseInt(productQuantity),
+        productPurchasePrice: parseInt(productPurchasePrice),
+        purchaseTotalPrice: parseInt(purchaseTotalPrice),
+        purchaseDate: purchaseDate,
+      };
+      console.log(data1);
 
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_API_ENDPOINT}/purchase-management/add-purchase`,
-        formData,
+        data1,
         {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -118,8 +136,8 @@ export default function AddPurchase() {
   }
 
   return (
-    <>
-      <Header />
+    <ProtectedRoute requiredRole={"owner"}>
+      <InsideHeader />
       <div className="flex justify-end mt-3">
         <div className="flex items-center w-3/10">
           <input
@@ -289,6 +307,6 @@ export default function AddPurchase() {
       </div>
 
       <PurchaseDetailsTable />
-    </>
+    /</ProtectedRoute>
   );
 }

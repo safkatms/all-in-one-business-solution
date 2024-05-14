@@ -1,10 +1,11 @@
 "use client";
 import { useRouter } from "next/navigation";
-import Header from "@/components/publicheader";
 import React, { ChangeEvent, SyntheticEvent, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import Cookies from 'js-cookie';
+import InsideHeader from "@/components/insideheader";
+import ProtectedRoute from "@/utils/protectedRoute";
 
 function Package() {
   const [name, setName] = useState("");
@@ -16,10 +17,12 @@ function Package() {
     console.log("Submit button clicked!");
     console.log("Form data:", { name });
     if (!name) {
+      
       alert("Select a Package");
     } else {
       try {
         const response = await postData();
+        router.push("/payment");
       } catch (error) {
         setError("Error logging in");
       }
@@ -51,8 +54,8 @@ function Package() {
   }
 
   return (
-    <div>
-      <Header />
+    <ProtectedRoute requiredRole={"owner"}>
+      <InsideHeader />
       <div className="container mx-auto h-screen flex items-center justify-center">
         <div className="bg-white shadow-2xl">
           <h1 className="text-4xl font-extrabold flex justify-center mt-8 ">
@@ -306,7 +309,7 @@ function Package() {
           </form>
         </div>
       </div>
-    </div>
+    </ProtectedRoute>
   );
 }
 

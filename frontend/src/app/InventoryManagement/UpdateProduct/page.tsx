@@ -1,6 +1,51 @@
+"use client";
+import InventoryProductTable from "@/components/Inventorytable";
 import Header from "@/components/publicheader";
+import { useRouter } from "next/router";
+import axios from "axios";
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
+
+interface Product {
+  productId: number;
+  productName: string;
+  productDetails: string;
+  productPurchasePrice: number;
+  productSellPrice: number;
+  productBrand: string;
+  productQuantity: number;
+}
 
 export default function UpdateProduct() {
+  // const router = useRouter();
+  // const { productId } = router.query;
+  // const [product, setProduct] = useState<Product>({
+  //   productId: 0,
+  //   productName: "",
+  //   productDetails: "",
+  //   productPurchasePrice: 0,
+  //   productSellPrice: 0,
+  //   productBrand: "",
+  //   productQuantity: 0,
+  // });
+
+  // useEffect(() => {
+  //   if (productId && typeof productId === "string") {
+  //     fetchProductDetails(productId);
+  //   }
+  // }, [productId]);
+
+  // const fetchProductDetails = async (productId: string) => {
+  //   try {
+  //     const response = await axios.get<Product>(
+  //       `http://localhost:3000/inventory-management/${productId}`
+  //     );
+  //     setProduct(response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching product details:", error);
+  //   }
+  // };
+
+  
   return (
     <>
       <Header />
@@ -124,6 +169,7 @@ export default function UpdateProduct() {
           </div>
         </form>
       </div>
+      <InventoryProductTable />
     </>
   );
 }
