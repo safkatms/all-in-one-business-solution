@@ -8,7 +8,7 @@ import InsideHeader from "@/components/insideheader";
 import Sidebar from "@/components/sidebar";
 import ProtectedRoute from "@/utils/protectedRoute";
 
-export default function Signup() {
+export default function UpdateProfile() {
   const router = useRouter();
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
