@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import InsideHeader from "@/components/insideheader";
 import Sidebar from "@/components/sidebar";
-import DeliveryManagementTable from "@/components/deliveryManTable";
+import DeliveryManagementTable from "@/components/deliveryManTable"; // Are you sure you need this here?
 import axios from "axios";
 import DeliveryManagementSearchTable from "@/components/deliveryManSearchTable";
 import Cookies from "js-cookie";
@@ -19,12 +19,16 @@ interface OrderDelivery {
 }
 
 const DeliveryDashboard: React.FC = () => {
-
   const [orderId, setOrderId] = useState("");
   const [deliveryData, setDeliveryData] = useState<OrderDelivery[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSearch = async () => {
     try {
+      setLoading(true);
+      setError(null);
+
       const token = Cookies.get("jwtToken");
       const response = await axios.get(
         `http://localhost:3000/delivery/${orderId}`,
@@ -34,19 +38,18 @@ const DeliveryDashboard: React.FC = () => {
           },
         }
       );
+
       if (Array.isArray(response.data)) {
         setDeliveryData(response.data);
       } else {
-        setDeliveryData([]); // Set to empty array if response.data is not an array
+        setDeliveryData([]);
       }
-      console.log(response.data);
     } catch (error) {
-      console.error("Error fetching delivery data:", error);
-      // setDeliveryData([]); // Set to empty array
+      setError("Error fetching delivery data");
+    } finally {
+      setLoading(false);
     }
-    
   };
-  
 
   return (
     <ProtectedRoute requiredRole={"owner"}>
@@ -68,8 +71,9 @@ const DeliveryDashboard: React.FC = () => {
                 type="button"
                 className="bg-customTeal hover:bg-buttonHover border rounded-xl text-white font-bold text-sm py-2 px-3 mr-2  focus:outline-none focus:shadow-outline"
                 onClick={handleSearch}
+                disabled={loading}
               >
-                Search
+                {loading ? "Searching..." : "Search"}
               </button>
             </div>
           </div>
@@ -77,9 +81,8 @@ const DeliveryDashboard: React.FC = () => {
           <h1 className="text-2xl text-center mt-8 mb-3">
             Delivery Management Dashboard
           </h1>
+          {error && <p className="text-red-500">{error}</p>}
           <DeliveryManagementSearchTable data={deliveryData} />
-
-          <DeliveryManagementTable />
         </div>
       </div>
     </ProtectedRoute>

@@ -6,6 +6,7 @@ import InsideHeader from "@/components/insideheader";
 import ProtectedRoute from "@/utils/protectedRoute";
 import Cookies from "js-cookie";
 import Sidebar from "@/components/sidebar";
+import SuccessMessage from "@/components/successMessage";
 
 interface OrderDelivery {
   orderId: number;
@@ -32,7 +33,11 @@ export default function MakeDelivery({
     totalPrice: 0,
     status: "",
   });
+  const [successMessage, setSuccessMessage] = useState("");
   const [status, setOrderStatus] = useState("");
+  const closeSuccessMessage = () => {
+    setSuccessMessage("");
+  };
 
   // Fetch order details
   useEffect(() => {
@@ -66,7 +71,8 @@ export default function MakeDelivery({
     e.preventDefault();
     try {
       await postData();
-      alert("Delivery made successfully");
+      setSuccessMessage("Order Completed successfully !");
+      Cookies.set('successMessage', `${orderId} delivery has been completed !`);
     } catch (error) {
       console.error("Error making delivery:", error);
     }
@@ -201,7 +207,7 @@ export default function MakeDelivery({
       <DeliveryManagementTable />
       </div>
       </div>
-
+      {successMessage && <SuccessMessage message={successMessage} onClose={closeSuccessMessage} />}
       {/* <DeliveryManagementTable /> */}
     </ProtectedRoute>
   );

@@ -6,6 +6,7 @@ import axios from "axios";
 import { useState, ChangeEvent, useEffect, SyntheticEvent } from "react";
 import Cookies from "js-cookie";
 import Sidebar from "@/components/sidebar";
+import SuccessMessage from "@/components/successMessage";
 
 interface Purchase {
   purchaseId: number;
@@ -45,6 +46,17 @@ export default function UpdatePurchase({
   const [purchaseTotalPrice, setPurchaseTotalPrice] = useState(0);
   const [purchaseDate, setPurchaseDate] = useState("");
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errors, setErrors] = useState({
+    vendorName: "",
+    vendorContact: "",
+    vendorEmail: "",
+    productName: "",
+    productQuantity: "",
+    productPurchasePrice: "",
+    purchaseTotalPrice: "",
+    purchaseDate: "",
+  });
 
   const handleChangeVendorName = (e: ChangeEvent<HTMLInputElement>) => {
     setVendorName(e.target.value);
@@ -74,6 +86,9 @@ export default function UpdatePurchase({
 
   const handleChangePurchaseTotalPrice = (e: ChangeEvent<HTMLInputElement>) => {
     setPurchaseTotalPrice(parseInt(e.target.value));
+  };
+  const closeSuccessMessage = () => {
+    setSuccessMessage("");
   };
 
   const handleChangePurchaseDate = (e: ChangeEvent<HTMLInputElement>) => {
@@ -115,36 +130,108 @@ export default function UpdatePurchase({
     fetchPurchaseDetails();
   }, [purchaseId]);
 
-  //handle on submit
+  const validateFields = () => {
+    const errors = {
+      vendorName: "",
+      vendorContact: "",
+      vendorEmail: "",
+      productName: "",
+      productQuantity: "",
+      productPurchasePrice: "",
+      purchaseTotalPrice: "",
+      purchaseDate: "",
+    };
+
+    if (!vendorName) {
+      errors.vendorName = "Vendor name is required";
+    } else if (vendorName.length < 2 || vendorName.length > 50) {
+      errors.vendorName = "Vendor name must be between 2 and 50 characters";
+    } else if (!/^[A-Z][a-zA-Z0-9]*$/.test(vendorName)) {
+      errors.vendorName =
+        "Vendor name must start with a capital letter and contain only alphanumeric characters";
+    }
+
+    if (!vendorContact) {
+      errors.vendorContact = "Vendor contact is required";
+    } else if (!/^\d{11}$/.test(vendorContact)) {
+      errors.vendorContact = "Vendor contact must be a valid 11-digit number";
+    }
+
+    if (!vendorEmail) {
+      errors.vendorEmail = "Vendor email is required";
+    } else if (!/^\S+@\S+\.\S+$/.test(vendorEmail)) {
+      errors.vendorEmail = "Vendor email must be a valid email address";
+    }
+
+    if (!productName) {
+      errors.productName = "Product name is required";
+    } else if (productName.length < 2 || productName.length > 50) {
+      errors.productName = "Product name must be between 2 and 50 characters";
+    }
+
+    if (!productQuantity) {
+      errors.productQuantity = "Product quantity is required";
+    } else if (
+      isNaN(Number(productQuantity)) ||
+      Number(productQuantity) <= 0 ||
+      !Number.isInteger(Number(productQuantity))
+    ) {
+      errors.productQuantity =
+        "Product quantity must be a non-negative integer";
+    }
+
+    if (!productPurchasePrice) {
+      errors.productPurchasePrice = "Product purchase price is required";
+    } else if (
+      isNaN(Number(productPurchasePrice)) ||
+      Number(productPurchasePrice) <= 0
+    ) {
+      errors.productPurchasePrice =
+        "Product purchase price must be a positive number";
+    }
+
+    if (!purchaseTotalPrice) {
+      errors.purchaseTotalPrice = "Purchase total price is required";
+    } else if (
+      isNaN(Number(purchaseTotalPrice)) ||
+      Number(purchaseTotalPrice) <= 0
+    ) {
+      errors.purchaseTotalPrice =
+        "Purchase total price must be a positive number";
+    }
+
+    if (!purchaseDate) {
+      errors.purchaseDate = "Purchase date is required";
+    }
+
+    return errors;
+  };
+
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    if (
-      !vendorName ||
-      !vendorContact ||
-      !vendorEmail ||
-      !productName ||
-      !productQuantity ||
-      !productPurchasePrice ||
-      !purchaseTotalPrice ||
-      !purchaseDate
-    ) {
-      setError("All fields are required");
-    } else {
+    const validationErrors = validateFields();
+    setErrors(validationErrors);
+
+    const hasErrors = Object.values(validationErrors).some((error) => !!error);
+
+    if (!hasErrors) {
       try {
+        // Validation passed, submit data
         await postData();
-        alert("product Update successfully");
+        Cookies.set('successMessage', `${purchaseId} Information has been updated!`);
+        setSuccessMessage("Product registered successfully !");
+        // Reset form state
+        setVendorName("");
+        setVendorContact("");
+        setVendorEmail("");
+        setProductName("");
+        setProductQuantity(0);
+        setProductPurchasePrice(0);
+        setPurchaseTotalPrice(0);
+        setPurchaseDate("");
       } catch (e: any) {
-        setError(e);
+        setErrors(e);
       }
-      setVendorName("");
-      setVendorContact("");
-      setVendorEmail("");
-      setProductName("");
-      setProductQuantity(parseInt(""));
-      setProductPurchasePrice(parseInt(""));
-      setPurchaseTotalPrice(parseInt(""));
-      setPurchaseDate("");
-      setError("");
     }
   };
 
@@ -223,8 +310,15 @@ export default function UpdatePurchase({
                     id="vendorName"
                     value={vendorName}
                     onChange={handleChangeVendorName}
-                    className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                      errors.vendorName && "border-red-500"
+                    }`}
                   />
+                  {errors.vendorName && (
+                    <p className="text-red-500 text-xs italic">
+                      {errors.vendorName}
+                    </p>
+                  )}
                 </div>
                 <div className="w-1/2 pl-2">
                   <label
@@ -239,8 +333,15 @@ export default function UpdatePurchase({
                     id="vendorContact"
                     value={vendorContact}
                     onChange={handleChangeVendorContact}
-                    className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                      errors.vendorContact && "border-red-500"
+                    }`}
                   />
+                  {errors.vendorContact && (
+                    <p className="text-red-500 text-xs italic">
+                      {errors.vendorContact}
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="mb-3 flex justify-between">
@@ -257,8 +358,15 @@ export default function UpdatePurchase({
                     id="vendorEmail"
                     value={vendorEmail}
                     onChange={handleChangeVendorEmail}
-                    className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                      errors.vendorEmail && "border-red-500"
+                    }`}
                   />
+                  {errors.vendorEmail && (
+                    <p className="text-red-500 text-xs italic">
+                      {errors.vendorEmail}
+                    </p>
+                  )}
                 </div>
                 <div className="w-1/2 pl-2">
                   <label
@@ -273,8 +381,15 @@ export default function UpdatePurchase({
                     id="productName"
                     value={productName}
                     onChange={handleChangeProductName}
-                    className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                      errors.productName && "border-red-500"
+                    }`}
                   />
+                  {errors.productName && (
+                    <p className="text-red-500 text-xs italic">
+                      {errors.productName}
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="mb-3 flex justify-between">
@@ -291,8 +406,15 @@ export default function UpdatePurchase({
                     id="productQuantity"
                     value={productQuantity}
                     onChange={handleChangeProductQuantity}
-                    className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                      errors.productQuantity && "border-red-500"
+                    }`}
                   />
+                  {errors.productQuantity && (
+                    <p className="text-red-500 text-xs italic">
+                      {errors.productQuantity}
+                    </p>
+                  )}
                 </div>
                 <div className="w-1/2 pl-2">
                   <label
@@ -307,8 +429,15 @@ export default function UpdatePurchase({
                     id="productPurchasePrice"
                     value={productPurchasePrice}
                     onChange={handleChangeProductPurchasePrice}
-                    className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                      errors.productPurchasePrice && "border-red-500"
+                    }`}
                   />
+                  {errors.productPurchasePrice && (
+                    <p className="text-red-500 text-xs italic">
+                      {errors.productPurchasePrice}
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="mb-3 flex justify-between">
@@ -325,8 +454,15 @@ export default function UpdatePurchase({
                     id="purchaseTotalPrice"
                     value={purchaseTotalPrice}
                     onChange={handleChangePurchaseTotalPrice}
-                    className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                      errors.purchaseTotalPrice && "border-red-500"
+                    }`}
                   />
+                  {errors.purchaseTotalPrice && (
+                    <p className="text-red-500 text-xs italic">
+                      {errors.purchaseTotalPrice}
+                    </p>
+                  )}
                 </div>
                 <div className="w-1/2 pl-2">
                   <label
@@ -341,8 +477,15 @@ export default function UpdatePurchase({
                     id="purchaseDate"
                     value={purchaseDate}
                     onChange={handleChangePurchaseDate}
-                    className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                      errors.purchaseDate && "border-red-500"
+                    }`}
                   />
+                  {errors.purchaseDate && (
+                    <p className="text-red-500 text-xs italic">
+                      {errors.purchaseDate}
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="text-center">
@@ -364,6 +507,12 @@ export default function UpdatePurchase({
           <PurchaseDetailsTable />
         </div>
       </div>
+      {successMessage && (
+        <SuccessMessage
+          message={successMessage}
+          onClose={closeSuccessMessage}
+        />
+      )}
 
       {/* <PurchaseDetailsTable /> */}
     </ProtectedRoute>
