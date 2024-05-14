@@ -28,6 +28,7 @@ let EmployeeService = class EmployeeService {
     async registerEmployee(createEmployeeDto, company, packageId) {
         const { employeesalary, employeejoiningdate, ...userDto } = createEmployeeDto;
         const { username, email, password } = userDto;
+        await this.connection.query(`SET search_path TO "public"`);
         const existingUser = await this.usersRepository.findOne({
             where: [{ username }, { email }],
         });

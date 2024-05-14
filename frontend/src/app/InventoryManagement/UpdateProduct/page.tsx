@@ -1,9 +1,71 @@
+"use client";
+import InventoryProductTable from "@/components/Inventorytable";
 import Header from "@/components/publicheader";
+import { useRouter } from "next/router";
+import axios from "axios";
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
+
+interface Product {
+  productId: number;
+  productName: string;
+  productDetails: string;
+  productPurchasePrice: number;
+  productSellPrice: number;
+  productBrand: string;
+  productQuantity: number;
+}
 
 export default function UpdateProduct() {
+  // const router = useRouter();
+  // const { productId } = router.query;
+  // const [product, setProduct] = useState<Product>({
+  //   productId: 0,
+  //   productName: "",
+  //   productDetails: "",
+  //   productPurchasePrice: 0,
+  //   productSellPrice: 0,
+  //   productBrand: "",
+  //   productQuantity: 0,
+  // });
+
+  // useEffect(() => {
+  //   if (productId && typeof productId === "string") {
+  //     fetchProductDetails(productId);
+  //   }
+  // }, [productId]);
+
+  // const fetchProductDetails = async (productId: string) => {
+  //   try {
+  //     const response = await axios.get<Product>(
+  //       `http://localhost:3000/inventory-management/${productId}`
+  //     );
+  //     setProduct(response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching product details:", error);
+  //   }
+  // };
+
+  
   return (
     <>
       <Header />
+
+      <div className="flex justify-end mt-3">
+        <div className="flex items-center w-3/10">
+          <input
+            type="text"
+            placeholder="Search..."
+            className="appearance-none border rounded-xl w-full py-2 px-3 mr-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+          <button
+            type="button"
+            className="bg-customTeal hover:bg-buttonHover border rounded-xl text-white font-bold text-sm py-2 px-3 mr-2  focus:outline-none focus:shadow-outline"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+
       <h1 className="text-3xl text-center mt-8">Update Product</h1>
       <div className="flex justify-center mt-3">
         <form className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
@@ -94,7 +156,7 @@ export default function UpdateProduct() {
           <div className="text-center">
             <button
               type="submit"
-              className="bg-buttonColor hover:bg-buttonHover text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline mr-2 w-full sm:w-auto"
+              className="bg-customTeal hover:bg-buttonHover text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline mr-2 w-full sm:w-auto"
             >
               Update Product
             </button>
@@ -107,6 +169,7 @@ export default function UpdateProduct() {
           </div>
         </form>
       </div>
+      <InventoryProductTable />
     </>
   );
 }
