@@ -188,7 +188,7 @@ export default function Employee() {
       <div className="flex">
         <Sidebar />
         <div>
-          <div className="bg-white my-10 w-screen h-fit shadow-2xl rounded-xl">
+          <div className="bg-white my-10 w-100 mx-2 shadow-2xl rounded-xl">
             <h1 className="text-4xl font-extrabold flex justify-center p-8">
               Employee Registration
             </h1>
@@ -400,7 +400,7 @@ export default function Employee() {
               </form>
             </div>
           </div>
-          <div className="bg-white my-10 w-screen h-fit shadow-2xl rounded-xl">
+          <div className="bg-white my-10 mx-2 shadow-2xl rounded-xl">
             <EmployeeTable />
           </div>
         </div>

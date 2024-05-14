@@ -6,63 +6,49 @@ import InsideHeader from "@/components/insideheader";
 import Sidebar from "@/components/sidebar";
 import ProtectedRoute from "@/utils/protectedRoute";
 import { getToken } from "@/utils/auth";
-import EmployeeTable from "@/components/employeeTable";
-import { stat } from "fs";
-import PayrollTable from "@/components/payrollTable";
 
-export default function Payroll() {
-  const router = useRouter();
-  const [employeeId, setemployeeId] = useState("");
-  const [bonus, setbonus] = useState("");
-  const [payrollMonth, setpayrollMonth] = useState("");
-  const [status, setstatus] = useState("");
+export default function PayrollUpdate({
+  params,
+}: {
+  params: { slug: [string, string] };
+}) {
+  const [employeeId, setEmployeeId] = useState(params.slug[0]);
+  const [bonus, setBonus] = useState("");
+  const [payrollMonth, setPayrollMonth] = useState(params.slug[1]);
+  const [status, setStatus] = useState("");
   const [error, setError] = useState("");
 
-  const handleChangeEmployeeId = (e: ChangeEvent<HTMLInputElement>) => {
-    setemployeeId(e.target.value);
-  };
+  const route=useRouter();
+
   const handleChangeBonus = (e: ChangeEvent<HTMLInputElement>) => {
-    setbonus(e.target.value);
+    setBonus(e.target.value);
   };
-  const handleChangePayrollMonth = (e: ChangeEvent<HTMLInputElement>) => {
-    setpayrollMonth(e.target.value);
-  };
+
   const handleChangeStatus = (e: ChangeEvent<HTMLSelectElement>) => {
-    setstatus(e.target.value);
+    setStatus(e.target.value);
   };
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     console.log("Submit button clicked!");
     console.log("Form data:", {
-      employeeId,
       bonus,
-      payrollMonth,
-      status
+      status,
     });
     setError("");
-    if (
-      !employeeId ||
-      !payrollMonth ||
-      !status 
-    ) {
+    if (!status) {
       setError("Fill the require field");
       return;
     }
-
-
     try {
       const response = await postData();
-      console.log("payroll created successfully:", response);
-      setError("Payroll created successfully");
-      // Reset form fields
-      setemployeeId("");
-      setbonus("");
-      setpayrollMonth("");
-      setbonus("");
+      console.log("payroll Update successfully:", response);
+      setError("Payroll Update successfully");
+      
+      route.push('/payroll');
     } catch (error) {
       console.error("Error creating payroll:", error);
-      setError(`Payroll for employee ID ${employeeId} and month ${payrollMonth} already exists`);
+      setError(`Payroll Creating error`);
     }
   };
 
@@ -70,13 +56,11 @@ export default function Payroll() {
     try {
       const token = getToken();
       const data1 = {
-        employeeId: parseInt(employeeId),
         bonus: parseInt(bonus),
-        payrollMonth: payrollMonth,
         status: status,
       };
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_API_ENDPOINT}/payroll/create`,
+      const response = await axios.patch(
+        `${process.env.NEXT_PUBLIC_BACKEND_API_ENDPOINT}/payroll/update/${employeeId}/${payrollMonth}`,
         data1,
         {
           headers: {
@@ -94,37 +78,20 @@ export default function Payroll() {
   }
 
   return (
-    <ProtectedRoute requiredRole={["owner","hr"]}>
+    <ProtectedRoute requiredRole={["owner", "hr"]}>
       <InsideHeader />
       <div className="flex">
         <Sidebar />
         <div>
           <div className="bg-white my-10 w-screen h-fit shadow-2xl rounded-xl">
             <h1 className="text-4xl font-extrabold flex justify-center p-8">
-              Payroll
+              Payroll Update
             </h1>
             {error && <p className="text-red-500 text-center mt-4">{error}</p>}
             <div className="p-8 flex justify-center">
               <form onSubmit={handleSubmit}>
                 <table>
                   <tbody>
-                    <tr>
-                      <td colSpan={2}>
-                        <label className="text-lg">Employee ID</label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2}>
-                        <input
-                          type="number"
-                          name="employeeId"
-                          value={employeeId}
-                          onChange={handleChangeEmployeeId}
-                          className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                        />
-                      </td>
-                    </tr>
-                  
                     <tr>
                       <td colSpan={2}>
                         <label className="text-lg">Bonus</label>
@@ -141,22 +108,7 @@ export default function Payroll() {
                         />
                       </td>
                     </tr>
-                    <tr>
-                      <td colSpan={2}>
-                        <label className="text-lg">Payroll Date</label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2}>
-                        <input
-                          type="month"
-                          name="payrollMonth"
-                          value={payrollMonth}
-                          onChange={handleChangePayrollMonth}
-                          className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                        />
-                      </td>
-                    </tr>
+
                     <tr>
                       <td colSpan={2}>
                         <label className="text-lg">Status</label>
@@ -201,9 +153,7 @@ export default function Payroll() {
               </form>
             </div>
           </div>
-          <div className="bg-white my-10 w-screen h-fit shadow-2xl rounded-xl">
-            <PayrollTable />
-          </div>
+          <div className="bg-white my-10 w-screen h-fit shadow-2xl rounded-xl"></div>
         </div>
       </div>
     </ProtectedRoute>
