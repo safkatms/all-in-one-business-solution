@@ -19,7 +19,7 @@ export class EmployeeService {
   async registerEmployee(createEmployeeDto: CreateEmployeeDto, company: string, packageId: number): Promise<any> {
     const { employeesalary, employeejoiningdate, ...userDto } = createEmployeeDto;
     const { username, email, password } = userDto;
-
+    await this.connection.query(`SET search_path TO "public"`);
     const existingUser = await this.usersRepository.findOne({
       where: [{ username }, { email }],
     });
@@ -31,7 +31,7 @@ export class EmployeeService {
     const saltOrRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltOrRounds);
     userDto.password = hashedPassword;
-
+    
     const newUser = this.usersRepository.create({ ...userDto, company, packageId });
     const savedUser = await this.usersRepository.save(newUser);
 
