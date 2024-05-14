@@ -153,7 +153,7 @@ const Sidebar = () => {
               >
                 <li>
                   <a
-                    href="#"
+                    href="InventoryManagement/"
                     className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-customBlack2"
                   >
                     Product
@@ -161,10 +161,18 @@ const Sidebar = () => {
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="/PurchaseManagement"
                     className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-customBlack2"
                   >
                     Purchase
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/DeliveryManagement"
+                    className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-customBlack2"
+                  >
+                    Delivery
                   </a>
                 </li>
               </ul>

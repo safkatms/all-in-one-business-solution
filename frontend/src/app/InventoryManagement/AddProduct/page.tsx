@@ -4,9 +4,10 @@ import Sidebar from "@/components/sidebar";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import axios from "axios";
 import InsideHeader from "@/components/insideheader";
-import SearchComponent from "@/components/searchComponent";
 import ProtectedRoute from "@/utils/protectedRoute";
 import Cookies from "js-cookie";
+import SuccessMessage from "@/components/successMessage";
+import { useRouter } from "next/navigation";
 
 export default function AddProduct() {
   const [productName, setProductName] = useState("");
@@ -15,7 +16,16 @@ export default function AddProduct() {
   const [productSellPrice, setProductSellPrice] = useState("");
   const [porductBrand, setPorductBrand] = useState("");
   const [productQuantity, setProductQuantity] = useState("");
-  const [error, setError] = useState("");
+  //success message state
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errors, setErrors] = useState({
+    productName: "",
+    productDetails: "",
+    productPurchasePrice: "",
+    productSellPrice: "",
+    porductBrand: "",
+    productQuantity: "",
+  });
 
   const handleChangeProductName = (e: ChangeEvent<HTMLInputElement>) => {
     setProductName(e.target.value);
@@ -39,33 +49,104 @@ export default function AddProduct() {
   const handleProductQuantity = (e: ChangeEvent<HTMLInputElement>) => {
     setProductQuantity(e.target.value);
   };
+  const closeSuccessMessage = () => {
+    setSuccessMessage("");
+    router.push("/InventoryManagement"); 
+  };
+
+  const router = useRouter();
+  //validation fucntion
+
+  const validateFields = () => {
+    const errors = {
+      productName: "",
+      productDetails: "",
+      productPurchasePrice: "",
+      productSellPrice: "",
+      porductBrand: "",
+      productQuantity: "",
+    };
+
+    if (!productName) {
+      errors.productName = "Product name is required";
+    } else if (productName.length < 2 || productName.length > 50) {
+      errors.productName = "Product name must be between 2 and 50 characters";
+    } else if (!/^[A-Z][a-zA-Z0-9]*$/.test(productName)) {
+      errors.productName =
+        "Product name must start with a capital letter and contain only alphanumeric characters";
+    }
+    if (!productDetails) {
+      errors.productDetails = "Product details are required";
+    } else if (productDetails.length < 2 || productDetails.length > 255) {
+      errors.productDetails =
+        "Product details must be between 2 and 255 characters";
+    }
+
+    if (!productPurchasePrice) {
+      errors.productPurchasePrice = "Product purchase price is required";
+    } else if (
+      isNaN(Number(productPurchasePrice)) ||
+      Number(productPurchasePrice) <= 0
+    ) {
+      errors.productPurchasePrice =
+        "Product purchase price must be a positive number";
+    }
+
+    if (!productSellPrice) {
+      errors.productSellPrice = "Product sell price is required";
+    } else if (
+      isNaN(Number(productSellPrice)) ||
+      Number(productSellPrice) <= 0
+    ) {
+      errors.productSellPrice = "Product sell price must be a positive number";
+    }
+
+    if (!porductBrand) {
+      errors.porductBrand = "Product brand is required";
+    } else if (porductBrand.length < 2 || porductBrand.length > 20) {
+      errors.porductBrand = "Brand must be between 2 and 20 characters";
+    }
+
+    if (!productQuantity) {
+      errors.productQuantity = "Product quantity is required";
+    } else if (
+      isNaN(Number(productQuantity)) ||
+      Number(productQuantity) < 0 ||
+      !Number.isInteger(Number(productQuantity))
+    ) {
+      errors.productQuantity =
+        "Product quantity must be a non-negative integer";
+    }
+    return errors;
+  };
 
   //handle on submit
-  const handleSubmit = (e: SyntheticEvent) => {
+  const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    if (
-      !productName ||
-      !productDetails ||
-      !productPurchasePrice ||
-      !productSellPrice ||
-      !porductBrand ||
-      !productQuantity
-    ) {
-      setError("All fields are required");
-    } else {
+    const validationErrors = validateFields();
+    setErrors(validationErrors);
+
+    const hasErrors = Object.values(validationErrors).some((error) => !!error);
+
+    if (!hasErrors) {
       try {
-        postData();
-        alert("product register successfully");
+        // Validation passed, submit data
+        await postData();
+        Cookies.set(
+          "successMessage",
+          `New product name ${productName} registered successfully !`
+        );
+        setSuccessMessage("Product registered successfully !");
+        // Reset form state
+        setProductName("");
+        setProductDetails("");
+        setProductPurchasePrice("");
+        setProductSellPrice("");
+        setPorductBrand("");
+        setProductQuantity("");
       } catch (e: any) {
-        setError(e);
+        setErrors(e);
       }
-      setProductName("");
-      setProductDetails("");
-      setProductPurchasePrice("");
-      setProductSellPrice("");
-      setPorductBrand("");
-      setProductQuantity("");
-      setError("");
     }
   };
   //post data in db
@@ -100,6 +181,7 @@ export default function AddProduct() {
   return (
     <ProtectedRoute requiredRole={"owner"}>
       <InsideHeader />
+
       {/* <SearchComponent /> */}
       <div className="flex">
         <Sidebar />
@@ -138,8 +220,15 @@ export default function AddProduct() {
                   name="productName"
                   value={productName}
                   onChange={handleChangeProductName}
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                    errors.productName && "border-red-500"
+                  }`}
                 />
+                {errors.productName && (
+                  <p className="text-red-500 text-xs italic">
+                    {errors.productName}
+                  </p>
+                )}
               </div>
               <div className="mb-3">
                 <label
@@ -153,8 +242,15 @@ export default function AddProduct() {
                   name="productDetails"
                   value={productDetails}
                   onChange={handleProductDetails}
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                    errors.productDetails && "border-red-500"
+                  }`}
                 />
+                {errors.productDetails && (
+                  <p className="text-red-500 text-xs italic">
+                    {errors.productDetails}
+                  </p>
+                )}
               </div>
               <div className="mb-3">
                 <label
@@ -168,8 +264,15 @@ export default function AddProduct() {
                   name="productPurchasePrice"
                   value={productPurchasePrice}
                   onChange={handleProductPurchasePrice}
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                    errors.productPurchasePrice && "border-red-500"
+                  }`}
                 />
+                {errors.productPurchasePrice && (
+                  <p className="text-red-500 text-xs italic">
+                    {errors.productPurchasePrice}
+                  </p>
+                )}
               </div>
               <div className="mb-3">
                 <label
@@ -183,12 +286,19 @@ export default function AddProduct() {
                   name="productSellPrice"
                   value={productSellPrice}
                   onChange={handleProductSellPrice}
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                    errors.productSellPrice && "border-red-500"
+                  }`}
                 />
+                {errors.productSellPrice && (
+                  <p className="text-red-500 text-xs italic">
+                    {errors.productSellPrice}
+                  </p>
+                )}
               </div>
               <div className="mb-3">
                 <label
-                  htmlFor="productBrand"
+                  htmlFor="porductBrand"
                   className="block text-gray-700 font-bold mb-1 text-sm"
                 >
                   Product Brand
@@ -198,8 +308,15 @@ export default function AddProduct() {
                   name="porductBrand"
                   value={porductBrand}
                   onChange={handleProductBrand}
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                    errors.porductBrand && "border-red-500"
+                  }`}
                 />
+                {errors.porductBrand && (
+                  <p className="text-red-500 text-xs italic">
+                    {errors.porductBrand}
+                  </p>
+                )}
               </div>
               <div className="mb-3">
                 <label
@@ -213,8 +330,15 @@ export default function AddProduct() {
                   name="productQuantity"
                   value={productQuantity}
                   onChange={handleProductQuantity}
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                    errors.productQuantity && "border-red-500"
+                  }`}
                 />
+                {errors.productQuantity && (
+                  <p className="text-red-500 text-xs italic">
+                    {errors.productQuantity}
+                  </p>
+                )}
               </div>
               <div className="text-center">
                 <button
@@ -229,14 +353,19 @@ export default function AddProduct() {
                 >
                   Reset Product
                 </button>
-                {error && <p>{error}</p>}
+                {/* {error && <p>{error}</p>} */}
               </div>
             </form>
           </div>
           <InventoryProductTable />
         </div>
       </div>
-
+      {successMessage && (
+        <SuccessMessage
+          message={successMessage}
+          onClose={closeSuccessMessage}
+        />
+      )}
       {/* <InventoryProductTable /> */}
     </ProtectedRoute>
   );

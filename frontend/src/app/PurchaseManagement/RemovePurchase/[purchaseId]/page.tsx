@@ -67,7 +67,8 @@ export default function RemovePurchase({
     try {
       await removeData();
       setShowConfirmation(false);
-      alert("Purchase removed successfully");
+      Cookies.set('successMessage', `${purchaseId} has been removed !`);
+      //alert("Purchase removed successfully");
     } catch (e: any) {
       setError(e);
     }
