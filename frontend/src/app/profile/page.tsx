@@ -110,15 +110,12 @@ export default function Profile() {
                     </td>
                   </tr>
                   <tr>
-                    <td>
+                    <td colSpan={2}>
                       <label className="text-lg">Email</label>
-                    </td>
-                    <td>
-                      <label className="text-lg">Mobile Number</label>
                     </td>
                   </tr>
                   <tr>
-                    <td>
+                  <td colSpan={2}>
                       <input
                         type="email"
                         readOnly
@@ -127,7 +124,14 @@ export default function Profile() {
                         className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
                       />
                     </td>
-                    <td>
+                  </tr>
+                  <tr>
+                    <td colSpan={2}>
+                      <label className="text-lg">Mobile Number</label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colSpan={2}>
                       <input
                         type="text"
                         readOnly
