@@ -7,6 +7,7 @@ import React, { ChangeEvent, SyntheticEvent } from "react";
 import InsideHeader from "@/components/insideheader";
 import ProtectedRoute from "@/utils/protectedRoute";
 
+
 function Payment() {
   const [cardNumber, setCardNumber] = useState("");
   const [cardExpiry, setCardExpiry] = useState("");
@@ -29,12 +30,16 @@ function Payment() {
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     console.log("Payment Processing");
+
     console.log("Form data:", { cardNumber,cardExpiry,cardCVC });
+
+
     if (!cardNumber) {
       alert("Please put Card Number");
     } else {
       try {
         const response=await postData();
+
         router.push("/dashboard");
       } catch (error) {
         setError("Error Processing Payment");
@@ -70,6 +75,9 @@ function Payment() {
 
   return (
     <ProtectedRoute requiredRole={"owner"}>
+
+    <>
+
       <InsideHeader />
 
       <div className="container mx-auto h-screen flex items-center justify-center">
@@ -193,6 +201,7 @@ function Payment() {
         </form>
       </div>
     </ProtectedRoute>
+
   );
 }
 export default Payment;
