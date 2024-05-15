@@ -1,9 +1,7 @@
 "use client";
-import Header from "@/components/publicheader";
 import React, { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import InsideHeader from "@/components/insideheader";
 import Sidebar from "@/components/sidebar";
 import ProtectedRoute from "@/utils/protectedRoute";
