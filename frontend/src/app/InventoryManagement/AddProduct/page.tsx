@@ -51,13 +51,14 @@ export default function AddProduct() {
   };
   const closeSuccessMessage = () => {
     setSuccessMessage("");
-    router.push("/InventoryManagement"); 
+    router.push("/InventoryManagement");
   };
 
   const router = useRouter();
   //validation fucntion
 
-  const validateFields = () => {
+  const validateFields = async () => {
+    const token = Cookies.get("jwtToken");
     const errors = {
       productName: "",
       productDetails: "",
@@ -66,10 +67,31 @@ export default function AddProduct() {
       porductBrand: "",
       productQuantity: "",
     };
+    if (productName) {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/inventory-management/by-name/${productName}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (response.data.exists) {
+          errors.productName = "Product with this name already exists";
+        }
+      } catch (error) {
+        console.error("Error checking duplicate product name:", error);
+      }
+    }
 
     if (!productName) {
       errors.productName = "Product name is required";
-    } else if (productName.length < 2 || productName.length > 50) {
+    }
+    else if(productName){
+      
+    } 
+    else if (productName.length < 2 || productName.length > 50) {
       errors.productName = "Product name must be between 2 and 50 characters";
     } else if (!/^[A-Z][a-zA-Z0-9]*$/.test(productName)) {
       errors.productName =
@@ -123,7 +145,7 @@ export default function AddProduct() {
   //handle on submit
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    const validationErrors = validateFields();
+    const validationErrors = await validateFields();
     setErrors(validationErrors);
 
     const hasErrors = Object.values(validationErrors).some((error) => !!error);
