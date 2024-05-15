@@ -7,7 +7,6 @@ import React, { ChangeEvent, SyntheticEvent } from "react";
 import InsideHeader from "@/components/insideheader";
 import ProtectedRoute from "@/utils/protectedRoute";
 
-
 function Payment() {
   const [cardNumber, setCardNumber] = useState("");
   const [cardExpiry, setCardExpiry] = useState("");
