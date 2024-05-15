@@ -42,6 +42,8 @@ export default function Login() {
         setPassword("");
         if (!response.data.packageId) {
           router.push("/package");
+        }else if(response.data.userType=="admin"){
+          router.push("/admin");
         } else {
           router.push("/dashboard");
         }
@@ -115,7 +117,7 @@ export default function Login() {
                 <tr>
                   <td colSpan={2}>
                     <input
-                      type={showPassword ? "text" : "password"} // Toggle between text and password type
+                      type={showPassword ? "text" : "password"} 
                       name="password"
                       value={password}
                       onChange={handleChangePassword}
@@ -150,7 +152,7 @@ export default function Login() {
                 </tr>
                 <tr>
                   <td colSpan={2}>
-                    Don't have an account?{" "}
+                    Dont have an account?
                     <Link href="/signup" className="ml-3 hover:text-gray-300">
                       Register
                     </Link>

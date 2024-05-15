@@ -75,7 +75,6 @@ function Payment() {
   return (
     <ProtectedRoute requiredRole={"owner"}>
 
-    <>
 
       <InsideHeader />
 
