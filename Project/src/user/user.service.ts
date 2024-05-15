@@ -179,15 +179,18 @@ export class UserService {
     userId: number,
     updateProfileDto: UpdateProfileDto,
   ): Promise<User> {
+    await this.connection.query(`SET search_path TO "public"`);
     await this.usersRepository.update(userId, updateProfileDto);
     return this.usersRepository.findOneBy({ userId });
   }
 
   async findByUsername(username: string): Promise<User | undefined> {
+    await this.connection.query(`SET search_path TO "public"`);
     return this.usersRepository.findOneBy({ username });
   }
 
   async findProfileByUsername(username: string): Promise<User | undefined> {
+    await this.connection.query(`SET search_path TO "public"`);
     return this.usersRepository.findOne({
       where: { username },
       select: [
@@ -208,6 +211,7 @@ export class UserService {
     currentPassword: string,
     newPassword: string,
   ): Promise<void> {
+    await this.connection.query(`SET search_path TO "public"`);
     const user = await this.usersRepository.findOneBy({ userId });
 
     if (!user) {

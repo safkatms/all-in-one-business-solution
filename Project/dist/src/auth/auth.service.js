@@ -14,12 +14,15 @@ const common_1 = require("@nestjs/common");
 const user_service_1 = require("../user/user.service");
 const bcrypt = require("bcrypt");
 const jwt_1 = require("@nestjs/jwt");
+const typeorm_1 = require("typeorm");
 let AuthService = class AuthService {
-    constructor(userService, jwtService) {
+    constructor(userService, jwtService, connection) {
         this.userService = userService;
         this.jwtService = jwtService;
+        this.connection = connection;
     }
     async validateUser(username, pass) {
+        await this.connection.query(`SET search_path TO "public"`);
         const user = await this.userService.findByUsername(username);
         if (!user) {
             throw new common_1.UnauthorizedException('Invalid credentials');
@@ -48,6 +51,7 @@ exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [user_service_1.UserService,
-        jwt_1.JwtService])
+        jwt_1.JwtService,
+        typeorm_1.Connection])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

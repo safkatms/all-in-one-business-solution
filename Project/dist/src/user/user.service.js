@@ -150,13 +150,16 @@ let UserService = class UserService {
 `);
     }
     async updateProfile(userId, updateProfileDto) {
+        await this.connection.query(`SET search_path TO "public"`);
         await this.usersRepository.update(userId, updateProfileDto);
         return this.usersRepository.findOneBy({ userId });
     }
     async findByUsername(username) {
+        await this.connection.query(`SET search_path TO "public"`);
         return this.usersRepository.findOneBy({ username });
     }
     async findProfileByUsername(username) {
+        await this.connection.query(`SET search_path TO "public"`);
         return this.usersRepository.findOne({
             where: { username },
             select: [
@@ -172,6 +175,7 @@ let UserService = class UserService {
         });
     }
     async changePassword(userId, currentPassword, newPassword) {
+        await this.connection.query(`SET search_path TO "public"`);
         const user = await this.usersRepository.findOneBy({ userId });
         if (!user) {
             throw new common_1.UnauthorizedException('User not found');

@@ -3,15 +3,18 @@ import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt'; 
 import { CreateAuthDto } from './dto/create-auth.dto';
+import { Connection } from 'typeorm';
 
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UserService,
     private jwtService: JwtService, 
+    private connection: Connection,
   ) {}
 
   async validateUser(username: string, pass: string): Promise<any> {
+    await this.connection.query(`SET search_path TO "public"`);
     const user = await this.userService.findByUsername(username);
 
     if (!user) {
