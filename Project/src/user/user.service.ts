@@ -198,6 +198,7 @@ export class UserService {
         'username',
         'mobileNo',
         'gender',
+        'company'
       ],
     });
   }

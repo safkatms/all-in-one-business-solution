@@ -16,7 +16,7 @@ export class PurchaseManagement {
 
   @ApiProperty({
     description: 'Contact number of the vendor',
-    example: '01234567890',
+    example: '01734567890',
   })
   @Column({ nullable: false })
   vendorContact: string;

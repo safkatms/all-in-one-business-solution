@@ -15,9 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SearchController = void 0;
 const common_1 = require("@nestjs/common");
 const search_service_1 = require("./search.service");
-const schema_guard_1 = require("../guards/schema.guard");
-const jwt_guard_1 = require("../guards/jwt.guard");
-const role_guard_1 = require("../guards/role.guard");
 const swagger_1 = require("@nestjs/swagger");
 let SearchController = class SearchController {
     constructor(searchService) {
@@ -97,7 +94,6 @@ __decorate([
 exports.SearchController = SearchController = __decorate([
     (0, swagger_1.ApiTags)('Search'),
     (0, common_1.Controller)('search'),
-    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, schema_guard_1.SetSchemaGuard, new role_guard_1.RoleGuard(['inventory_manager', 'owner'])),
     __metadata("design:paramtypes", [search_service_1.SearchService])
 ], SearchController);
 //# sourceMappingURL=search.controller.js.map

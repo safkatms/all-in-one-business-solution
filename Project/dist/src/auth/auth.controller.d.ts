@@ -9,6 +9,9 @@ export declare class AuthController {
     constructor(authService: AuthService, userService: UserService);
     login(loginDto: CreateAuthDto): Promise<{
         access_token: string;
+        packageId: any;
+        userType: any;
+        username: any;
     }>;
     forgotPassword(forgotPasswordDto: ForgotPasswordDto): Promise<void>;
     resetPassword(resetPasswordDto: ResetPasswordDto): Promise<void>;

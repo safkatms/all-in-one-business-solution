@@ -14,8 +14,8 @@ const class_validator_1 = require("class-validator");
 const swagger_1 = require("@nestjs/swagger");
 var PayrollStatus;
 (function (PayrollStatus) {
-    PayrollStatus["Paid"] = "paid";
-    PayrollStatus["Unpaid"] = "unpaid";
+    PayrollStatus["Paid"] = "Paid";
+    PayrollStatus["Unpaid"] = "Unpaid";
 })(PayrollStatus || (exports.PayrollStatus = PayrollStatus = {}));
 class CreatePayrollDto {
 }

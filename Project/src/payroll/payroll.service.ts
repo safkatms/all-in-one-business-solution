@@ -15,13 +15,13 @@ export class PayrollService {
     private readonly employeeRepository: Repository<Employee>,
   ) {}
   async create(createPayrollDto: CreatePayrollDto): Promise<Payroll> {
-    // Find the employee by ID
+   
     const employee = await this.employeeRepository.findOneBy({ employeeid: createPayrollDto.employeeId });
     if (!employee) {
       throw new NotFoundException(`Employee with ID ${createPayrollDto.employeeId} not found`);
     }
   
-    // Check if payroll for the given month and employee already exists
+    
     const existingPayroll = await this.payrollRepository.findOne({
       where: {
         employee: { employeeid: employee.employeeid },
@@ -29,21 +29,21 @@ export class PayrollService {
       },
     });
   
-    // If a payroll record already exists for the given month, throw an exception or handle as necessary
+    
     if (existingPayroll) {
       throw new ConflictException(`Payroll for employee ID ${createPayrollDto.employeeId} and month ${createPayrollDto.payrollMonth} already exists`);
     }
   
-    // Create a new payroll record if it doesn't exist for the given month
+    
     const payroll = this.payrollRepository.create({
       employee,
       salary: employee.employeesalary,
-      bonus: createPayrollDto.bonus || 0, // If bonus is optional, ensure a default value is set
+      bonus: createPayrollDto.bonus || 0, 
       payrollMonth: createPayrollDto.payrollMonth,
       status: createPayrollDto.status,
     });
   
-    // Save the new payroll record
+
     await this.payrollRepository.save(payroll);
     return payroll;
   }
@@ -52,7 +52,7 @@ export class PayrollService {
 
   findAll() : Promise<Payroll[]> {
     return this.payrollRepository.find({
-      relations: ['employee'], // Optionally include employee details
+      relations: ['employee'],
     });
   }
 
@@ -63,12 +63,10 @@ export class PayrollService {
   async update(employeeId: number, payrollMonth: string, updatePayrollDto: UpdatePayrollDto): Promise<Payroll> {
     const payroll = await this.payrollRepository.findOne({
       where: {
-        // Use 'employeeId' directly if it's the name of the column in the database
-        // If 'employee.employeeid' is the correct path, make sure your entity relationship is properly configured
         employee: { employeeid: employeeId },
         payrollMonth,
       },
-      relations: ['employee'], // This ensures 'employee' is loaded and can be used in the condition
+      relations: ['employee'],
     });
 
     if (!payroll) {

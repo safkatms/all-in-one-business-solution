@@ -28,7 +28,7 @@ export class CreatePurchaseManagementDto {
   @ApiProperty({
     description: 'Contact number of the vendor',
     minLength: 11,
-    example: '01234567890',
+    example: '01734567890',
   })
   @Length(11)
   @IsNotEmpty({ message: 'empty value. Vendor contact cannot be empty' })

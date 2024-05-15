@@ -38,6 +38,9 @@ let AuthService = class AuthService {
         const payload = { username: user.username, sub: user.userId, ...user };
         return {
             access_token: this.jwtService.sign(payload),
+            packageId: user.packageId,
+            userType: user.userType,
+            username: user.firstName
         };
     }
 };
