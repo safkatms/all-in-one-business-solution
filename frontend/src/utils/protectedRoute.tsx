@@ -13,7 +13,7 @@ const ProtectedRoute = ({ children, requiredRole }: { children: React.ReactNode,
         } else {
           const hasRequiredRole = await hasRole(requiredRole);
           if (!hasRequiredRole) {
-            router.push('/login');
+            router.push('/not-found');
           }
         }
       };

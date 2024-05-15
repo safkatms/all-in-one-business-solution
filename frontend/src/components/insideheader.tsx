@@ -66,7 +66,8 @@ const InsideHeader = () => {
               )}
             </li>
             <li>
-              <p className="text-white">Logged in As </p>
+
+              <p className="text-white">Logged in As</p>
             </li>
             <li>
               <LogoutButton />

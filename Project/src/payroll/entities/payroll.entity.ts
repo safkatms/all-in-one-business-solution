@@ -8,7 +8,7 @@ export class Payroll {
   payrollId: number;
 
   @ManyToOne(() => Employee)
-  @JoinColumn({ name: "employeeId" }) // This must match the exact column name in your database
+  @JoinColumn({ name: "employeeId" }) 
   employee: Employee;
 
 
@@ -16,7 +16,7 @@ export class Payroll {
   salary: number;
 
   @Column('numeric', { default: 0 })
-  bonus: number; // Added bonus field with a default value
+  bonus: number;
 
   @Column()
   payrollMonth: string;
