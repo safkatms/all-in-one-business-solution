@@ -77,7 +77,7 @@ export default function AddProduct() {
             },
           }
         );
-        if (response.data.exists) {
+        if (response.data.productName === productName) {
           errors.productName = "Product with this name already exists";
         }
       } catch (error) {
@@ -87,11 +87,8 @@ export default function AddProduct() {
 
     if (!productName) {
       errors.productName = "Product name is required";
-    }
-    else if(productName){
-      
-    } 
-    else if (productName.length < 2 || productName.length > 50) {
+    } else if (productName) {
+    } else if (productName.length < 2 || productName.length > 50) {
       errors.productName = "Product name must be between 2 and 50 characters";
     } else if (!/^[A-Z][a-zA-Z0-9]*$/.test(productName)) {
       errors.productName =
