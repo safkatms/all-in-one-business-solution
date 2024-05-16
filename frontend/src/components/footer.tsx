@@ -2,12 +2,48 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="bg-customBlack py-4 p">
-      <div className="container mx-auto flex justify-between items-center">
-        <h6 className="text-white text-start font-xs ">
-          Copyright ©2024 ALL-IN-ONE-SOLUTION. All Rights Reserved.
-        </h6>
-        <nav className="flex text-end">
+    <footer className="bg-gray-800 text-white py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between">
+          <div>
+            <h5 className="font-bold">ALL-IN-ONE BUSINESS SOLUTION</h5>
+            <p>Handle Everything from Purchase to Sale</p>
+          </div>
+          <div className="flex space-x-8">
+            <div>
+              <h6 className="font-bold">Sales & Marketing</h6>
+              <p>077 7475 8489</p>
+              <p>083 8475 7484</p>
+            </div>
+            <div>
+              <h6 className="font-bold">Support</h6>
+              <p>019 4877 8888</p>
+              <p>035 7999 2777</p>
+            </div>
+            <div>
+              <h6 className="font-bold">Product</h6>
+              <p>How it works?</p>
+              <p>Pricing</p>
+            </div>
+            <div>
+              <h6 className="font-bold">Others</h6>
+              <p>About Us</p>
+              <p>Privacy & Policy</p>
+              <p>Terms & Condition</p>
+            </div>
+          </div>
+        </div>
+        <div className="flex justify-between mt-8">
+          <p>&copy; 2024 ALL-IN-ONE-SOLUTION. All Rights Reserved.</p>
+          <div className="flex space-x-4">
+            <a href="#" className="text-gray-400 hover:text-white">
+              <i className="fab fa-facebook"></i>
+            </a>
+            <a href="#" className="text-gray-400 hover:text-white">
+              <i className="fab fa-youtube"></i>
+            </a>
+          </div>
+          <nav className="flex text-end">
           <ul className="flex space-x-4">
             <li>
               <Link
@@ -52,6 +88,8 @@ const Footer = () => {
             </li>
           </ul>
         </nav>
+        </div>
+        
       </div>
     </footer>
   );

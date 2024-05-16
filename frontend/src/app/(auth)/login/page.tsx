@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Header from "@/components/publicheader";
 import React, { ChangeEvent, SyntheticEvent, useState } from "react";
 import Link from "next/link";
@@ -10,7 +10,7 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false); 
+  const [showPassword, setShowPassword] = useState(false);
 
   const router = useRouter();
 
@@ -42,7 +42,7 @@ export default function Login() {
         setPassword("");
         if (!response.data.packageId) {
           router.push("/package");
-        }else if(response.data.userType=="admin"){
+        } else if (response.data.userType == "admin") {
           router.push("/admin");
         } else {
           router.push("/dashboard");
@@ -71,98 +71,102 @@ export default function Login() {
   }
 
   return (
-    <div>
+    <>
       <Header />
-      <div className="container mx-auto h-screen flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold">
-            Welcome to All in One Business Solution
-          </h1>
-          <h6 className="font-normal">All Business Solution in One Platform!</h6>
-          <Link href="/signup">
-            <button className="bg-customTeal text-white rounded-lg font-semibold py-1 px-1">
-              REGISTRATION
-            </button>
-          </Link>
-        </div>
-        <div className="bg-white m-10 shadow-2xl">
-          <h1 className="text-4xl font-extrabold flex justify-center mt-8">
-            Login
-          </h1>
-          {error && <p className="text-red-500 text-center mt-4">{error}</p>}
-          <form onSubmit={handleSubmit}>
-            <table className="m-8">
-              <tbody>
-                <tr>
-                  <td colSpan={2}>
-                    <label className="text-lg">Username</label>
-                  </td>
-                </tr>
-                <tr>
-                  <td colSpan={2}>
-                    <input
-                      type="text"
-                      name="username"
-                      value={username}
-                      onChange={handleChangeUsername}
-                      className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td colSpan={2}>
-                    <label className="text-lg">Password</label>
-                  </td>
-                </tr>
-                <tr>
-                  <td colSpan={2}>
-                    <input
-                      type={showPassword ? "text" : "password"} 
-                      name="password"
-                      value={password}
-                      onChange={handleChangePassword}
-                      className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td colSpan={2}>
-                    <button className="bg-customTeal text-white rounded-lg font-semibold w-full mt-2 py-2 px-3">
-                      Login
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={showPassword} 
-                      onChange={toggleShowPassword} 
-                    />{" "}
-                    <label className="text-s">Show Password</label>
-                  </td>
-                  <td>
-                    <Link
-                      href="/forget-password"
-                      className="ml-3 hover:text-gray-300"
-                    >
-                      Forget password?
-                    </Link>
-                  </td>
-                </tr>
-                <tr>
-                  <td colSpan={2}>
-                    Dont have an account?
-                    <Link href="/signup" className="ml-3 hover:text-gray-300">
-                      Register
-                    </Link>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </form>
+      <div className="min-w-screen min-h-screen items-center bg-gradient-to-b from-customCyan to-customWhite">
+        <div className="flex justify-between items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-40">
+          <div>
+            <h1 className="text-3xl font-bold">
+              Welcome to All in One Business Solution
+            </h1>
+            <h6 className="font-normal">
+              All Business Solution in One Platform!
+            </h6>
+            <Link href="/signup">
+              <button className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300 bg-customTeal text-white rounded-lg font-semibold py-1 px-1">
+                REGISTRATION
+              </button>
+            </Link>
+          </div>
+          <div className="bg-white m-10 min-w-96 shadow-2xl rounded-lg ring-offset-2 ring-2 border">
+            <h1 className="text-4xl font-extrabold flex justify-center mt-8">
+              Login
+            </h1>
+            {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+            <form onSubmit={handleSubmit}>
+              <table className="m-8">
+                <tbody>
+                  <tr>
+                    <td colSpan={2}>
+                      <label className="text-lg">Username</label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colSpan={2}>
+                      <input
+                        type="text"
+                        name="username"
+                        value={username}
+                        onChange={handleChangeUsername}
+                        className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colSpan={2}>
+                      <label className="text-lg">Password</label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colSpan={2}>
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        value={password}
+                        onChange={handleChangePassword}
+                        className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colSpan={2}>
+                      <button className="bg-customTeal text-white rounded-lg font-semibold w-full mt-2 py-2 px-3 hover:bg-indigo-500">
+                        Login
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input
+                        type="checkbox"
+                        checked={showPassword}
+                        onChange={toggleShowPassword}
+                      />{" "}
+                      <label className="text-s">Show Password</label>
+                    </td>
+                    <td>
+                      <Link
+                        href="/forget-password"
+                        className="ml-3 hover:text-indigo-500"
+                      >
+                        Forget password?
+                      </Link>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colSpan={2}>
+                      Dont have an account?
+                      <Link href="/signup" className="ml-3 hover:text-indigo-500">
+                        Register
+                      </Link>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -3,5 +3,15 @@
 @tailwind utilities;
 
 body {
-    background-color: #EEEEEE;
+    background-color: #ffffff;
+  }
+  @layer utilities {
+    .customCyan {
+      --tw-gradient-from: rgb(193, 248, 251);
+      --tw-gradient-to: rgba(216, 237, 238, 1);
+    }
+  
+    .customWhite {
+      --tw-gradient-to: rgba(255, 255, 255, 1);
+    }
   }
