@@ -163,7 +163,7 @@ export default function UpdateCustomer({
 
   return (
 
-<ProtectedRoute requiredRole={["owner"]}>
+<ProtectedRoute requiredRole={["owner","salesman"]}>
       <InsideHeader />
       <div className="flex">
         <Sidebar />

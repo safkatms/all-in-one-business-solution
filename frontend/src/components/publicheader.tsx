@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const Header = () => {
   return (
-    <header className="bg-customBlack py-4">
+    <header className="fixed w-full bg-customBlack py-4">
       <div className="container mx-auto flex justify-between items-center max-w-7xl px-4 sm:px-6 lg:px-8 ">
         {/* Logo or site title */}
         <h1 className=" py-100">

@@ -17,7 +17,7 @@ export default function Home() {
             </h6>
             <Link href="/signup">
               <button className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300 bg-customTeal text-white rounded-lg font-semibold py-2 px-3">
-                REGISTRATION
+                REGISTER NOW
               </button>
             </Link>
           </div>

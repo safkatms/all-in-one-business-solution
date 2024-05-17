@@ -193,7 +193,7 @@ export default function Signup() {
     <>
       <Header />
       <div className="min-w-screen min-h-screen items-center bg-gradient-to-b from-customCyan to-customWhite">
-        <div className="flex justify-between items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-40">
           <div>
             <h1 className="text-3xl font-bold">
               Welcome to All in One Business Solution
@@ -202,7 +202,7 @@ export default function Signup() {
               All Business Solution in One Platform!
             </h6>
             <Link href="/login">
-              <button className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300 bg-customTeal text-white rounded-lg font-semibold py-1 px-12">
+              <button className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300 bg-customTeal text-white rounded-lg font-semibold py-2 px-3">
                 Login
               </button>
             </Link>
@@ -213,7 +213,7 @@ export default function Signup() {
             </h1>
             {error && <p className="text-red-500 text-center mt-4">{error}</p>}
             <form onSubmit={handleSubmit}>
-              <table className="m-8">
+              <table className="m-8 flex justify-center">
                 <tbody>
                   <tr>
                     <td>

@@ -12,7 +12,8 @@ const Dashboard = () => {
     },
     {
       title: "Inventory Management",
-      description: "Track and manage your inventory, stock levels, and suppliers.",
+      description:
+        "Track and manage your inventory, stock levels, and suppliers.",
     },
     {
       title: "Account Management",
@@ -26,35 +27,35 @@ const Dashboard = () => {
 
   return (
     <ProtectedRoute
-      requiredRole={[
-        "admin",
-        "owner",
-        "hr",
-        "accountant",
-        "inventory_manager",
-        "salesman",
-      ]}
-    >
+    requiredRole={[
+      "admin",
+      "owner",
+      "hr",
+      "accountant",
+      "inventory_manager",
+      "salesman",
+    ]}>
       <InsideHeader />
-      <div className="flex">
-        <Sidebar />
-        <div className="ml-8">
-          <h1 className="text-3xl font-bold mb-4">
-            Welcome to All in One Business Solution
-          </h1>
-          <p className="text-gray-600 mb-8">
-            Your one-stop solution for all business needs!
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className="bg-white p-6 rounded-lg shadow-md"
-              >
-                <h2 className="text-lg font-semibold mb-2">{feature.title}</h2>
-                <p className="text-gray-600">{feature.description}</p>
-              </div>
-            ))}
+      <div className="min-w-screen min-h-screen items-center">
+        <div className="flex max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Sidebar />
+          <div className="ml-8">
+            <h1 className="text-3xl font-bold mb-4">
+              Welcome to All in One Business Solution
+            </h1>
+            <p className="text-gray-600 mb-8">
+              Your one-stop solution for all business needs!
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {features.map((feature, index) => (
+                <div key={index} className="bg-white p-6 rounded-lg shadow-md">
+                  <h2 className="text-lg font-semibold mb-2">
+                    {feature.title}
+                  </h2>
+                  <p className="text-gray-600">{feature.description}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

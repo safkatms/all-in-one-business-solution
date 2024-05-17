@@ -52,59 +52,61 @@ function Reset() {
   return (
     <div>
       <Header />
-      <div className="container mx-auto h-screen flex items-center justify-center">
-        <div className="bg-white p-14 shadow-2xl">
-          <h1 className="text-4xl font-extrabold flex justify-center mt-8">
-            Reset Password
-          </h1>
-          <form onSubmit={handleSubmit}>
-            <table className="m-8">
-              <tbody>
-                <tr>
-                  <td>
-                    <label className="text-lg">Password</label>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input
-                      type="password"
-                      name="password"
-                      value={password}
-                      onChange={handleChangePassword}
-                      className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <label className="text-lg">Token</label>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input
-                      type="text"
-                      name="token"
-                      value={token}
-                      onChange={handleChangeToken}
-                      className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <button
-                      type="submit"
-                      className="bg-customTeal text-white rounded-lg font-semibold w-full mt-2 py-2 px-3"
-                    >
-                      Reset
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </form>
+      <div className="min-w-screen min-h-screen items-center bg-gradient-to-b from-customCyan to-customWhite">
+        <div className="flex justify-center items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-40">
+          <div className="bg-white m-10 min-w-96 shadow-2xl rounded-lg ring-offset-2 ring-2 border">
+            <h1 className="text-4xl font-extrabold flex justify-center mt-8">
+              Reset Password
+            </h1>
+            <form onSubmit={handleSubmit}>
+              <table className="flex justify-center m-8">
+                <tbody>
+                  <tr>
+                    <td>
+                      <label className="text-lg">Password</label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input
+                        type="password"
+                        name="password"
+                        value={password}
+                        onChange={handleChangePassword}
+                        className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label className="text-lg">Token</label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input
+                        type="text"
+                        name="token"
+                        value={token}
+                        onChange={handleChangeToken}
+                        className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <button
+                        type="submit"
+                        className="bg-customTeal text-white rounded-lg font-semibold w-full mt-2 py-2 px-3"
+                      >
+                        Reset
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </form>
+          </div>
         </div>
       </div>
     </div>

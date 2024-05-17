@@ -52,7 +52,7 @@ const Footer = () => {
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   viewBox="0 0 50 50"
                   className="w-8 h-8"
                 >
@@ -74,7 +74,7 @@ const Footer = () => {
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   viewBox="0 0 50 50"
                   className="w-8 h-8"
                 >

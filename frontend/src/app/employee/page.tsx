@@ -183,225 +183,229 @@ export default function Employee() {
   }
 
   return (
-    <ProtectedRoute requiredRole={["owner","hr"]}>
+    <ProtectedRoute requiredRole={["owner", "hr"]}>
       <InsideHeader />
-      <div className="flex">
-        <Sidebar />
-        <div>
-          <div className="bg-white my-10 w-100 mx-2 shadow-2xl rounded-xl">
-            <h1 className="text-4xl font-extrabold flex justify-center p-8">
-              Employee Registration
-            </h1>
-            {error && <p className="text-red-500 text-center mt-4">{error}</p>}
-            <div className="p-8 flex justify-center">
-              <form onSubmit={handleSubmit}>
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <label className="text-lg">Firstname</label>
-                      </td>
-                      <td>
-                        <label className="text-lg">Lastname</label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <input
-                          type="text"
-                          name="firstName"
-                          value={firstName}
-                          onChange={handleChangeFirstName}
-                          className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                        />
-                      </td>
-                      <td>
-                        <input
-                          type="text"
-                          name="lastName"
-                          value={lastName}
-                          onChange={handleChangeLastName}
-                          className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2}>
-                        <label>Username</label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2}>
-                        <input
-                          type="text"
-                          name="username"
-                          value={username}
-                          onChange={handleChangeUsername}
-                          className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2}>
-                        <label className="text-lg">Email</label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2}>
-                        <input
-                          type="email"
-                          name="email"
-                          value={email}
-                          onChange={handleChangeEmail}
-                          className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2}>
-                        <label className="text-lg">Mobile Number</label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2}>
-                        <input
-                          type="text"
-                          name="mobileNo"
-                          value={mobileNo}
-                          onChange={handleChangeMobile}
-                          className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2}>
-                        <label className="text-lg">Password</label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2}>
-                        <input
-                          type="text"
-                          name="password"
-                          value={password}
-                          onChange={handleChangepassword}
-                          className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2}>
-                        <label className="text-lg">Gender</label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td
-                        colSpan={2}
-                        className="flex justify-between items-center"
-                      >
-                        <input
-                          type="radio"
-                          name="gender"
-                          value="male"
-                          onChange={handleChangeGender}
-                          id="male"
-                        />
-                        <label htmlFor="male">Male</label>
-                        <input
-                          type="radio"
-                          name="gender"
-                          value="female"
-                          onChange={handleChangeGender}
-                          id="female"
-                        />
-                        <label htmlFor="female">Female</label>
-                        <input
-                          type="radio"
-                          name="gender"
-                          value="others"
-                          onChange={handleChangeGender}
-                          id="others"
-                        />
-                        <label htmlFor="others">Others</label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2}>
-                        <select
-                          name="userType"
-                          value={userType}
-                          onChange={handleChangeuserType}
-                          className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+      <div className="min-w-screen min-h-screen items-center">
+        <div className="flex max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Sidebar />
+          <div className="items-center w-screen">
+            <div className="bg-white my-10  mx-2 m-10 w-full shadow-2xl rounded-lg ring-offset-2 ring-2 border">
+              <h1 className="text-4xl font-bold flex justify-center p-8">
+                Employee Registration
+              </h1>
+              {error && (
+                <p className="text-red-500 text-center mt-4">{error}</p>
+              )}
+              <div className="p-8 flex justify-center">
+                <form onSubmit={handleSubmit}>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <label className="text-lg">Firstname</label>
+                        </td>
+                        <td>
+                          <label className="text-lg">Lastname</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <input
+                            type="text"
+                            name="firstName"
+                            value={firstName}
+                            onChange={handleChangeFirstName}
+                            className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            name="lastName"
+                            value={lastName}
+                            onChange={handleChangeLastName}
+                            className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <label>Username</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <input
+                            type="text"
+                            name="username"
+                            value={username}
+                            onChange={handleChangeUsername}
+                            className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <label className="text-lg">Email</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <input
+                            type="email"
+                            name="email"
+                            value={email}
+                            onChange={handleChangeEmail}
+                            className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <label className="text-lg">Mobile Number</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <input
+                            type="text"
+                            name="mobileNo"
+                            value={mobileNo}
+                            onChange={handleChangeMobile}
+                            className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <label className="text-lg">Password</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <input
+                            type="text"
+                            name="password"
+                            value={password}
+                            onChange={handleChangepassword}
+                            className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <label className="text-lg">Gender</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          colSpan={2}
+                          className="flex justify-between items-center"
                         >
-                          <option id="" value="">
-                            Select Company
-                          </option>
-                          <option value="hr">HR</option>
-                          <option value="accountant">Accountant</option>
-                          <option value="inventory_manager">
-                            Inventory Manager
-                          </option>
-                          <option value="salesman">Sales Person</option>
-                        </select>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2}>
-                        <label className="text-lg">Salary</label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2}>
-                        <input
-                          type="number"
-                          name="employeesalary"
-                          value={employeesalary}
-                          onChange={handleChangeSalary}
-                          className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2}>
-                        <label className="text-lg">Joining Date</label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2}>
-                        <input
-                          type="date"
-                          name="employeejoiningdate"
-                          value={employeejoiningdate}
-                          onChange={handleChangeJoiningDate}
-                          className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                        />
-                      </td>
-                    </tr>
-                    <tr className="text-center">
-                      <td>
-                        <button
-                          type="submit"
-                          className="bg-customTeal text-white rounded-lg font-semibold w-1/2 mt-2 py-2 px-3"
-                        >
-                          Save
-                        </button>
-                      </td>
-                      <td>
-                        <button
-                          type="reset"
-                          className="bg-red-600 text-white rounded-lg font-semibold w-1/2 mt-2 py-2 px-3"
-                        >
-                          Cancle
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </form>
+                          <input
+                            type="radio"
+                            name="gender"
+                            value="male"
+                            onChange={handleChangeGender}
+                            id="male"
+                          />
+                          <label htmlFor="male">Male</label>
+                          <input
+                            type="radio"
+                            name="gender"
+                            value="female"
+                            onChange={handleChangeGender}
+                            id="female"
+                          />
+                          <label htmlFor="female">Female</label>
+                          <input
+                            type="radio"
+                            name="gender"
+                            value="others"
+                            onChange={handleChangeGender}
+                            id="others"
+                          />
+                          <label htmlFor="others">Others</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <select
+                            name="userType"
+                            value={userType}
+                            onChange={handleChangeuserType}
+                            className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+                          >
+                            <option id="" value="">
+                              Select Company
+                            </option>
+                            <option value="hr">HR</option>
+                            <option value="accountant">Accountant</option>
+                            <option value="inventory_manager">
+                              Inventory Manager
+                            </option>
+                            <option value="salesman">Sales Person</option>
+                          </select>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <label className="text-lg">Salary</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <input
+                            type="number"
+                            name="employeesalary"
+                            value={employeesalary}
+                            onChange={handleChangeSalary}
+                            className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <label className="text-lg">Joining Date</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <input
+                            type="date"
+                            name="employeejoiningdate"
+                            value={employeejoiningdate}
+                            onChange={handleChangeJoiningDate}
+                            className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+                          />
+                        </td>
+                      </tr>
+                      <tr className="text-center">
+                        <td>
+                          <button
+                            type="submit"
+                            className="bg-customTeal text-white rounded-lg font-semibold w-1/2 mt-2 py-2 px-3"
+                          >
+                            Save
+                          </button>
+                        </td>
+                        <td>
+                          <button
+                            type="reset"
+                            className="bg-red-600 text-white rounded-lg font-semibold w-1/2 mt-2 py-2 px-3"
+                          >
+                            Cancle
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </form>
+              </div>
             </div>
-          </div>
-          <div className="bg-white my-10 mx-2 shadow-2xl rounded-xl">
-            <EmployeeTable />
+            <div className="bg-white my-10  mx-2 m-10 w-full shadow-2xl rounded-lg ring-offset-2 ring-2 border">
+              <EmployeeTable />
+            </div>
           </div>
         </div>
       </div>

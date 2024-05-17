@@ -83,18 +83,16 @@ export default function Login() {
               All Business Solution in One Platform!
             </h6>
             <Link href="/signup">
-              <button className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300 bg-customTeal text-white rounded-lg font-semibold py-1 px-1">
-                REGISTRATION
+              <button className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300 bg-customTeal text-white rounded-lg font-semibold py-2 px-3">
+                REGISTER NOW
               </button>
             </Link>
           </div>
           <div className="bg-white m-10 min-w-96 shadow-2xl rounded-lg ring-offset-2 ring-2 border">
-            <h1 className="text-4xl font-extrabold flex justify-center mt-8">
-              Login
-            </h1>
+            <h1 className="text-4xl font-extrabold text-center mt-8">Login</h1>
             {error && <p className="text-red-500 text-center mt-4">{error}</p>}
             <form onSubmit={handleSubmit}>
-              <table className="m-8">
+              <table className="m-8 flex justify-center">
                 <tbody>
                   <tr>
                     <td colSpan={2}>
@@ -156,7 +154,10 @@ export default function Login() {
                   <tr>
                     <td colSpan={2}>
                       Dont have an account?
-                      <Link href="/signup" className="ml-3 hover:text-indigo-500">
+                      <Link
+                        href="/signup"
+                        className="ml-3 hover:text-indigo-500"
+                      >
                         Register
                       </Link>
                     </td>

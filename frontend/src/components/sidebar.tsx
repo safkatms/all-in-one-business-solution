@@ -10,8 +10,8 @@ const Sidebar = () => {
   return (
     <div>
       <div
-        className={`bg-customBlack h-screen p-5 duration-300 relative ${
-          open ? "w-72" : "w-10 bg-transparent"
+        className={`min-h-fit p-5 duration-300 relative ${
+          open ? "lg:w-72 sm:w-50" : "lg:w-72 sm:w-10 bg-transparent"
         }`}
       >
         <svg
@@ -20,7 +20,7 @@ const Sidebar = () => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className={`w-10 h-10 text-white absolute right-3 ${
+          className={`w-10 h-10 lg:hidden text-customTeal absolute right-3 ${
             !open && "rotate-180"
           }`}
           onClick={() => setOpen(!open)}
@@ -31,10 +31,10 @@ const Sidebar = () => {
             d="m11.25 9-3 3m0 0 3 3m-3-3h7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
           />
         </svg>
-        <div className={`items-center mt-14 ${open?"flex":"hidden"}`}>
-          <ul className="relative justify-between ">
+        <div className={`items-center mt-14 lg:flex ${open?"flex":"hidden"} `}>
+          <ul className="relative justify-start space-y-2">
           <li>
-            <Link href='/dashboard' className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group hover:bg-customBlack2 text-white ">
+            <Link href='/dashboard' className="flex w-full py-2 px-7 text-base transition duration-75 rounded-lg group bg-customBlack hover:bg-indigo-500 text-white ">
                <svg className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
                   <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"/>
                   <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"/>
@@ -45,7 +45,7 @@ const Sidebar = () => {
             <li>
               <button
                 type="button"
-                className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group hover:bg-customBlack2 text-white "
+                className="flex justify-start w-full py-2 px-7 text-base transition duration-75 rounded-lg group bg-customBlack hover:bg-indigo-500 text-white "
                 aria-controls="dropdown-example"
                 data-collapse-toggle="dropdown-example"
                 onClick={() => setExpandH(!expandH)}
@@ -73,7 +73,7 @@ const Sidebar = () => {
                     stroke="currentColor"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeWidth="2"
                     d="m1 1 4 4 4-4"
                   />
                 </svg>
@@ -86,7 +86,7 @@ const Sidebar = () => {
                 <li>
                   <Link
                     href="/employee"
-                    className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-customBlack2"
+                    className="flex items-center w-full p-2  text-customBlack border border-customBlack transition duration-75 rounded-lg pl-11 group bg-white hover:bg-indigo-500"
                   >
                     Employee
                   </Link>
@@ -94,7 +94,7 @@ const Sidebar = () => {
                 <li>
                   <Link
                     href="/payroll"
-                    className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-customBlack2"
+                    className="flex items-center w-full p-2  text-customBlack border border-customBlack transition duration-75 rounded-lg pl-11 group bg-white hover:bg-indigo-500"
                   >
                     Payroll
                   </Link>
@@ -102,7 +102,7 @@ const Sidebar = () => {
                 <li>
                   <Link
                     href="#"
-                    className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-customBlack2"
+                    className="flex items-center w-full p-2 text-customBlack border border-customBlack transition duration-75 rounded-lg pl-11 group bg-white hover:bg-indigo-500"
                   >
                     Leave
                   </Link>
@@ -113,7 +113,7 @@ const Sidebar = () => {
             <li>
               <button
                 type="button"
-                className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group hover:bg-customBlack2 text-white "
+                className="flex justify-start w-full py-2 px-7 text-base transition duration-75 rounded-lg group bg-customBlack hover:bg-indigo-500 text-white "
                 aria-controls="dropdown-example"
                 data-collapse-toggle="dropdown-example"
                 onClick={() => setExpandI(!expandI)}
@@ -141,7 +141,7 @@ const Sidebar = () => {
                     stroke="currentColor"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeWidth="2"
                     d="m1 1 4 4 4-4"
                   />
                 </svg>
@@ -154,7 +154,7 @@ const Sidebar = () => {
                 <li>
                   <Link
                     href="InventoryManagement/"
-                    className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-customBlack2"
+                    className="flex items-center w-full p-2  text-customBlack border border-customBlack transition duration-75 rounded-lg pl-11 group bg-white hover:bg-indigo-500"
                   >
                     Product
                   </Link>
@@ -162,7 +162,7 @@ const Sidebar = () => {
                 <li>
                   <Link
                     href="/PurchaseManagement"
-                    className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-customBlack2"
+                    className="flex items-center w-full p-2  text-customBlack border border-customBlack transition duration-75 rounded-lg pl-11 group bg-white hover:bg-indigo-500"
                   >
                     Purchase
                   </Link>
@@ -170,7 +170,7 @@ const Sidebar = () => {
                 <li>
                   <Link
                     href="/DeliveryManagement"
-                    className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-customBlack2"
+                    className="flex items-center w-full p-2  text-customBlack border border-customBlack transition duration-75 rounded-lg pl-11 group bg-white hover:bg-indigo-500"
                   >
                     Delivery
                   </Link>
@@ -180,7 +180,7 @@ const Sidebar = () => {
             <li>
               <button
                 type="button"
-                className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group hover:bg-customBlack2 text-white "
+                className="flex justify-start w-full py-2 px-7 text-base transition duration-75 rounded-lg group bg-customBlack hover:bg-indigo-500 text-white "
                 aria-controls="dropdown-example"
                 data-collapse-toggle="dropdown-example"
                 onClick={() => setExpandS(!expandS)}
@@ -208,7 +208,7 @@ const Sidebar = () => {
                     stroke="currentColor"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeWidth="2"
                     d="m1 1 4 4 4-4"
                   />
                 </svg>
@@ -221,7 +221,7 @@ const Sidebar = () => {
                 <li>
                   <Link
                     href="/order"
-                    className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-customBlack2"
+                    className="flex items-center w-full p-2  text-customBlack border border-customBlack transition duration-75 rounded-lg pl-11 group bg-white hover:bg-indigo-500"
                   >
                     Make an Order
                   </Link>
@@ -229,7 +229,7 @@ const Sidebar = () => {
                 <li>
                   <Link
                     href="/customer"
-                    className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-customBlack2"
+                    className="flex items-center w-full p-2  text-customBlack border border-customBlack transition duration-75 rounded-lg pl-11 group bg-white hover:bg-indigo-500"
                   >
                     Customer
                   </Link>
@@ -238,7 +238,7 @@ const Sidebar = () => {
             </li>
             <hr />
             <li>
-            <Link href='/profile' className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group hover:bg-customBlack2 text-white ">
+            <Link href='/profile' className="flex justify-start w-full py-2 px-7 text-base transition duration-75 rounded-lg group bg-customBlack hover:bg-indigo-500 text-white">
                <svg className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
                <path fill="currentColor" d="m10.135 21l-.362-2.892q-.479-.145-1.035-.454q-.557-.31-.947-.664l-2.668 1.135l-1.865-3.25l2.306-1.739q-.045-.27-.073-.558q-.03-.288-.03-.559q0-.252.03-.53q.028-.278.073-.626L3.258 9.126l1.865-3.212L7.771 7.03q.448-.373.97-.673q.52-.3 1.013-.464L10.134 3h3.732l.361 2.912q.575.202 1.016.463t.909.654l2.725-1.115l1.865 3.211l-2.382 1.796q.082.31.092.569t.01.51q0 .233-.02.491q-.019.259-.088.626l2.344 1.758l-1.865 3.25l-2.681-1.154q-.467.393-.94.673t-.985.445L13.866 21zm1.838-6.5q1.046 0 1.773-.727T14.473 12t-.727-1.773t-1.773-.727q-1.052 0-1.776.727T9.473 12t.724 1.773t1.776.727"></path>
                </svg>
