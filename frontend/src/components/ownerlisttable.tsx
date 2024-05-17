@@ -95,7 +95,7 @@ export default function OwnerListTable() {
   return (
     <ProtectedRoute requiredRole={["admin"]}>
       <div className="flex justify-center p-4">
-        <div className="w-full">
+        <div className="w-100%">
           <h1 className="text-2xl text-left mb-2">All Owners:</h1>
           <table className="min-w-full bg-white rounded-lg overflow-hidden text-sm">
             <thead className="bg-gray-600 text-white">

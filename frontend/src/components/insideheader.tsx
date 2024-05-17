@@ -1,12 +1,18 @@
-"use client"
+"use client";
 import Link from "next/link";
 import LogoutButton from "./logout";
 import Cookies from 'js-cookie';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from "next/image";
+import { getUsername } from "@/utils/auth";
 
 const InsideHeader = () => {
   const [notification, setNotification] = useState<string | null>(null);
+  const [username, setUsername] = useState<string | null | undefined>(null);
+
+  useEffect(() => {
+    setUsername(getUsername());
+  }, []);
 
   const handleNotificationClick = () => {
     const successMessage = Cookies.get('successMessage');
@@ -23,9 +29,9 @@ const InsideHeader = () => {
 
   return (
     <header className="bg-customBlack py-4">
-       <div className="container mx-auto flex justify-between items-center max-w-7xl px-4 sm:px-6 lg:px-8 ">
+      <div className="container mx-auto flex justify-between items-center max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Logo or site title */}
-        <h1 className=" py-100">
+        <h1 className="py-100">
           <Link href="/">
             <Image
               src="/aiobs2.png"
@@ -73,8 +79,11 @@ const InsideHeader = () => {
               )}
             </li>
             <li>
-
-              <p className="text-white">Logged in As</p>
+              {username !== null && username !== undefined ? (
+                <p className="text-white">Logged in As {username}</p>
+              ) : (
+                <p className="text-white">Loading...</p>
+              )}
             </li>
             <li>
               <LogoutButton />
@@ -85,6 +94,5 @@ const InsideHeader = () => {
     </header>
   );
 };
-
 
 export default InsideHeader;

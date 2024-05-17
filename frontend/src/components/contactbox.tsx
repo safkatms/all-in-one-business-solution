@@ -5,8 +5,7 @@ import { useRouter } from "next/navigation";
 import ProtectedRoute from "@/utils/protectedRoute";
 import { getToken } from "@/utils/auth";
 
-
-export default function Order()  {
+export default function Order() {
   const router = useRouter();
   const [customerContact, setcustomerContact] = useState("");
   const [orderId, setorderId] = useState("");
@@ -15,39 +14,31 @@ export default function Order()  {
   const handleChangecustomerContact = (e: ChangeEvent<HTMLInputElement>) => {
     setcustomerContact(e.target.value);
   };
- 
- 
+
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     console.log("Submit button clicked!");
     console.log("Form data:", {
-    
-        customerContact,
-     
-      
+      customerContact,
     });
 
     setError("");
-    if (
-       !customerContact
-      
-    ) {
+    if (!customerContact) {
       setError("Customer Contact required");
       return;
     }
-     
+
     if (!customerContact.match(/^01[3-9]\d{8}$/)) {
       setError("Mobile number must be a valid Bangladesh number.");
       return;
     }
-    
+
     try {
       const response = await postData();
       console.log("Order created successfully:", response);
       setError("Order created successfully");
-      
+
       setcustomerContact("");
-     
     } catch (error) {
       console.error("Error creating Order:", error);
       setError("Customer not found or Error ");
@@ -59,7 +50,6 @@ export default function Order()  {
       const token = getToken();
       const data1 = {
         customerContact: customerContact,
-        
       };
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_API_ENDPOINT}/order`,
@@ -80,27 +70,20 @@ export default function Order()  {
     }
   }
 
-
-
-
-
-
-
-
-
   return (
-
-<ProtectedRoute requiredRole={["owner"]}>
-      
-      <div className="flex">
-        <div className=" my-10 w-screen ">
+    <ProtectedRoute requiredRole={["owner"]}>
+      <div className="flex justify-center p-4">
+        <div className="w-100%">
           {error && <p className="text-red-500 text-center mt-2">{error}</p>}
-          {orderId && <p className="text-green-500 text-center mt-2">Use {orderId} as Order ID</p>}
+          {orderId && (
+            <p className="text-green-500 text-center mt-2">
+              Use {orderId} as Order ID
+            </p>
+          )}
           <div className=" flex justify-center">
             <form onSubmit={handleSubmit}>
               <table>
                 <tbody>
-
                   <tr>
                     <td colSpan={2}>
                       <label>Contact</label>
@@ -116,7 +99,7 @@ export default function Order()  {
                         className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
                       />
                     </td>
-                  </tr> 
+                  </tr>
                   <tr className="text-center">
                     <td>
                       <button
@@ -134,7 +117,5 @@ export default function Order()  {
         </div>
       </div>
     </ProtectedRoute>
-    
   );
-};
-
+}

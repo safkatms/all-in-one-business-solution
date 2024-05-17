@@ -1,20 +1,20 @@
 "use client";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import axios from "axios";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import InsideHeader from "@/components/insideheader";
 import Sidebar from "@/components/sidebar";
 import ProtectedRoute from "@/utils/protectedRoute";
 import { getToken } from "@/utils/auth";
 import Cookies from "js-cookie";
-import CustomerListTable from '@/components/customerlisttable';
-import CustomerSearch from '@/components/customersearch';
+import CustomerListTable from "@/components/customerlisttable";
+import CustomerSearch from "@/components/customersearch";
 
 interface Customer {
   name: string;
   contact: string;
   email: string;
- 
 }
 
 export default function UpdateCustomer({
@@ -22,15 +22,12 @@ export default function UpdateCustomer({
 }: {
   params: { contact: string };
 }) {
-  const {contact } = params;
+  const { contact } = params;
   const [customer, setCustomer] = useState<Customer>({
-    
     name: "",
     contact: "",
     email: "",
-   
   });
-
 
   const [name, setname] = useState("");
   const [contactNo, setcontact] = useState("");
@@ -66,7 +63,6 @@ export default function UpdateCustomer({
         setname(response.data.name);
         setcontact(response.data.contact);
         setemail(response.data.email);
-        
       } catch (error) {
         console.error("Error fetching customer details:", error);
       }
@@ -75,7 +71,6 @@ export default function UpdateCustomer({
     fetchCustomerDetails();
   }, [contactNo]);
 
-
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     console.log("Submit button clicked!");
@@ -83,20 +78,14 @@ export default function UpdateCustomer({
       name,
       contact,
       email,
-      
     });
 
     setError("");
-    if (
-      !name ||
-      !contact ||
-      !email
-      
-    ) {
+    if (!name || !contact || !email) {
       setError("All fields are required");
       return;
     }
-     
+
     if (!name.match(/^[A-Z][a-z]*$/)) {
       setError(
         "Customer name must start with a capital letter and contain no numbers or special characters."
@@ -107,17 +96,17 @@ export default function UpdateCustomer({
       setError("Invalid email address.");
       return;
     }
-    
+
     if (!contact.match(/^01[3-9]\d{8}$/)) {
       setError("Mobile number must be a valid Bangladesh number.");
       return;
     }
-    
+
     try {
       const response = await postData();
       console.log("Customer Update successfully:", response);
       setError("Customer Updated successfully");
-      
+
       setname("");
       setcontact("");
       setemail("");
@@ -153,106 +142,104 @@ export default function UpdateCustomer({
     }
   }
 
-
-
-
-
-
-
-
-
   return (
-
-<ProtectedRoute requiredRole={["owner","salesman"]}>
+    <ProtectedRoute requiredRole={["owner", "salesman"]}>
       <InsideHeader />
-      <div className="flex">
-        <Sidebar />
-        <div className="bg-white my-10 w-screen h-fit shadow-2xl rounded-xl">
-          <h1 className="text-4xl font-extrabold flex justify-center p-8">
-           Customer Update
-          </h1>
-          {error && <p className="text-red-500 text-center mt-4">{error}</p>}
-          <div className="p-8 flex justify-center">
-            <form onSubmit={handleSubmit}>
-              <table>
-                <tbody>
-                  <tr>
-                    <td colSpan={2}>
-                      <label className="text-lg">Name</label>
-                    </td>
-                   
-                  </tr>
-                  <tr>
-                    <td colSpan={2}>
-                      <input
-                        type="text"
-                        name="name"
-                        value={name}
-                        onChange={handleChangename}
-                        className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                      />
-                    </td>
-                   
-                  </tr>
-                  <tr>
-                    <td colSpan={2}>
-                      <label>Contact</label>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colSpan={2}>
-                      <input
-                        type="text"
-                        name="contact"
-                        value={contact}
-                        onChange={handleChangecontact}
-                        className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colSpan={2}>
-                      <label className="text-lg">Email</label>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colSpan={2}>
-                      <input
-                        type="email"
-                        name="email"
-                        value={email}
-                        onChange={handleChangeemail}
-                        className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                      />
-                    </td>
-                  </tr>
-                  <tr className="text-center">
-                    <td>
-                      <button
-                        type="submit"
-                        className="bg-customTeal text-white rounded-lg font-semibold w-mid mt-2 py-2 px-3"
-                      >
-                        Update
-                      </button>
-                    </td>
-                    <td>
-                      <button
-                        type="reset"
-                        className="bg-red-600 text-white rounded-lg font-semibold w-mid mt-2 py-2 px-3"
-                      >
-                        Cancel
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </form>
+      <div className="min-w-screen min-h-screen items-center">
+        <div className="flex max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Sidebar />
+          <div className="items-center w-screen mx-2 m-10 rounded-lg ring-offset-2 ring-2">
+            <div className="bg-white my-10  mx-2 m-10 w-100% border ">
+              <h1 className="text-4xl font-extrabold flex justify-center p-8">
+                Customer Update
+              </h1>
+              {error && (
+                <p className="text-red-500 text-center mt-4">{error}</p>
+              )}
+              <div className="p-8 flex justify-center">
+                <form onSubmit={handleSubmit}>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td colSpan={2}>
+                          <label className="text-lg">Name</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <input
+                            type="text"
+                            name="name"
+                            value={name}
+                            onChange={handleChangename}
+                            className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <label>Contact</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <input
+                            type="text"
+                            name="contact"
+                            value={contact}
+                            onChange={handleChangecontact}
+                            className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <label className="text-lg">Email</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <input
+                            type="email"
+                            name="email"
+                            value={email}
+                            onChange={handleChangeemail}
+                            className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+                          />
+                        </td>
+                      </tr>
+                      <tr className="text-center">
+                        <td>
+                          <button
+                            type="submit"
+                            className="bg-customTeal text-white rounded-lg font-semibold w-mid mt-2 py-2 px-3"
+                          >
+                            Update
+                          </button>
+                        </td>
+                        <td>
+                          <Link href="/customer">
+                          <button
+                            type="reset"
+                            className="bg-red-600 text-white rounded-lg font-semibold w-mid mt-2 py-2 px-3"
+                          >
+                            Cancel
+                          </button>
+                          </Link>
+                          
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </form>
+              </div>
+            </div>
+            <div className="bg-white my-10  mx-2 m-10 w-100% border ">
+              <CustomerListTable />
+            </div>
           </div>
-          <CustomerListTable/>
         </div>
       </div>
     </ProtectedRoute>
-    
   );
-};
-
+}

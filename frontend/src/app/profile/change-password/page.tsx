@@ -22,11 +22,10 @@ export default function ChangePassword() {
   const handleChangeconfirmPassword = (e: ChangeEvent<HTMLInputElement>) => {
     setconfirmPassword(e.target.value);
   };
-  
+
   const handleChangenewPassword = (e: ChangeEvent<HTMLInputElement>) => {
     setnewPassword(e.target.value);
   };
-  
 
   const toggleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
@@ -106,99 +105,105 @@ export default function ChangePassword() {
       ]}
     >
       <InsideHeader />
-      <div className="flex">
-        <Sidebar />
-        <div className="bg-white my-10 w-screen h-fit shadow-2xl rounded-xl">
-          <h1 className="text-4xl font-extrabold flex justify-center p-8">
-            Change password
-          </h1>
-          {error && <p className="text-red-500 text-center mt-4">{error}</p>}
-          <div className="p-8 flex justify-center">
-            <form onSubmit={handleSubmit}>
-              <table>
-                <tbody>
-                  <tr>
-                    <td colSpan={2}>
-                      <label className="text-lg">Current Password</label>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colSpan={2}>
-                      <input
-                        type={showPassword ? "text" : "password"}
-                        name="currentPassword"
-                        value={currentPassword}
-                        onChange={handleChangecurrentPassword}
-                        className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colSpan={2}>
-                      <label className="text-lg">New Password</label>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colSpan={2}>
-                      <input
-                        type={showPassword ? "text" : "password"}
-                        name="newPassword"
-                        value={newPassword}
-                        onChange={handleChangenewPassword}
-                        className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colSpan={2}>
-                      <label className="text-lg">Confirm Password</label>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colSpan={2}>
-                      <input
-                        type={showPassword ? "text" : "password"}
-                        name="confirmPassword"
-                        value={confirmPassword}
-                        onChange={handleChangeconfirmPassword}
-                        className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                      />
-                    </td>
-                  </tr>
-                  
-                  <tr>
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={showPassword}
-                      onChange={toggleShowPassword} 
-                    />
-                    <label className="text-s">Show Password</label>
-                  </td>
-                </tr>
-                  <tr className="text-center">
-                    <td>
-                      <button
-                        type="submit"
-                        className="bg-customTeal text-white rounded-lg font-semibold  mt-2 py-2 px-6"
-                      >
-                        Save
-                      </button>
-                    </td>
-                    <td>
-                      <Link href="/profile">
-                        <button
-                          type="button"
-                          className="bg-red-600 text-white rounded-lg font-semibold  mt-2 py-2 px-3"
-                        >
-                          Cancle
-                        </button>
-                      </Link>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </form>
+      <div className="min-w-screen min-h-screen items-center">
+        <div className="flex max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Sidebar />
+          <div className="items-center w-screen mx-2 m-10 rounded-lg ring-offset-2 ring-2">
+            <div className="bg-white my-10  mx-2 m-10 w-100% border ">
+              <h1 className="text-4xl font-extrabold flex justify-center p-8">
+                Change password
+              </h1>
+              {error && (
+                <p className="text-red-500 text-center mt-4">{error}</p>
+              )}
+              <div className="p-8 flex justify-center">
+                <form onSubmit={handleSubmit}>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td colSpan={2}>
+                          <label className="text-lg">Current Password</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <input
+                            type={showPassword ? "text" : "password"}
+                            name="currentPassword"
+                            value={currentPassword}
+                            onChange={handleChangecurrentPassword}
+                            className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <label className="text-lg">New Password</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <input
+                            type={showPassword ? "text" : "password"}
+                            name="newPassword"
+                            value={newPassword}
+                            onChange={handleChangenewPassword}
+                            className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <label className="text-lg">Confirm Password</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <input
+                            type={showPassword ? "text" : "password"}
+                            name="confirmPassword"
+                            value={confirmPassword}
+                            onChange={handleChangeconfirmPassword}
+                            className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+                          />
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>
+                          <input
+                            type="checkbox"
+                            checked={showPassword}
+                            onChange={toggleShowPassword}
+                          />
+                          <label className="text-s">Show Password</label>
+                        </td>
+                      </tr>
+                      <tr className="text-center">
+                        <td>
+                          <button
+                            type="submit"
+                            className="bg-customTeal text-white rounded-lg font-semibold  mt-2 py-2 px-6 hover:bg-teal-500"
+                          >
+                            Save
+                          </button>
+                        </td>
+                        <td>
+                          <Link href="/profile">
+                            <button
+                              type="button"
+                              className="bg-red-600 text-white rounded-lg font-semibold  mt-2 py-2 px-3 hover:bg-red-500"
+                            >
+                              Cancel
+                            </button>
+                          </Link>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
       </div>

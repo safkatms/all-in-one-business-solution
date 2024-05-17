@@ -188,8 +188,8 @@ export default function Employee() {
       <div className="min-w-screen min-h-screen items-center">
         <div className="flex max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Sidebar />
-          <div className="items-center w-screen">
-            <div className="bg-white my-10  mx-2 m-10 w-full shadow-2xl rounded-lg ring-offset-2 ring-2 border">
+          <div className="items-center w-screen mx-2 m-10 rounded-lg ring-offset-2 ring-2">
+            <div className="bg-white my-10  mx-2 m-10 w-100% border ">
               <h1 className="text-4xl font-bold flex justify-center p-8">
                 Employee Registration
               </h1>
@@ -394,7 +394,7 @@ export default function Employee() {
                             type="reset"
                             className="bg-red-600 text-white rounded-lg font-semibold w-1/2 mt-2 py-2 px-3"
                           >
-                            Cancle
+                            Cancel
                           </button>
                         </td>
                       </tr>
@@ -403,7 +403,7 @@ export default function Employee() {
                 </form>
               </div>
             </div>
-            <div className="bg-white my-10  mx-2 m-10 w-full shadow-2xl rounded-lg ring-offset-2 ring-2 border">
+            <div className="bg-white my-10  mx-2 m-10 w-100% border ">
               <EmployeeTable />
             </div>
           </div>

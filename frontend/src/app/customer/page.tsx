@@ -116,9 +116,12 @@ export default function Customer()  {
 
 <ProtectedRoute requiredRole={["owner","salesman"]}>
       <InsideHeader />
-      <div className="flex">
+      <div className="min-w-screen min-h-screen items-center">
+        <div className="flex max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
         <Sidebar />
-        <div className="bg-white my-10 w-screen h-fit shadow-2xl rounded-xl">
+        <div className="items-center w-screen mx-2 m-10 rounded-lg ring-offset-2 ring-2">
+            <div className="bg-white my-10  mx-2 m-10 w-100% border ">
           <h1 className="text-4xl font-extrabold flex justify-center p-8">
            Customer Registration
           </h1>
@@ -199,7 +202,14 @@ export default function Customer()  {
               </table>
             </form>
           </div>
+          
+        </div>
+        <div className="bg-white my-10  mx-2 m-10 w-100% border ">
+
           <CustomerListTable/>
+          </div>
+        </div>
+        
         </div>
       </div>
     </ProtectedRoute>

@@ -48,8 +48,8 @@ export default function InventoryProductTable() {
   };
 
   return (
-    <>
-      <div className="flex justify-center mt-8">
+    
+      <div className="flex justify-center p-4">
         <div className="w-100%">
           <h1 className="text-2xl text-left mb-2"> All Products:</h1>
           <table className="min-w-full bg-white rounded-lg overflow-hidden text-sm">
@@ -75,7 +75,7 @@ export default function InventoryProductTable() {
                   <td className="px-4 py-2">{product.productSellPrice}</td>
                   <td className="px-4 py-2">{product.porductBrand}</td>
                   <td className="px-4 py-2">{product.productQuantity}</td>
-                  <td className="px-4 py-2">
+                  <td className="px-4 py-2 flex justify-between">
                     <button
                       type="submit"
                       className="bg-customTeal hover:bg-customBlack2 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline mr-2 w-full sm:w-auto"
@@ -97,6 +97,6 @@ export default function InventoryProductTable() {
           </table>
         </div>
       </div>
-    </>
+    
   );
 }

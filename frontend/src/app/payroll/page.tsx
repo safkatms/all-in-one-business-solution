@@ -38,18 +38,13 @@ export default function Payroll() {
       employeeId,
       bonus,
       payrollMonth,
-      status
+      status,
     });
     setError("");
-    if (
-      !employeeId ||
-      !payrollMonth ||
-      !status 
-    ) {
+    if (!employeeId || !payrollMonth || !status) {
       setError("Fill the require field");
       return;
     }
-
 
     try {
       const response = await postData();
@@ -62,7 +57,9 @@ export default function Payroll() {
       setbonus("");
     } catch (error) {
       console.error("Error creating payroll:", error);
-      setError(`Payroll for employee ID ${employeeId} and month ${payrollMonth} already exists`);
+      setError(
+        `Payroll for employee ID ${employeeId} and month ${payrollMonth} already exists`
+      );
     }
   };
 
@@ -94,115 +91,119 @@ export default function Payroll() {
   }
 
   return (
-    <ProtectedRoute requiredRole={["owner","hr"]}>
+    <ProtectedRoute requiredRole={["owner", "hr"]}>
       <InsideHeader />
-      <div className="flex">
-        <Sidebar />
-        <div>
-          <div className="bg-white my-10 w-screen h-fit shadow-2xl rounded-xl">
-            <h1 className="text-4xl font-extrabold flex justify-center p-8">
-              Payroll
-            </h1>
-            {error && <p className="text-red-500 text-center mt-4">{error}</p>}
-            <div className="p-8 flex justify-center">
-              <form onSubmit={handleSubmit}>
-                <table>
-                  <tbody>
-                    <tr>
-                      <td colSpan={2}>
-                        <label className="text-lg">Employee ID</label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2}>
-                        <input
-                          type="number"
-                          name="employeeId"
-                          value={employeeId}
-                          onChange={handleChangeEmployeeId}
-                          className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                        />
-                      </td>
-                    </tr>
-                  
-                    <tr>
-                      <td colSpan={2}>
-                        <label className="text-lg">Bonus</label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2}>
-                        <input
-                          type="number"
-                          name="bonus"
-                          value={bonus}
-                          onChange={handleChangeBonus}
-                          className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2}>
-                        <label className="text-lg">Payroll Date</label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2}>
-                        <input
-                          type="month"
-                          name="payrollMonth"
-                          value={payrollMonth}
-                          onChange={handleChangePayrollMonth}
-                          className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2}>
-                        <label className="text-lg">Status</label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2}>
-                        <select
-                          name="status"
-                          value={status}
-                          onChange={handleChangeStatus}
-                          className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
-                        >
-                          <option id="" value="">
-                            Select an option
-                          </option>
-                          <option value="Paid">Paid</option>
-                          <option value="Unpaid">Unpaid</option>
-                        </select>
-                      </td>
-                    </tr>
-                    <tr className="text-center">
-                      <td>
-                        <button
-                          type="submit"
-                          className="bg-customTeal text-white rounded-lg font-semibold w-m mt-2 py-2 px-6"
-                        >
-                          Save
-                        </button>
-                      </td>
-                      <td>
-                        <button
-                          type="reset"
-                          className="bg-red-600 text-white rounded-lg font-semibold w-m mt-2 py-2 px-3"
-                        >
-                          Cancle
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </form>
+      <div className="min-w-screen min-h-screen items-center">
+        <div className="flex max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Sidebar />
+          <div className="items-center w-screen mx-2 m-10 rounded-lg ring-offset-2 ring-2">
+            <div className="bg-white my-10  mx-2 m-10 w-100% border ">
+              <h1 className="text-4xl font-extrabold flex justify-center p-8">
+                Payroll
+              </h1>
+              {error && (
+                <p className="text-red-500 text-center mt-4">{error}</p>
+              )}
+              <div className="p-8 flex justify-center">
+                <form onSubmit={handleSubmit}>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td colSpan={2}>
+                          <label className="text-lg">Employee ID</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <input
+                            type="number"
+                            name="employeeId"
+                            value={employeeId}
+                            onChange={handleChangeEmployeeId}
+                            className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+                          />
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td colSpan={2}>
+                          <label className="text-lg">Bonus</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <input
+                            type="number"
+                            name="bonus"
+                            value={bonus}
+                            onChange={handleChangeBonus}
+                            className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <label className="text-lg">Payroll Date</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <input
+                            type="month"
+                            name="payrollMonth"
+                            value={payrollMonth}
+                            onChange={handleChangePayrollMonth}
+                            className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <label className="text-lg">Status</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <select
+                            name="status"
+                            value={status}
+                            onChange={handleChangeStatus}
+                            className="bg-customGray rounded w-full py-2 px-3 text-customBlack2 leading-tight focus:outline-none focus:shadow-outline"
+                          >
+                            <option id="" value="">
+                              Select an option
+                            </option>
+                            <option value="Paid">Paid</option>
+                            <option value="Unpaid">Unpaid</option>
+                          </select>
+                        </td>
+                      </tr>
+                      <tr className="text-center">
+                        <td>
+                          <button
+                            type="submit"
+                            className="bg-customTeal text-white rounded-lg font-semibold w-m mt-2 py-2 px-6"
+                          >
+                            Save
+                          </button>
+                        </td>
+                        <td>
+                          <button
+                            type="reset"
+                            className="bg-red-600 text-white rounded-lg font-semibold w-m mt-2 py-2 px-3"
+                          >
+                            Cancel
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </form>
+              </div>
             </div>
-          </div>
-          <div className="bg-white my-10 w-screen h-fit shadow-2xl rounded-xl">
-            <PayrollTable />
+            <div className="bg-white my-10  mx-2 m-10 w-100% border ">
+              <PayrollTable />
+            </div>
           </div>
         </div>
       </div>

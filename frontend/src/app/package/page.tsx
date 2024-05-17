@@ -54,10 +54,11 @@ function Package() {
   }
 
   return (
-    <ProtectedRoute requiredRole={"owner"}>
+    <ProtectedRoute requiredRole={["owner"]}>
       <InsideHeader />
-      <div className="container mx-auto h-screen flex items-center justify-center">
-        <div className="bg-white shadow-2xl">
+       <div className="min-w-screen min-h-screen items-center bg-gradient-to-b from-customCyan to-customWhite">
+        <div className="flex justify-center items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-40">
+          <div className="bg-white m-10 min-w-96 shadow-2xl rounded-lg ring-offset-2 ring-2 border">
           <h1 className="text-4xl font-extrabold flex justify-center mt-8 ">
             Select a Package
           </h1>
@@ -166,7 +167,7 @@ function Package() {
                   type="button"
                   id="standard"
                   onClick={() => setName("standard")}
-                  className="text-white bg-customTeal hover:bg-customBlack2 focus:ring-4 focus:outline-none focus:ring-blue-200  font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
+                  className="text-white bg-customTeal focus:ring-4 focus:outline-none focus:ring-blue-200  font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300"
                 >
                   Choose plan
                 </button>
@@ -277,14 +278,14 @@ function Package() {
                   type="button"
                   id="premium"
                   onClick={() => setName("premium")}
-                  className="text-white bg-customTeal hover:bg-customBlack2 focus:ring-4 focus:outline-none focus:ring-blue-200  font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
+                  className="text-white bg-customTeal focus:ring-4 focus:outline-none focus:ring-blue-200  font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300"
                 >
                   Choose plan
                 </button>
               </div>
             </div>
             <div className="flex justify-end m-2">
-              <div className="text-white bg-customTeal hover:bg-customBlack2 focus:ring-4 focus:outline-none focus:ring-blue-200  font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center text-center">
+              <div className="text-white bg-customTeal focus:ring-4 focus:outline-none focus:ring-blue-200  font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center text-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300">
                 <button type="submit" className="flex justify-between">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -300,7 +301,7 @@ function Package() {
                       d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
                     />
                   </svg>
-                  <label className="text-white text-xl ml-1 font-semibold">
+                  <label className="text-white text-xl ml-1 font-semibold ">
                     Buy
                   </label>
                 </button>
@@ -309,6 +310,8 @@ function Package() {
           </form>
         </div>
       </div>
+      </div>
+     
     </ProtectedRoute>
   );
 }

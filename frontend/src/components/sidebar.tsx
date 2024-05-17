@@ -10,8 +10,8 @@ const Sidebar = () => {
   return (
     <div>
       <div
-        className={`min-h-fit p-5 duration-300 relative ${
-          open ? "lg:w-72 sm:w-50" : "lg:w-72 sm:w-10 bg-transparent"
+        className={`min-h-fit p-5 duration-300 relative bg-white my-10  mx-1 rounded-lg lg:ring-offset-2 lg:ring-2 ${
+          open ? "lg:w-60 sm:w-50 sm:ring-offset-2 sm:ring-2" : "lg:w-60 sm:w-10 bg-transparent"
         }`}
       >
         <svg
@@ -45,7 +45,7 @@ const Sidebar = () => {
             <li>
               <button
                 type="button"
-                className="flex justify-start w-full py-2 px-7 text-base transition duration-75 rounded-lg group bg-customBlack hover:bg-indigo-500 text-white "
+                className="flex justify-start space-x-2 w-full py-2 px-7 text-base transition duration-75 rounded-lg group bg-customBlack hover:bg-indigo-500 text-white "
                 aria-controls="dropdown-example"
                 data-collapse-toggle="dropdown-example"
                 onClick={() => setExpandH(!expandH)}
@@ -63,7 +63,7 @@ const Sidebar = () => {
                   HR
                 </span>
                 <svg
-                  className="w-3 h-3"
+                  className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -113,7 +113,7 @@ const Sidebar = () => {
             <li>
               <button
                 type="button"
-                className="flex justify-start w-full py-2 px-7 text-base transition duration-75 rounded-lg group bg-customBlack hover:bg-indigo-500 text-white "
+                className="flex justify-start space-x-2 w-full py-2 px-7 text-base transition duration-75 rounded-lg group bg-customBlack hover:bg-indigo-500 text-white "
                 aria-controls="dropdown-example"
                 data-collapse-toggle="dropdown-example"
                 onClick={() => setExpandI(!expandI)}
@@ -131,7 +131,7 @@ const Sidebar = () => {
                   Inventory
                 </span>
                 <svg
-                  className="w-3 h-3"
+                  className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -180,7 +180,7 @@ const Sidebar = () => {
             <li>
               <button
                 type="button"
-                className="flex justify-start w-full py-2 px-7 text-base transition duration-75 rounded-lg group bg-customBlack hover:bg-indigo-500 text-white "
+                className="flex justify-start space-x-2 w-full py-2 px-7 text-base transition duration-75 rounded-lg group bg-customBlack hover:bg-indigo-500 text-white "
                 aria-controls="dropdown-example"
                 data-collapse-toggle="dropdown-example"
                 onClick={() => setExpandS(!expandS)}
@@ -198,7 +198,7 @@ const Sidebar = () => {
                   Sales
                 </span>
                 <svg
-                  className="w-3 h-3"
+                  className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
