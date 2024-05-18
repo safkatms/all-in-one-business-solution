@@ -43,7 +43,8 @@ let AuthService = class AuthService {
             access_token: this.jwtService.sign(payload),
             packageId: user.packageId,
             userType: user.userType,
-            username: user.firstName
+            username: user.firstName,
+            company: user.company
         };
     }
 };

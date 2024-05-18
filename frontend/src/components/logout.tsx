@@ -10,6 +10,7 @@ const LogoutButton = () => {
     removeToken();
     Cookies.remove("username");
     Cookies.remove("usertype");
+    Cookies.remove("company");
     router.push("/login");
   };
 

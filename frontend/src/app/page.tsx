@@ -1,3 +1,4 @@
+import Carousel from "@/components/carousel";
 import Footer from "@/components/footer";
 import Header from "@/components/publicheader";
 import Link from "next/link";
@@ -21,6 +22,9 @@ export default function Home() {
               </button>
             </Link>
           </div>
+        </div>
+        <div className="flex flex-col space-y-4 p-4 min-h-80 justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Carousel/>
         </div>
         <div className="flex flex-col space-y-4 space-x-4 p-4 min-h-80 justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <h1 className="text-4xl font-extrabold flex justify-center p-2 ">

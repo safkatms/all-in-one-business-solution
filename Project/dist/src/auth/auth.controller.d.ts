@@ -12,6 +12,7 @@ export declare class AuthController {
         packageId: any;
         userType: any;
         username: any;
+        company: any;
     }>;
     forgotPassword(forgotPasswordDto: ForgotPasswordDto): Promise<void>;
     resetPassword(resetPasswordDto: ResetPasswordDto): Promise<void>;

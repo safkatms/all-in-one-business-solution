@@ -32,7 +32,7 @@ const InsideHeader = () => {
       <div className="container mx-auto flex justify-between items-center max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Logo or site title */}
         <h1 className="py-100">
-          <Link href="/">
+          <Link href="/dashboard">
             <Image
               src="/aiobs2.png"
               alt="AIOBS Logo"
@@ -80,7 +80,7 @@ const InsideHeader = () => {
             </li>
             <li>
               {username !== null && username !== undefined ? (
-                <p className="text-white">Logged in As {username}</p>
+                <p className="text-white">Logged in As <Link href="/profile">{username}</Link></p>
               ) : (
                 <p className="text-white">Loading...</p>
               )}

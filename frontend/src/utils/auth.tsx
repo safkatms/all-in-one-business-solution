@@ -10,6 +10,9 @@ export const getToken = () => {
 export const getUsername = () => {
   return Cookies.get("username");
 };
+export const getCompany = () => {
+  return Cookies.get("company");
+};
 
 export const setToken = (token: any) => {
   Cookies.set(TOKEN_KEY, token);

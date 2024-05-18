@@ -52,7 +52,7 @@ export default function InventoryProductTable() {
       <div className="flex justify-center p-4">
         <div className="w-100%">
           <h1 className="text-2xl text-left mb-2"> All Products:</h1>
-          <table className="min-w-full bg-white rounded-lg overflow-hidden text-sm">
+          <table className="min-w-full bg-white rounded-lg overflow-hidden text-xs">
             <thead className="bg-gray-600 text-white">
               <tr>
                 <th className="px-4 py-2">ID</th>

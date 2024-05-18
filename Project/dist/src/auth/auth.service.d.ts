@@ -13,5 +13,6 @@ export declare class AuthService {
         packageId: any;
         userType: any;
         username: any;
+        company: any;
     }>;
 }

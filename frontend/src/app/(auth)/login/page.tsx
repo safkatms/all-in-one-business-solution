@@ -39,6 +39,7 @@ export default function Login() {
         Cookies.set("jwtToken", token, { expires: 7 });
         Cookies.set("username", response.data.username, { expires: 7 });
         Cookies.set("usertype", response.data.userType, { expires: 7 });
+        Cookies.set("company", response.data.company, { expires: 7 });
         setPassword("");
         if (!response.data.packageId) {
           router.push("/package");
