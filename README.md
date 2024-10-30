@@ -73,5 +73,5 @@ The **All-in-One Business Solution** ERP system is designed to deliver a complet
 
  **Clone the repository**:
    ```bash
-   git clone https://github.com/username/all-in-one-business-solution.git
+   git clone https://github.com/safkatms/all-in-one-business-solution.git
    cd all-in-one-business-solution
