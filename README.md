@@ -11,9 +11,6 @@ The **All-in-One Business Solution** is a multi-tenant SaaS ERP platform built t
 - [🚀 Getting Started](#getting-started)
 - [🛠️ Technology Stack](#technology-stack)
 - [⚙️ Installation](#installation)
-- [📖 Usage](#usage)
-- [🤝 Contributing](#contributing)
-- [📄 License](#license)
 
 ---
 
